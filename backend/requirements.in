@@ -2,6 +2,7 @@
 fastapi
 uvicorn[standard]
 pydantic[email]
+requests
 
 # Database
 motor
@@ -11,3 +12,4 @@ dnspython
 pip-tools
 black
 flake8
+pytests

@@ -6,7 +6,6 @@ from .models import TaskModel, UpdateTaskModel
 
 router = APIRouter()
 
-
 @router.post("/", response_description="Add new task")
 async def create_task(request: Request, task: TaskModel = Body(...)):
     task = jsonable_encoder(task)

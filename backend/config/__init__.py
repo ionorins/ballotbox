@@ -2,8 +2,8 @@ from pydantic import BaseSettings
 
 
 class CommonSettings(BaseSettings):
-    APP_NAME: str = "FARM Intro"
-    DEBUG_MODE: bool = False
+    APP_NAME: str = "CS261"
+    DEBUG_MODE: bool = True
 
 
 class ServerSettings(BaseSettings):
