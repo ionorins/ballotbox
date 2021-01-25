@@ -11,7 +11,6 @@ app = FastAPI()
 async def shutdown_db_client():
     app.mongodb_client.close()
 
-
 app.mongodb_client = AsyncIOMotorClient(settings.DB_URL)
 app.mongodb = app.mongodb_client[settings.DB_NAME]
 app.include_router(todo_router, tags=["tasks"], prefix="/task")
