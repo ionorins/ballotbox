@@ -25,8 +25,8 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     volumes:
-      - .:/app
-      - /app/node_modules
+      - ./frontend/public:/public
+      - ./frontend/src:/src
     ports:
       - 3000:3000
     environment:
