@@ -1,0 +1,35 @@
+.container {
+    min-height: 100vh;
+    min-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    background-color: palegreen;
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+}
+.entry-form {
+    max-width: 100vh;
+}
+.entry-button {
+    background-color: black;
+    outline: none;
+    border: none;
+}
+.entry-button:hover {
+    background-color:white;
+    color: black;
+}
+
+.main-card {
+    background-color:white;
+    color: black;
+    max-width: 100vh;
+    min-width: 50vw;
+    min-height: 50vh;
+}
+
+.navbar {
+    background-color:white;
+    color: black;
+}
