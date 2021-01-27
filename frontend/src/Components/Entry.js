@@ -3,6 +3,8 @@ import Form from "react-bootstrap/Form";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import Home from './Home.js';
+import Login from './Login.js';
+import Signup from './Signup.js';
 
 const Entry = ({ setPage }) => {
 
@@ -16,18 +18,18 @@ const Entry = ({ setPage }) => {
 
     return (
         <div className="container">
-            <h1 className="display-1">BallotBox</h1>
-            <Form className="entry-form mx-auto my-3" onSubmit={handleSubmit}>
+            <h1 className="display-1">BallotBox 🗳️</h1>
+            <Form className="forms mx-auto my-3" onSubmit={handleSubmit}>
                 <Form.Group controlId="eventCode">
-                    <Form.Control size="lg" placeholder="Event Code" maxlength="5" />
+                    <Form.Control size="lg" placeholder="Event Code" maxLength="5" />
                 </Form.Group>
-                <Button className="entry-button my-2" type="submit">
+                <Button className="buttons my-2" type="submit">
                 Submit
                 </Button>
             </Form>
             <Navbar fixed="bottom">
-                <Navbar.Text className="mx-auto footer-text">
-                    Want to host an event? <a href="">Login</a> or <a href="">sign up</a>
+                <Navbar.Text className="mx-auto navbar-text">
+                    Want to host an event? <a onClick={() => setPage(<Login />)}>Login</a> or <a onClick={() => setPage(<Signup />)}>sign up</a>
                 </Navbar.Text>
             </Navbar>
         </div>

@@ -8,17 +8,17 @@
     justify-content: center;
     text-align: center;
 }
-.entry-form {
+.forms {
     max-width: 100vh;
 }
-.entry-button {
-    background-color: black;
-    outline: none;
-    border: none;
+.buttons {
+    background-color: black !important;
+    outline: none !important;
+    border: none !important;
 }
-.entry-button:hover {
-    background-color:white;
-    color: black;
+.buttons:hover {
+    background-color:white !important;
+    color: black !important;
 }
 
 .main-card {
@@ -30,6 +30,6 @@
 }
 
 .navbar {
-    background-color:white;
+    background-color: transparent;
     color: black;
 }
