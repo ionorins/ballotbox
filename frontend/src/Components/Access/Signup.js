@@ -1,10 +1,10 @@
-import '../App.css';
+import '../../App.css';
 import Form from "react-bootstrap/Form";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import {FiUser, FiLock, FiMail} from "react-icons/fi";
-import Home from './Home.js';
+import Home from '../Home.js';
 import {sha256} from 'js-sha256';
 
 const Login = () => {
@@ -13,6 +13,7 @@ const Login = () => {
         const form = event.currentTarget;
         const email = event.target[0].value;
         const pass = sha256(event.target[1].value);
+        // form validation
         console.log(email);
         console.log(pass);
         event.preventDefault();
@@ -21,7 +22,7 @@ const Login = () => {
 
     return (
         <div className="container">
-            <h1 className="display-1">BallotBox🗳️</h1>
+            <h1 className="display-1 clickable-link" onClick={() => window.location.reload()}>BallotBox🗳️</h1>
             <Form className="forms mx-auto" onSubmit={handleSubmit}>
                 <InputGroup controlId="user" className="my-4" size="lg">
                     <InputGroup.Prepend>
@@ -29,7 +30,7 @@ const Login = () => {
                             <FiUser/>
                         </InputGroup.Text>
                     </InputGroup.Prepend>
-                    <Form.Control type="username" placeholder="Enter username" size="lg" />
+                    <Form.Control type="username" placeholder="Username" size="lg" />
                 </InputGroup>
                 <InputGroup controlId="email" className="my-4" size="lg">
                     <InputGroup.Prepend>
@@ -37,7 +38,7 @@ const Login = () => {
                             <FiMail />
                         </InputGroup.Text>
                     </InputGroup.Prepend>
-                    <Form.Control type="email" placeholder="Enter email" size="lg" />
+                    <Form.Control type="email" placeholder="Email" size="lg" />
                 </InputGroup>
                 <InputGroup size="lg">
                     <InputGroup.Prepend>

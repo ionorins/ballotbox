@@ -1,4 +1,4 @@
-import Entry from './Components/Entry.js';
+import Entry from './Components/Access/Entry.js';
 import React, {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 

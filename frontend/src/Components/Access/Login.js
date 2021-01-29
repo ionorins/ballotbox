@@ -1,8 +1,10 @@
-import '../App.css';
+import '../../App.css';
 import Form from "react-bootstrap/Form";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
-import Home from './Home.js';
+import InputGroup from "react-bootstrap/InputGroup";
+import {FiUser, FiLock, FiMail} from "react-icons/fi";
+import Home from '../Home.js';
 import {sha256} from 'js-sha256';
 
 const Login = () => {
@@ -19,17 +21,25 @@ const Login = () => {
 
     return (
         <div className="container">
-            <h1 className="display-1">BallotBox🗳️</h1>
+            <h1 className="display-1 clickable-link" onClick={() => window.location.reload()}>BallotBox🗳️</h1>
             <Form className="forms mx-auto" onSubmit={handleSubmit}>
-                <Form.Group controlId="email" className="my-2">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" size="lg" />
-                </Form.Group>
+                <InputGroup controlId="email" className="my-2">
+                    <InputGroup.Prepend>
+                        <InputGroup.Text>
+                            <FiMail/>
+                        </InputGroup.Text>
+                    </InputGroup.Prepend>
+                    <Form.Control type="email" placeholder="Email" size="lg" />
+                </InputGroup>
 
-                <Form.Group controlId="password" className="my-2">
-                    <Form.Label>Password</Form.Label>
+                <InputGroup controlId="password" className="my-2">
+                    <InputGroup.Prepend>
+                        <InputGroup.Text>
+                            <FiLock/>
+                        </InputGroup.Text>
+                    </InputGroup.Prepend>
                     <Form.Control type="password" placeholder="Password" size="lg" />
-                </Form.Group>
+                </InputGroup>
             <Button variant="primary" type="submit" className="buttons my-2">
                 Log in
             </Button>

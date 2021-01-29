@@ -1,8 +1,10 @@
-import '../App.css';
+import '../../App.css';
 import Form from "react-bootstrap/Form";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
-import Home from './Home.js';
+import InputGroup from "react-bootstrap/InputGroup";
+import { FiLink } from "react-icons/fi";
+import Home from '../Home.js';
 import Login from './Login.js';
 import Signup from './Signup.js';
 
@@ -20,16 +22,21 @@ const Entry = ({ setPage }) => {
         <div className="container">
             <h1 className="display-1">BallotBox 🗳️</h1>
             <Form className="forms mx-auto my-3" onSubmit={handleSubmit}>
-                <Form.Group controlId="eventCode">
+                <InputGroup className="my-2">
+                    <InputGroup.Prepend>
+                        <InputGroup.Text>
+                            <FiLink/>
+                        </InputGroup.Text>
+                    </InputGroup.Prepend>
                     <Form.Control size="lg" placeholder="Event Code" maxLength="5" />
-                </Form.Group>
+                </InputGroup>
                 <Button className="buttons my-2" type="submit">
                 Submit
                 </Button>
             </Form>
             <Navbar fixed="bottom">
                 <Navbar.Text className="mx-auto navbar-text">
-                    Want to host an event? <a onClick={() => setPage(<Login />)}>Login</a> or <a onClick={() => setPage(<Signup />)}>sign up</a>
+                    Want to host an event? <a className="clickable-link" onClick={() => setPage(<Login />)}>Login</a> or <a className="clickable-link" onClick={() => setPage(<Signup />)}>sign up</a>
                 </Navbar.Text>
             </Navbar>
         </div>
