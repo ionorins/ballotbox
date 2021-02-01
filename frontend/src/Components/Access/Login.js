@@ -8,9 +8,10 @@ import Home from '../Home.js';
 import {sha256} from 'js-sha256';
 import Card from "react-bootstrap/Card";
 import Nav from "react-bootstrap/Nav";
+import { useHistory } from "react-router-dom";
 
-const Login = () => {
-
+const Login = ({setToken}) => {
+    let history = useHistory();
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -20,6 +21,10 @@ const Login = () => {
         console.log(pass);
         event.preventDefault();
         event.stopPropagation();
+        setToken(email);
+        localStorage.setItem('token', JSON.stringify(email));
+        localStorage.setItem('loggedIn', JSON.stringify("true"));
+        history.push("/control");
       };
 
     return (

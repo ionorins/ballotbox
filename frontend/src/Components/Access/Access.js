@@ -1,0 +1,48 @@
+import '../../App.css';
+import {sha256} from 'js-sha256';
+import React, {useEffect, useState} from "react";
+import Login from "./Login.js";
+import Card from "react-bootstrap/Card";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import Signup from "./Signup";
+import {Link, useHistory} from "react-router-dom";
+
+const Access = ({setToken}) => {
+    const [currentView, setView] = useState(<Login setToken={setToken}/>);
+    let history = useHistory();
+
+    if (JSON.parse(localStorage.getItem('loggedIn')) === "true") {
+        history.push("/control")
+    }
+
+    return (
+        <div className="container">
+            <Link to="/" className="clickable-link">
+                <h1 className="display-1">BallotBox🗳️</h1>
+            </Link>
+        <Card className="access-card mx-auto my-3">
+            <Card.Header style={{borderBottom: "none", backgroundColor: "transparent",}}>
+                <Nav variant="tabs" className="tab-bar" defaultActiveKey="#login">
+                    <Nav.Item className="custom-nav-tabs mx-1">
+                        <Nav.Link className="custom-nav-links" href="#login" onClick={() => setView(<Login />)}>Login</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item className="custom-nav-tabs mx-1">
+                        <Nav.Link className="custom-nav-links" href="#signup" onClick={() => setView(<Signup />)}>Sign Up
+                        </Nav.Link>
+                    </Nav.Item>
+                </Nav>
+            </Card.Header>
+            <Card.Body className="access-card-body">
+                { currentView }
+            </Card.Body>
+        </Card>
+            <Navbar fixed="bottom">
+                <Navbar.Text className="mx-auto navbar-text">
+                    DBCampus Project 2021
+                </Navbar.Text>
+            </Navbar>
+        </div>
+    )
+}
+export default Access;
