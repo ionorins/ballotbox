@@ -3,7 +3,8 @@
     min-width: 100vw;
     display: flex;
     flex-direction: column;
-    background-color: palegreen;
+    background: rgb(104,38,110);
+    background: linear-gradient(90deg, rgba(104,38,110,1) 0%, rgba(127,237,255,1) 100%);
     align-content: center;
     justify-content: center;
     text-align: center;
@@ -30,11 +31,37 @@
 }
 
 .navbar {
-    background-color:white;
-    opacity: 50%;
     color: black;
 }
 
-.clickable-link {
+.clickable-link, .clickable-link:active, .clickable-link:hover {
     cursor:pointer;
+    color:black;
+    text-decoration:none;
+}
+
+.tab-bar {
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+.access-card {
+    background-color: transparent !important;
+    border: none !important;
+}
+.access-card-body {
+    background-color: white !important;
+    border-radius: .75rem;
+}
+.custom-nav-tabs {
+    background-color: rgb(128,128,128);
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+}
+
+.custom-nav-links {
+    color: white;
+}
+.custom-nav-links:active {
+    color: black;
 }

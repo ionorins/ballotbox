@@ -21,8 +21,6 @@ const Login = () => {
       };
 
     return (
-        <div className="container">
-            <h1 className="display-1 clickable-link" onClick={() => window.location.reload()}>BallotBox🗳️</h1>
             <Form className="forms mx-auto" onSubmit={handleSubmit}>
                 <InputGroup controlId="user" className="my-4" size="lg">
                     <InputGroup.Prepend>
@@ -53,19 +51,13 @@ const Login = () => {
                     <InputGroup.Text>
                             <FiLock />
                         </InputGroup.Text>
-                    </InputGroup.Prepend>   
+                    </InputGroup.Prepend>
                     <Form.Control type="password" placeholder="Confirm Password"/>
                 </InputGroup>
             <Button type="submit" className="buttons my-4">
                 Sign up
             </Button>
             </Form>
-            <Navbar fixed="bottom">
-                <Navbar.Text className="mx-auto footer-text">
-                    BallotBox © 2021
-                </Navbar.Text>
-            </Navbar>
-        </div>
     )
 }
 export default Login;

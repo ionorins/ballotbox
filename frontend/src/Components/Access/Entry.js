@@ -5,8 +5,7 @@ import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import { FiLink } from "react-icons/fi";
 import Home from '../Home.js';
-import Login from './Login.js';
-import Signup from './Signup.js';
+import {Link} from "react-router-dom";
 
 const Entry = ({ setPage }) => {
 
@@ -17,6 +16,8 @@ const Entry = ({ setPage }) => {
         event.stopPropagation();
         setPage(<Home roomCode={roomCode}/>)
       };
+
+
 
     return (
         <div className="container">
@@ -31,12 +32,12 @@ const Entry = ({ setPage }) => {
                     <Form.Control size="lg" placeholder="Event Code" maxLength="5" />
                 </InputGroup>
                 <Button className="buttons my-2" type="submit">
-                Submit
+                Join
                 </Button>
             </Form>
             <Navbar fixed="bottom">
                 <Navbar.Text className="mx-auto navbar-text">
-                    Want to host an event? <a className="clickable-link" onClick={() => setPage(<Login />)}>Login</a> or <a className="clickable-link" onClick={() => setPage(<Signup />)}>sign up</a>
+                    <Link to="/host" className="clickable-link">Hosting an event? Click here</Link>
                 </Navbar.Text>
             </Navbar>
         </div>

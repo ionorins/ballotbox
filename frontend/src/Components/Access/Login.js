@@ -6,8 +6,11 @@ import InputGroup from "react-bootstrap/InputGroup";
 import {FiUser, FiLock, FiMail} from "react-icons/fi";
 import Home from '../Home.js';
 import {sha256} from 'js-sha256';
+import Card from "react-bootstrap/Card";
+import Nav from "react-bootstrap/Nav";
 
 const Login = () => {
+
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
@@ -20,36 +23,28 @@ const Login = () => {
       };
 
     return (
-        <div className="container">
-            <h1 className="display-1 clickable-link" onClick={() => window.location.reload()}>BallotBox🗳️</h1>
             <Form className="forms mx-auto" onSubmit={handleSubmit}>
-                <InputGroup controlId="email" className="my-2">
+                <InputGroup controlId="email" className="my-4" size="lg">
                     <InputGroup.Prepend>
                         <InputGroup.Text>
                             <FiMail/>
                         </InputGroup.Text>
                     </InputGroup.Prepend>
-                    <Form.Control type="email" placeholder="Email" size="lg" />
+                    <Form.Control type="email" placeholder="Email"/>
                 </InputGroup>
 
-                <InputGroup controlId="password" className="my-2">
+                <InputGroup controlId="password" className="my-4" size="lg">
                     <InputGroup.Prepend>
                         <InputGroup.Text>
                             <FiLock/>
                         </InputGroup.Text>
                     </InputGroup.Prepend>
-                    <Form.Control type="password" placeholder="Password" size="lg" />
+                    <Form.Control type="password" placeholder="Password"/>
                 </InputGroup>
             <Button variant="primary" type="submit" className="buttons my-2">
                 Log in
             </Button>
             </Form>
-            <Navbar fixed="bottom">
-                <Navbar.Text className="mx-auto footer-text">
-                    BallotBox © 2021
-                </Navbar.Text>
-            </Navbar>
-        </div>
     )
 }
 export default Login;
