@@ -1,5 +1,6 @@
 import '../App.css';
 import { useHistory } from "react-router-dom";
+import FormBuilder from "./FormBuilder/FormBuilder";
 
 const Host = ({token}) => {
 
@@ -15,7 +16,7 @@ const Host = ({token}) => {
 
     return (
         <div className="container">
-            {JSON.parse(localStorage.getItem('token'))}
+            <FormBuilder />
         </div>
     )
 }
