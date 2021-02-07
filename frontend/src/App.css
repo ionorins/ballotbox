@@ -82,3 +82,6 @@
 .builder-option {
     cursor: pointer;
 }
+.form-builder-col {
+    width: 100%;
+}

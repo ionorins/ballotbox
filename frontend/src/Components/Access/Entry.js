@@ -4,17 +4,20 @@ import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import { FiLink } from "react-icons/fi";
-import Home from '../Home.js';
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
+import Event from "../Event";
 
-const Entry = ({ setPage }) => {
+const Entry = ({ setToken }) => {
+
+    const history = useHistory();
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
         const roomCode = event.target[0].value;
         event.preventDefault();
         event.stopPropagation();
-        setPage(<Home roomCode={roomCode}/>)
+        setToken(roomCode);
+        history.push("/event");
       };
 
 

@@ -1,13 +1,9 @@
 import '../../App.css';
 import Form from "react-bootstrap/Form";
-import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import {FiUser, FiLock, FiMail} from "react-icons/fi";
-import Home from '../Home.js';
 import {sha256} from 'js-sha256';
-import Card from "react-bootstrap/Card";
-import Nav from "react-bootstrap/Nav";
 import { useHistory } from "react-router-dom";
 
 const Login = ({setToken}) => {

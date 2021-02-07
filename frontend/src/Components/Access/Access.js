@@ -1,5 +1,4 @@
 import '../../App.css';
-import {sha256} from 'js-sha256';
 import React, {useEffect, useState} from "react";
 import Login from "./Login.js";
 import Card from "react-bootstrap/Card";

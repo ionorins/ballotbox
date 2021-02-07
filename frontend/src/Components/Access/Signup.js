@@ -1,10 +1,8 @@
 import '../../App.css';
 import Form from "react-bootstrap/Form";
-import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import {FiUser, FiLock, FiMail} from "react-icons/fi";
-import Home from '../Home.js';
 import {sha256} from 'js-sha256';
 
 const Login = () => {

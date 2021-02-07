@@ -4,10 +4,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import ListGroup from "react-bootstrap/ListGroup";
 import {useState} from "react";
-import Home from "../Home";
 import FreeText from "./Types/FreeText";
 import MultipleChoice from "./Types/MultipleChoice";
 import MoodSlider from "./Types/MoodSlider";
+import Accordion from "react-bootstrap/Accordion";
 
 const FormBuilder = () => {
 
@@ -20,28 +20,41 @@ const FormBuilder = () => {
     const questions = <ListGroup.Item>Test</ListGroup.Item>
 
     return (
-            <Card className="main-card mx-auto">
-                <Row className="builder-row">
-                    <Col lg={3}className="builder-cols-left">
-                        <ListGroup variant="flush">
-                            <ListGroup.Item className="font-weight-bold">Form Modules</ListGroup.Item>
-                            <ListGroup.Item className="builder-option" onClick={() => select(<FreeText/>)}>Free Text</ListGroup.Item>
-                            <ListGroup.Item className="builder-option" onClick={() => select(<MultipleChoice/>)}>Multiple Choice</ListGroup.Item>
-                            <ListGroup.Item className="builder-option" onClick={() => select(<MoodSlider />)}>Mood Slider</ListGroup.Item>
-                            <ListGroup.Item className="builder-option" onClick={() => select(4)}>Option 4</ListGroup.Item>
-                        </ListGroup>
-                    </Col>
-                    <Col lg={6} className="align-self-center">
-                        { option }
-                    </Col>
-                    <Col lg={3} className="builder-cols-right">
-                        <ListGroup variant="flush" className="option-lists">
-                            <ListGroup.Item className="font-weight-bold">Form Preview</ListGroup.Item>
-                            { questions }
-                        </ListGroup>
-                    </Col>
-                </Row>
-            </Card>
+        <Card className="main-card mx-auto">
+            <h1>Form Modules</h1>
+            <Accordion>
+                <Card>
+                    <Card.Header>
+                        <Accordion.Toggle eventKey="0">
+                            Free Text
+                        </Accordion.Toggle>
+                    </Card.Header>
+                    <Accordion.Collapse eventKey="0">
+                        <FreeText/>
+                    </Accordion.Collapse>
+                </Card>
+                <Card>
+                    <Card.Header>
+                        <Accordion.Toggle eventKey="1">
+                            Multiple Choice
+                        </Accordion.Toggle>
+                    </Card.Header>
+                    <Accordion.Collapse eventKey="1">
+                        <MultipleChoice/>
+                    </Accordion.Collapse>
+                </Card>
+                <Card>
+                    <Card.Header>
+                        <Accordion.Toggle eventKey="2">
+                            Mood Slider
+                        </Accordion.Toggle>
+                    </Card.Header>
+                    <Accordion.Collapse eventKey="2">
+                        <MoodSlider/>
+                    </Accordion.Collapse>
+                </Card>
+            </Accordion>
+        </Card>
     )
 }
 export default FormBuilder;
