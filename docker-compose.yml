@@ -40,3 +40,9 @@ services:
       - 8000:80
     volumes:
       - ./backend:/app
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: my-rabbit
+    ports:
+      - 5672:5672
+      - 15672:15672
