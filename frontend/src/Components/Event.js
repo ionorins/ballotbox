@@ -12,7 +12,8 @@ const Event = ({token}) => {
 
     return (
         <div className="container">
-            <Card className="mx-auto access-card">
+            <h1>BallotBox 🗳️</h1>
+            <Card className="access-card">
                 <Card.Header style={{borderBottom: "none", backgroundColor: "transparent",}}>
                     <Nav variant="tabs" className="tab-bar" defaultActiveKey="#comments">
                         <Nav.Item className="custom-nav-tabs mx-1">

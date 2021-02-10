@@ -8,9 +8,7 @@
     align-content: center;
     justify-content: center;
     text-align: center;
-}
-.forms {
-    max-width: 100vh;
+    padding: 0 !important;
 }
 .buttons {
     background-color: black !important;
@@ -20,14 +18,6 @@
 .buttons:hover {
     background-color:white !important;
     color: black !important;
-}
-
-.main-card {
-    background-color:white;
-    color: black;
-    max-width: 100vw;
-    min-width: 50vw !important;
-    min-height: 50vh;
 }
 
 .navbar {
@@ -48,6 +38,16 @@
 .access-card {
     background-color: transparent !important;
     border: none !important;
+    width: 100%;
+    max-width: 100vh;
+    margin-left: auto;
+    margin-right: auto;
+}
+.main-card {
+    max-width: 100vh;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 .access-card-body {
     background-color: white !important;
@@ -84,4 +84,26 @@
 }
 .form-builder-col {
     width: 100%;
+}
+.comment-list {
+    text-align: left;
+}
+.comment-likes {
+    text-align: right;
+}
+.like-button {
+    background-color: transparent !important;
+    color: blue !important;
+    border: none !important;
+    padding: .2rem .5rem !important;
+}
+.like-button:active {
+    color: purple !important;
+}
+.comment-append {
+    background: none !important;
+    border-left: none !important;
+}
+.builder-toggle {
+    border: none;
 }

@@ -1,6 +1,7 @@
 import '../App.css';
 import { useHistory } from "react-router-dom";
 import FormBuilder from "./FormBuilder/FormBuilder";
+import Card from "react-bootstrap/Card";
 
 const Host = ({token}) => {
 
@@ -16,8 +17,14 @@ const Host = ({token}) => {
 
     return (
         <div className="container">
-            <FormBuilder />
+            <Card className="main-card">
+                <Card.Body className="access-card-body">
+
+                    <FormBuilder />
+                </Card.Body>
+
+            </Card>
         </div>
-    )
+    );
 }
 export default Host;

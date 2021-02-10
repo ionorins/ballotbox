@@ -34,8 +34,7 @@ const FreeText = () => {
 
 
     return (
-        <Form className="forms mx-auto">
-            <h1>Multiple Choice</h1>
+        <Form className="px-3 mx-auto">
             <InputGroup className="my-4" size="lg">
                 <Form.Control type="text" placeholder="Question prompt"/>
             </InputGroup>
@@ -44,7 +43,7 @@ const FreeText = () => {
                 <Button  onClick={() => incrementOptions()}  size="sm" variant="light">Extra Option</Button>
             </InputGroup>
             <Button variant="primary" type="submit" className="buttons my-2">
-                Add
+                Send
             </Button>
         </Form>
     )
