@@ -1,6 +1,6 @@
 import pika
 import uuid
-import ast
+import json
 
 
 class DeepMojiRpcClient(object):
@@ -36,7 +36,7 @@ class DeepMojiRpcClient(object):
             body=str(n))
         while self.response is None:
             self.connection.process_data_events()
-        return ast.literal_eval(self.response)
+        return json.loads(self.response)
 
 
 analyse = DeepMojiRpcClient().call
