@@ -4,6 +4,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from config import settings
 
 from apps.todo.routers import router as todo_router
+from apps.auth.routers import router as auth_router
 
 app = FastAPI()
 
@@ -13,7 +14,8 @@ async def shutdown_db_client():
 
 app.mongodb_client = AsyncIOMotorClient(settings.DB_URL)
 app.mongodb = app.mongodb_client[settings.DB_NAME]
-app.include_router(todo_router, tags=["tasks"], prefix="/task")
+# app.include_router(todo_router, tags=["tasks"], prefix="/task")
+app.include_router(auth_router, tags=["auth"])
 
 
 if __name__ == "__main__":
