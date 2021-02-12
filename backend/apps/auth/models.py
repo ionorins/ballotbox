@@ -31,7 +31,3 @@ class HostSessionModel(BaseModel):
 
     class Config:
         allow_population_by_field_name = True
-
-class HostLoginModel(BaseModel):
-    username: EmailStr
-    password: bytes

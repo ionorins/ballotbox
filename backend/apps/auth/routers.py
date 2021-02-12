@@ -7,10 +7,10 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from .models import HostModel, HostSessionModel
 
 router = APIRouter()
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 
-@router.post("/create", response_description="Create user")
+@router.post("/create")
 async def create(request: Request, host: HostModel = Body(...)):
     # check if email already exists
     check = await request.app.mongodb["hosts"].find_one({
@@ -29,7 +29,7 @@ async def create(request: Request, host: HostModel = Body(...)):
 
     return JSONResponse(status_code=status.HTTP_201_CREATED, content="ok")
 
-@router.post("/token")
+@router.post("/login")
 async def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends()):
     # check email and password
     check = await request.app.mongodb["hosts"].find_one({
@@ -51,7 +51,7 @@ async def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends
 
     return JSONResponse(status_code=status.HTTP_201_CREATED, content=session)
 
-@router.get("/logout")
+@router.post("/logout")
 async def logout(request: Request, access_token: str = Depends(oauth2_scheme)):
     # delete session from database
     await request.app.mongodb["hostSessions"].delete_one({
