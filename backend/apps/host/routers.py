@@ -51,7 +51,7 @@ async def create_event(request: Request, access_token: str = Depends(oauth2_sche
 
 
 @router.get("/events")
-async def create_event(request: Request, access_token: str = Depends(oauth2_scheme)):
+async def get_events(request: Request, access_token: str = Depends(oauth2_scheme)):
     host = await get_host_profile(request, access_token)
 
     events = []
@@ -66,7 +66,7 @@ async def create_event(request: Request, access_token: str = Depends(oauth2_sche
 
 
 @router.get("/event/{code}")
-async def create_event(code: str, request: Request, access_token: str = Depends(oauth2_scheme)):
+async def get_event(code: str, request: Request, access_token: str = Depends(oauth2_scheme)):
     host = await get_host_profile(request, access_token)
 
     event = await request.app.mongodb["events"].find_one({
@@ -83,7 +83,7 @@ async def create_event(code: str, request: Request, access_token: str = Depends(
 
 
 @router.put("/event/{code}")
-async def update_task(code: str, request: Request, task: UpdateEventModel = Body(...), access_token: str = Depends(oauth2_scheme)):
+async def update_event(code: str, request: Request, task: UpdateEventModel = Body(...), access_token: str = Depends(oauth2_scheme)):
     host = await get_host_profile(request, access_token)
 
     event = {k: v for k, v in task.dict().items() if v is not None}
