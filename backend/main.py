@@ -1,14 +1,15 @@
-from fastapi import FastAPI
 import uvicorn
+from fastapi import FastAPI
 from motor.motor_asyncio import AsyncIOMotorClient
-from config import settings
 
-from apps.todo.routers import router as todo_router
+from apps.attendee.routers import router as attendee_router
 from apps.auth.routers import router as auth_router
 from apps.host.routers import router as host_router
-from apps.attendee.routers import router as attendee_router
+from apps.todo.routers import router as todo_router
+from config import settings
 
 app = FastAPI()
+
 
 @app.on_event("shutdown")
 async def shutdown_db_client():

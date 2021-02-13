@@ -1,10 +1,12 @@
-from fastapi.param_functions import Body
-from .models import AttendeeModel, CommentModel, PostCommentModel
+from sys import maxsize
+
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.encoders import jsonable_encoder
+from fastapi.param_functions import Body
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer
-from sys import maxsize
+
+from .models import AnswerModel, AttendeeModel, CommentModel, PostCommentModel
 
 router = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="attendee/login/{event}")
@@ -19,7 +21,18 @@ async def get_attendee_profile(request, access_token):
 
     if attendee is None:
         raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN, detail="Not allowed")
+            status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
+
+    if attendee["event"] == "{event}":
+        return attendee
+
+    event = await request.app.mongodb["events"].find_one({
+        "code": attendee["event"]
+    })
+
+    if event is None or not event["active"]:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
 
     return attendee
 
@@ -37,17 +50,36 @@ async def get_alias(request, access_token):
 
     return attendee["alias"]
 
+
 async def check_event_exists(request, code):
-    if code == '{event}':
+    if code == "{event}":
         return
 
     event = await request.app.mongodb["events"].find_one({
         "code": code
     })
 
-    if event is None:
+    if event is None or not event["active"]:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Event not found")
+
+
+async def check_event(request, access_token, code):
+    if code == "{event}":
+        return
+
+    attendee = await request.app.mongodb["attendees"].find_one({
+        "access_token": access_token
+    })
+
+    event = await request.app.mongodb["events"].find_one({
+        "code": code
+    })
+
+    if attendee is None or event is None or not event["active"]:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
+
 
 @router.post("/login/{event}")
 async def login(request: Request, event: str):
@@ -75,11 +107,12 @@ async def logout(request: Request, access_token: str = Depends(oauth2_scheme)):
 
 
 @router.post("/alias/{alias}")
-async def logout(alias: str, request: Request, access_token: str = Depends(oauth2_scheme)):
+async def change_alias(alias: str, request: Request, access_token: str = Depends(oauth2_scheme)):
     await get_attendee_profile(request, access_token)
 
-    if alias == 'Host':
-        alias = 'Not host'
+    if alias == "Host":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="Alias not allowed")
 
     await request.app.mongodb["attendees"].update_one({
         "access_token": access_token
@@ -99,8 +132,8 @@ async def comment(request: Request, access_token: str = Depends(oauth2_scheme), 
     # create comment
     new_comment = CommentModel()
     new_comment.content = comment.content
-    new_comment.author = attendee['access_token']
-    new_comment.event = attendee['event']
+    new_comment.author = attendee["access_token"]
+    new_comment.event = attendee["event"]
     new_comment = jsonable_encoder(new_comment)
 
     # save comment
@@ -128,7 +161,7 @@ async def get_comments(request: Request, access_token: str = Depends(oauth2_sche
 
 
 @router.post("/comment/like/{id}")
-async def get_comments(id: str, request: Request, access_token: str = Depends(oauth2_scheme)):
+async def like_comment(id: str, request: Request, access_token: str = Depends(oauth2_scheme)):
     attendee = await get_attendee_profile(request, access_token)
 
     comment = await request.app.mongodb["comments"].find_one({
@@ -149,6 +182,45 @@ async def get_comments(id: str, request: Request, access_token: str = Depends(oa
         "_id": id
     }, {
         "$set": comment
+    })
+
+    return JSONResponse(status_code=status.HTTP_200_OK, content="ok")
+
+
+@router.get("/polls")
+async def get_polls(request: Request, access_token: str = Depends(oauth2_scheme)):
+    attendee = await get_attendee_profile(request, access_token)
+
+    polls = []
+
+    for poll in await request.app.mongodb["polls"].find({
+        "event": attendee["event"]
+    }).to_list(length=maxsize):
+        poll["id"] = poll.pop("_id")
+        polls.append(poll)
+
+    return JSONResponse(status_code=status.HTTP_200_OK, content=polls)
+
+
+@router.post("/poll/{id}/answer")
+async def answer(id: str, request: Request, access_token: str = Depends(oauth2_scheme), answer: AnswerModel = Body(...)):
+    attendee = await get_attendee_profile(request, access_token)
+
+    poll = await request.app.mongodb["polls"].find_one({
+        "_id": id,
+        "event": attendee["event"]
+    })
+
+    if poll is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
+
+    poll["answers"].append(answer.content)
+
+    await request.app.mongodb["polls"].update_one({
+        "_id": id
+    }, {
+        "$set": poll
     })
 
     return JSONResponse(status_code=status.HTTP_200_OK, content="ok")

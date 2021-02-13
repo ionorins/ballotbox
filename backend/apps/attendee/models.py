@@ -1,10 +1,12 @@
-from typing import List, Optional
-
-from pydantic import BaseModel, Field
 import secrets
 from time import time
+from typing import List
 
-id_factory = lambda : secrets.token_urlsafe(64)
+from pydantic import BaseModel, Field
+
+
+def id_factory(): return secrets.token_urlsafe(64)
+
 
 class AttendeeModel(BaseModel):
     access_token: str = Field(index=True, default_factory=id_factory)
@@ -14,8 +16,9 @@ class AttendeeModel(BaseModel):
     class Config:
         allow_population_by_field_name = True
 
+
 class CommentModel(BaseModel):
-    id: str = Field(index=True, default_factory=id_factory, alias='_id')
+    id: str = Field(index=True, default_factory=id_factory, alias="_id")
     content: str = Field(default=None)
     event: str = Field(index=True, default=None)
     author: str = Field(default=None)
@@ -27,5 +30,10 @@ class CommentModel(BaseModel):
     class Config:
         allow_population_by_field_name = True
 
+
 class PostCommentModel(BaseModel):
     content: str
+
+
+class AnswerModel(BaseModel):
+    content: dict

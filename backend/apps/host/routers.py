@@ -1,11 +1,14 @@
-from .models import EventModel, PollModel, PostPollModel, UpdateEventModel, CommentModel, PostCommentModel
+import copy
+from sys import maxsize
+from time import time
+
 from fastapi import APIRouter, Body, Depends, HTTPException, Request, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer
-from time import time
-from sys import maxsize
-import copy
+
+from .models import (CommentModel, EventModel, PollModel, PostCommentModel,
+                     PostPollModel, UpdateEventModel)
 
 router = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
@@ -33,7 +36,7 @@ async def get_host_profile(request, access_token):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN, detail="Not allowed")
 
-    del host['_id']
+    del host["_id"]
 
     return host
 
@@ -110,14 +113,14 @@ async def get_event(code: str, request: Request, access_token: str = Depends(oau
 
 
 @router.put("/event/{code}")
-async def update_event(code: str, request: Request, task: UpdateEventModel = Body(...), access_token: str = Depends(oauth2_scheme)):
+async def update_event(code: str, request: Request, new_event: UpdateEventModel = Body(...), access_token: str = Depends(oauth2_scheme)):
     host = await get_host_profile(request, access_token)
 
-    event = {k: v for k, v in task.dict().items() if v is not None}
+    event = {k: v for k, v in new_event.dict().items() if v is not None}
 
     if len(event) >= 1:
         update_result = await request.app.mongodb["events"].update_one(
-            {"code": code, "host": host['username']}, {"$set": event}
+            {"code": code, "host": host["username"]}, {"$set": event}
         )
 
         if update_result.modified_count == 1:
@@ -172,6 +175,7 @@ async def get_comments(code: str, request: Request, access_token: str = Depends(
 
     return JSONResponse(status_code=status.HTTP_200_OK, content=comments)
 
+
 @router.post("/event/{code}/poll")
 async def create_poll(code: str, request: Request, access_token: str = Depends(oauth2_scheme), poll: PostPollModel = Body(...)):
     host = await get_host_profile(request, access_token)
@@ -205,3 +209,28 @@ async def get_polls(code: str, request: Request, access_token: str = Depends(oau
         polls.append(poll)
 
     return JSONResponse(status_code=status.HTTP_200_OK, content=polls)
+
+
+@router.put("/event/{code}/poll/{id}")
+async def update_poll(code: str, id: str, request: Request, new_poll: PostPollModel = Body(...), access_token: str = Depends(oauth2_scheme)):
+    host = await get_host_profile(request, access_token)
+    await check_event(request, host["username"], code)
+
+    # check poll exists
+    poll = await request.app.mongodb["polls"].find_one({
+        "_id": id,
+        "event": code
+    })
+
+    if poll is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
+                            detail="Event not found")
+
+    # update poll
+    poll["content"] = new_poll.content
+
+    await request.app.mongodb["polls"].update_one(
+        {"_id": id}, {"$set": poll}
+    )
+
+    return JSONResponse(status_code=status.HTTP_200_OK, content="ok")
