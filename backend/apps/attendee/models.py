@@ -8,8 +8,8 @@ id_factory = lambda : secrets.token_urlsafe(64)
 
 class AttendeeModel(BaseModel):
     access_token: str = Field(index=True, default_factory=id_factory)
-    event: Optional[str]
-    alias: Optional[str]
+    event: str = Field(default=None)
+    alias: str = Field(default=None)
 
     class Config:
         allow_population_by_field_name = True

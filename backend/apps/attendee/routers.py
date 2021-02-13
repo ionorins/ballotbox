@@ -25,6 +25,9 @@ async def get_attendee_profile(request, access_token):
 
 
 async def get_alias(request, access_token):
+    if access_token == "Host":
+        return "Host"
+
     attendee = await request.app.mongodb["attendees"].find_one({
         "access_token": access_token
     })
@@ -34,9 +37,22 @@ async def get_alias(request, access_token):
 
     return attendee["alias"]
 
+async def check_event_exists(request, code):
+    if code == '{event}':
+        return
+
+    event = await request.app.mongodb["events"].find_one({
+        "code": code
+    })
+
+    if event is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Event not found")
 
 @router.post("/login/{event}")
 async def login(request: Request, event: str):
+    await check_event_exists(request, event)
+
     # generate attendee
     attendee = AttendeeModel()
     attendee.event = event
@@ -61,6 +77,9 @@ async def logout(request: Request, access_token: str = Depends(oauth2_scheme)):
 @router.post("/alias/{alias}")
 async def logout(alias: str, request: Request, access_token: str = Depends(oauth2_scheme)):
     await get_attendee_profile(request, access_token)
+
+    if alias == 'Host':
+        alias = 'Not host'
 
     await request.app.mongodb["attendees"].update_one({
         "access_token": access_token

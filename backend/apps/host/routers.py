@@ -1,4 +1,4 @@
-from .models import EventModel, UpdateEventModel
+from .models import EventModel, PollModel, PostPollModel, UpdateEventModel, CommentModel, PostCommentModel
 from fastapi import APIRouter, Body, Depends, HTTPException, Request, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
@@ -14,6 +14,9 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 
 async def get_host_profile(request, access_token):
+    if access_token == "Host":
+        return "Host"
+
     session = await request.app.mongodb["hostSessions"].find_one({
         "access_token": access_token
     })
@@ -33,6 +36,30 @@ async def get_host_profile(request, access_token):
     del host['_id']
 
     return host
+
+
+async def get_alias(request, access_token):
+    attendee = await request.app.mongodb["attendees"].find_one({
+        "access_token": access_token
+    })
+
+    if attendee is None:
+        return None
+
+    return attendee["alias"]
+
+
+async def check_event(request, host, code):
+    if code == "{event}":
+        return
+
+    event = await request.app.mongodb["events"].find_one({
+        "code": code
+    })
+
+    if event is None or event["host"] != host:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Event not found")
 
 
 @router.post("/event")
@@ -106,3 +133,75 @@ async def update_event(code: str, request: Request, task: UpdateEventModel = Bod
 
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                         detail="Event not found")
+
+
+@router.post("/event/{code}/comment")
+async def comment(code: str, request: Request, access_token: str = Depends(oauth2_scheme), comment: PostCommentModel = Body(...)):
+    host = await get_host_profile(request, access_token)
+
+    await check_event(request, host["username"], code)
+
+    # create comment
+    new_comment = CommentModel()
+    new_comment.content = comment.content
+    new_comment.author = "Host"
+    new_comment.event = code
+    new_comment = jsonable_encoder(new_comment)
+
+    # save comment
+    await request.app.mongodb["comments"].insert_one(new_comment)
+
+    return JSONResponse(status_code=status.HTTP_200_OK, content="ok")
+
+
+@router.get("/event/{code}/comment")
+async def get_comments(code: str, request: Request, access_token: str = Depends(oauth2_scheme)):
+    host = await get_host_profile(request, access_token)
+
+    await check_event(request, host["username"], code)
+
+    comments = []
+
+    for comment in await request.app.mongodb["comments"].find({
+        "event": code
+    }).to_list(length=maxsize):
+        comment["id"] = comment.pop("_id")
+        comment["author"] = await get_alias(request, comment["author"])
+        comment["likes"] = len(comment["likes"])
+        comments.append(comment)
+
+    return JSONResponse(status_code=status.HTTP_200_OK, content=comments)
+
+@router.post("/event/{code}/poll")
+async def create_poll(code: str, request: Request, access_token: str = Depends(oauth2_scheme), poll: PostPollModel = Body(...)):
+    host = await get_host_profile(request, access_token)
+
+    await check_event(request, host["username"], code)
+
+    # create comment
+    new_poll = PollModel()
+    new_poll.content = poll.content
+    new_poll.event = code
+    new_poll = jsonable_encoder(new_poll)
+
+    # save comment
+    await request.app.mongodb["polls"].insert_one(new_poll)
+
+    return JSONResponse(status_code=status.HTTP_200_OK, content=new_poll["_id"])
+
+
+@router.get("/event/{code}/polls")
+async def get_polls(code: str, request: Request, access_token: str = Depends(oauth2_scheme)):
+    host = await get_host_profile(request, access_token)
+
+    await check_event(request, host["username"], code)
+
+    polls = []
+
+    for poll in await request.app.mongodb["polls"].find({
+        "event": code
+    }).to_list(length=maxsize):
+        poll["id"] = poll.pop("_id")
+        polls.append(poll)
+
+    return JSONResponse(status_code=status.HTTP_200_OK, content=polls)
