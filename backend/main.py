@@ -12,8 +12,6 @@ from config import settings
 app = FastAPI()
 
 origins = [
-    "http://localhost:8000",
-    "http://fast:80",
     "http://localhost:3000",
     "http://react:3000"
 ]

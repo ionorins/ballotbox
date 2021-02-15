@@ -12,13 +12,18 @@ id_factory = lambda : secrets.token_urlsafe(64)
 class EventModel(BaseModel):
     code: str = Field(index=True, default_factory=event_code_factory)
     host: Optional[str] = Field(index=True)
+    name: Optional[str] = Field(default=None)
     active: bool = Field(default=True)
 
     class Config:
         allow_population_by_field_name = True
 
+class PostEventModel(BaseModel):
+    name: str = Field(...)
+
 class UpdateEventModel(BaseModel):
     active: bool = Field(default=True)
+    name: str = Field(...)
 
     class Config:
         allow_population_by_field_name = True
