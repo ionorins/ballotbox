@@ -42,6 +42,9 @@ async def get_host_profile(request, access_token):
 
 
 async def get_alias(request, access_token):
+    if access_token == "Host":
+        return {"id": "Host", "name": "Host"}
+
     attendee = await request.app.mongodb["attendees"].find_one({
         "access_token": access_token
     })
@@ -49,7 +52,7 @@ async def get_alias(request, access_token):
     if attendee is None:
         return None
 
-    return attendee["alias"]
+    return {"id": str(attendee["_id"]), "name": attendee["alias"]}
 
 
 async def check_event(request, host, code):
