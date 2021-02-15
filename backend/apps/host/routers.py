@@ -234,3 +234,19 @@ async def update_poll(code: str, id: str, request: Request, new_poll: PostPollMo
     )
 
     return JSONResponse(status_code=status.HTTP_200_OK, content="ok")
+
+@router.get("/event/{code}/attendees")
+async def get_attendees(code: str, request: Request, access_token: str = Depends(oauth2_scheme)):
+    host = await get_host_profile(request, access_token)
+
+    await check_event(request, host["username"], code)
+
+    attendees = []
+
+    for attendee in await request.app.mongodb["attendees"].find({
+        "event": code
+    }).to_list(length=maxsize):
+        attendee = await get_alias(request, attendee["access_token"])
+        attendees.append(attendee)
+
+    return JSONResponse(status_code=status.HTTP_200_OK, content=attendees)
