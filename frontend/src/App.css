@@ -45,6 +45,7 @@
 }
 .main-card {
     max-width: 100vh;
+    min-height: 50vh;
     width: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -106,4 +107,9 @@
 }
 .builder-toggle {
     border: none;
+}
+.event-select-button {
+    color: dodgerblue !important;
+    background: none !important;
+    border: none !important;
 }

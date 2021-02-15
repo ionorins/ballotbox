@@ -12,7 +12,7 @@ const Access = ({setToken}) => {
     let history = useHistory();
 
     if (JSON.parse(localStorage.getItem('loggedIn')) === "true") {
-        history.push("/control")
+        history.push("/host")
     }
 
     return (

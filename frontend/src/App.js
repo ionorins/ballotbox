@@ -4,7 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Route, Switch, BrowserRouter as Router} from "react-router-dom";
 import Access from "./Components/Access/Access";
 import Host from "./Components/Host";
-import Event from "./Components/Event";
+import Event from "./Components/Attendee/Event";
+import ControlPanel from "./Components/Host/ControlPanel";
 
 function App() {
     const [token, setToken] = useState();
@@ -15,10 +16,13 @@ function App() {
             <Route exact path="/">
                 <Entry setToken={setToken}/>
             </Route>
-            <Route path="/host">
+            <Route path="/login">
                 <Access setToken={setToken}/>
             </Route>
-            <Route path="/control">
+            <Route path="/host/event/:id">
+                <ControlPanel />
+            </Route>
+            <Route path="/host">
                 <Host token={token}/>
             </Route>
             <Route path="/event/">

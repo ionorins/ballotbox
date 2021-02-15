@@ -5,7 +5,7 @@ import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import { FiLink } from "react-icons/fi";
 import {Link, useHistory} from "react-router-dom";
-import Event from "../Event";
+import Event from "../Attendee/Event";
 
 const Entry = ({ setToken }) => {
 

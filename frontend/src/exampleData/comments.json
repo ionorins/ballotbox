@@ -29,54 +29,6 @@
       "author": "E Williams",
       "content": "Hello",
       "likes": 5
-    },
-    {
-      "id": 2,
-      "author": "B Jones",
-      "content": "Stimulate your mind as you test your typing speed with this standard English paragraph typing test. Watch your typing speed and accuracy increase as you learn about a variety of new topics! Over 40 typing test selections available.",
-      "likes": 2
-    },
-    {
-      "id": 3,
-      "author": "C Davis",
-      "content": "Testing",
-      "likes": 3
-    },
-    {
-      "id": 4,
-      "author": "D Adams",
-      "content": "123456",
-      "likes": 4
-    },
-    {
-      "id": 5,
-      "author": "E Williams",
-      "content": "Hello",
-      "likes": 5
-    },
-    {
-      "id": 2,
-      "author": "B Jones",
-      "content": "Stimulate your mind as you test your typing speed with this standard English paragraph typing test. Watch your typing speed and accuracy increase as you learn about a variety of new topics! Over 40 typing test selections available.",
-      "likes": 2
-    },
-    {
-      "id": 3,
-      "author": "C Davis",
-      "content": "Testing",
-      "likes": 3
-    },
-    {
-      "id": 4,
-      "author": "D Adams",
-      "content": "123456",
-      "likes": 4
-    },
-    {
-      "id": 5,
-      "author": "E Williams",
-      "content": "Hello",
-      "likes": 5
     }
   ]
 }
