@@ -18,8 +18,8 @@ const Login = ({setToken}) => {
         event.preventDefault();
         event.stopPropagation();
         setToken(email);
-        localStorage.setItem('token', JSON.stringify(email));
-        localStorage.setItem('loggedIn', JSON.stringify("true"));
+        //localStorage.setItem('token', JSON.stringify(email));
+        //localStorage.setItem('loggedIn', JSON.stringify("true"));
         history.push("/control");
       };
 

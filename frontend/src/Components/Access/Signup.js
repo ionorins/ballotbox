@@ -5,17 +5,31 @@ import InputGroup from "react-bootstrap/InputGroup";
 import {FiUser, FiLock, FiMail} from "react-icons/fi";
 import {sha256} from 'js-sha256';
 
-const Login = () => {
+const Signup = () => {
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
         const email = event.target[0].value;
         const pass = sha256(event.target[1].value);
         // form validation
-        console.log(email);
-        console.log(pass);
         event.preventDefault();
         event.stopPropagation();
+        console.log("----");
+        fetch('http://localhost:8000/auth/create', {
+            method: 'POST',
+            body: JSON.stringify({
+                username: email,
+                password: pass,
+            }),
+        }).then((response) => {
+            if (response.status !== 200) {
+                console.log("400");
+            }
+            else {
+                alert("SUCES!!!");
+            }
+        });
+
       };
 
     return (
@@ -58,4 +72,4 @@ const Login = () => {
             </Form>
     )
 }
-export default Login;
+export default Signup;

@@ -17,7 +17,7 @@ const Host = ({token}) => {
     if (token == null) {
         const localToken = JSON.parse(localStorage.getItem('token'))
         if (localToken == null)
-            history.push("/host");
+            history.push("/login");
         else
             token = localStorage.getItem('token');
     }
