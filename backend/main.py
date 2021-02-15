@@ -1,6 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
 from motor.motor_asyncio import AsyncIOMotorClient
+from fastapi.middleware.cors import CORSMiddleware
 
 from apps.attendee.routers import router as attendee_router
 from apps.auth.routers import router as auth_router
@@ -9,6 +10,19 @@ from apps.todo.routers import router as todo_router
 from config import settings
 
 app = FastAPI()
+
+origins = [
+    "http://localhost:8000",
+    "https://fast:80",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.on_event("shutdown")
