@@ -5,9 +5,12 @@ import InputGroup from "react-bootstrap/InputGroup";
 import {FiUser, FiLock, FiMail} from "react-icons/fi";
 import {sha256} from 'js-sha256';
 import { useHistory } from "react-router-dom";
+import {useCookies, withCookies} from "react-cookie";
 
 const Login = ({setToken}) => {
     let history = useHistory();
+
+    const [cookies, setCookie] = useCookies(['access_token']);
 
     const handleSubmit = (event) => {
         const email = event.target[0].value;
@@ -23,19 +26,17 @@ const Login = ({setToken}) => {
             method: 'POST',
             body: form,
         }).then((response) => {
-            if (response.status === 201) {
-                setToken(email);
-                history.push("/host");
-
-            }
-            else {
+            if (response.status !== 201) {
                 alert("Incorrect details");
+                return;
             }
+            response.json().then((responseJson) => {
+                setCookie('access_token', responseJson["access_token"]);
+                history.push("/host");
+            })
         });
 
     };
-        //localStorage.setItem('token', JSON.stringify(email));
-        //localStorage.setItem('loggedIn', JSON.stringify("true"));
 
 
     return (
@@ -63,4 +64,4 @@ const Login = ({setToken}) => {
             </Form>
     )
 }
-export default Login;
+export default withCookies(Login);
