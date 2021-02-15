@@ -10,18 +10,33 @@ const Login = ({setToken}) => {
     let history = useHistory();
 
     const handleSubmit = (event) => {
-        const form = event.currentTarget;
         const email = event.target[0].value;
         const pass = sha256(event.target[1].value);
+        let form = new FormData();
+        form.append("username", email);
+        form.append("password", pass);
         console.log(email);
         console.log(pass);
         event.preventDefault();
         event.stopPropagation();
-        setToken(email);
+        fetch('http://localhost:8000/auth/login', {
+            method: 'POST',
+            body: form,
+        }).then((response) => {
+            if (response.status === 201) {
+                setToken(email);
+                history.push("/host");
+
+            }
+            else {
+                alert("Incorrect details");
+            }
+        });
+
+    };
         //localStorage.setItem('token', JSON.stringify(email));
         //localStorage.setItem('loggedIn', JSON.stringify("true"));
-        history.push("/control");
-      };
+
 
     return (
             <Form className="forms mx-auto" onSubmit={handleSubmit}>

@@ -9,8 +9,8 @@ const Signup = () => {
 
     const handleSubmit = (event) => {
         const form = event.currentTarget;
-        const email = event.target[0].value;
-        const pass = sha256(event.target[1].value);
+        const email = event.target[1].value;
+        const pass = sha256(event.target[2].value);
         // form validation
         event.preventDefault();
         event.stopPropagation();
@@ -23,10 +23,10 @@ const Signup = () => {
             }),
         }).then((response) => {
             if (response.status !== 200) {
-                console.log("400");
+                // redirect to login or log them in
             }
             else {
-                alert("SUCES!!!");
+                // do something
             }
         });
 

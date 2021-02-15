@@ -12,12 +12,24 @@ const Entry = ({ setToken }) => {
     const history = useHistory();
 
     const handleSubmit = (event) => {
-        const form = event.currentTarget;
         const roomCode = event.target[0].value;
+        let form = new FormData();
+
+        fetch('http://localhost:8000/attendee/login/'+roomCode, {
+            method: 'POST',
+            body: "",
+        }).then((response) => {
+            if (response.status === 201) {
+                setToken(roomCode);
+                history.push("/event");
+
+            }
+            else {
+                alert("Event doesn't exist");
+            }
+        });
         event.preventDefault();
         event.stopPropagation();
-        setToken(roomCode);
-        history.push("/event");
       };
 
 

@@ -7,7 +7,7 @@ import Nav from "react-bootstrap/Nav";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import EventList from "./Host/EventList";
-import React from "react";
+import React, {useState} from "react";
 
 
 const Host = ({token}) => {
@@ -41,7 +41,7 @@ const Host = ({token}) => {
                         <Col sm={9}>
                             <Tab.Content>
                                 <Tab.Pane eventKey="events">
-                                    <EventList />
+                                    <EventList/>
                                 </Tab.Pane>
                                 <Tab.Pane eventKey="account">
                                     account
