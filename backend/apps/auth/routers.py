@@ -27,7 +27,16 @@ async def create(request: Request, host: HostModel = Body(...)):
     host = jsonable_encoder(host)
     await request.app.mongodb["hosts"].insert_one(host)
 
-    return JSONResponse(status_code=status.HTTP_201_CREATED, content="ok")
+    # create and return session
+    session = HostSessionModel()
+    session.username = host['username']
+    session.token_type = "bearer"
+    session = jsonable_encoder(session)
+    await request.app.mongodb["hostSessions"].insert_one(session)
+
+    del session["_id"]
+
+    return JSONResponse(status_code=status.HTTP_201_CREATED, content=session)
 
 
 @router.post("/login")
