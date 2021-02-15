@@ -7,7 +7,7 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer
 
-from .models import (CommentModel, EventModel, PollModel, PostCommentModel,
+from .models import (CommentModel, EventModel, PollModel, PostCommentModel, PostEventModel,
                      PostPollModel, UpdateEventModel)
 
 router = APIRouter()
@@ -69,12 +69,13 @@ async def check_event(request, host, code):
 
 
 @router.post("/event")
-async def create_event(request: Request, access_token: str = Depends(oauth2_scheme)):
+async def create_event(request: Request, access_token: str = Depends(oauth2_scheme), new_event: PostEventModel = Body(...)):
     host = await get_host_profile(request, access_token)
 
     # create event
     event = EventModel()
     event.host = host["username"]
+    event.name = new_event.name
     event = jsonable_encoder(event)
 
     # save event
