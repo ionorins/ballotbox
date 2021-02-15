@@ -76,6 +76,7 @@ async def create_event(request: Request, access_token: str = Depends(oauth2_sche
     event = EventModel()
     event.host = host["username"]
     event.name = new_event.name
+    event.timestamp = new_event.timestamp
     event = jsonable_encoder(event)
 
     # save event

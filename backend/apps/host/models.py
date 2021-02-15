@@ -13,6 +13,7 @@ class EventModel(BaseModel):
     code: str = Field(index=True, default_factory=event_code_factory)
     host: Optional[str] = Field(index=True)
     name: Optional[str] = Field(default=None)
+    timestamp: Optional[int] = Field(default=None)
     active: bool = Field(default=True)
 
     class Config:
@@ -20,10 +21,12 @@ class EventModel(BaseModel):
 
 class PostEventModel(BaseModel):
     name: str = Field(...)
+    timestamp: int = Field(...)
 
 class UpdateEventModel(BaseModel):
     active: bool = Field(default=True)
     name: str = Field(...)
+    timestamp: int = Field(...)
 
     class Config:
         allow_population_by_field_name = True
