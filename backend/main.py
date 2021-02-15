@@ -13,7 +13,9 @@ app = FastAPI()
 
 origins = [
     "http://localhost:8000",
-    "https://fast:80",
+    "http://fast:80",
+    "http://localhost:3000",
+    "http://react:3000"
 ]
 
 app.add_middleware(
