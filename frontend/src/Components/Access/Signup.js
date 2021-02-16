@@ -2,19 +2,21 @@ import '../../App.css';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
-import {FiUser, FiLock, FiMail} from "react-icons/fi";
-import {sha256} from 'js-sha256';
+import {FiLock, FiMail} from "react-icons/fi";
+import {useCookies} from "react-cookie";
+import { useHistory } from "react-router-dom";
 
 const Signup = () => {
 
+    const [cookies, setCookies] = useCookies(['access_token']);
+    let history = useHistory();
+
     const handleSubmit = (event) => {
-        const form = event.currentTarget;
-        const email = event.target[1].value;
-        const pass = sha256(event.target[2].value);
+        const email = event.target[0].value;
+        const pass = event.target[1].value;
         // form validation
         event.preventDefault();
         event.stopPropagation();
-        console.log("----");
         fetch('http://localhost:8000/auth/create', {
             method: 'POST',
             body: JSON.stringify({
@@ -22,11 +24,16 @@ const Signup = () => {
                 password: pass,
             }),
         }).then((response) => {
-            if (response.status !== 200) {
-                // redirect to login or log them in
+            if (response.status !== 201) {
+                alert("Signup failed");
+                return;
             }
             else {
-                // do something
+                alert("Signup succesful");
+                response.json().then((responseJson) => {
+                    setCookies('access_token', responseJson["access_token"]);
+                    history.push("/host");
+                })
             }
         });
 
@@ -34,14 +41,6 @@ const Signup = () => {
 
     return (
             <Form className="forms mx-auto" onSubmit={handleSubmit}>
-                <InputGroup controlId="user" className="my-4" size="lg">
-                    <InputGroup.Prepend>
-                        <InputGroup.Text>
-                            <FiUser/>
-                        </InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <Form.Control type="username" placeholder="Username" size="lg" />
-                </InputGroup>
                 <InputGroup controlId="email" className="my-4" size="lg">
                     <InputGroup.Prepend>
                         <InputGroup.Text>

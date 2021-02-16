@@ -1,5 +1,5 @@
 import '../../App.css';
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Login from "./Login.js";
 import Card from "react-bootstrap/Card";
 import Nav from "react-bootstrap/Nav";
@@ -18,7 +18,7 @@ const Access = ({setToken}) => {
     return (
         <div className="container">
             <Link to="/" className="clickable-link">
-                <h1 className="display-1">BallotBox🗳️</h1>
+                <h1 className="display-3">BallotBox🗳️</h1>
             </Link>
         <Card className="access-card mx-auto my-3">
             <Card.Header style={{borderBottom: "none", backgroundColor: "transparent",}}>

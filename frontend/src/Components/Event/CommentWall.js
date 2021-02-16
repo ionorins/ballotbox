@@ -1,51 +1,93 @@
 import '../../App.css';
-import {FiPlay, FiThumbsUp} from "react-icons/fi";
-import Comments from "../../exampleData/comments.json";
+import {FiThumbsUp} from "react-icons/fi";
 import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
-import {sha256} from "js-sha256";
+import {useParams} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {useCookies} from "react-cookie";
 
 
 const CommentWall = () => {
 
-    const like = (id) => {
-        // post like with id
+    let { id } = useParams();
+    const [cookies, setCookies] = useCookies(['access_token']);
+    const [comments, setComments] = useState("");
 
+    const like = (id) => {
+        fetch('http://localhost:8000/attendee/comment/like/'+id, {
+            method: 'POST',
+            headers: {
+                "Authorization": "Bearer "+cookies['access_token'],
+            },
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+            });
     }
+
+    async function getComments() {
+        fetch('http://localhost:8000/host/event/'+id+"/comment", {
+            method: 'GET',
+            headers: {
+                "Authorization": "Bearer "+cookies['access_token'],
+            }
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+                const commentList = responseJson.map((comment) =>
+                    <ListGroup.Item>
+                        <Row>
+                            <Col>
+                                <h6>Anonymous</h6>
+                            </Col>
+                            <Col className="comment-likes">
+                                {comment.likes}
+                                <Button className="like-button" onClick={() => like(comment.id)}>
+                                    <FiThumbsUp  className="mb-2"/>
+                                </Button>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                {comment.content}
+                            </Col>
+                        </Row>
+                    </ListGroup.Item>
+                );
+                setComments(commentList);
+            });
+        setTimeout(getComments, 3000);
+    }
+
+    useEffect(() => {
+        getComments();
+    },[])
+
 
     const handleSubmit = (event) => {
         const message = event.target[0].value;
-        console.log(message);
-        // post message to api with id
         event.preventDefault();
         event.stopPropagation();
+        fetch('http://localhost:8000/host/event/'+id+"/comment", {
+            method: 'POST',
+            headers: {
+                "Authorization": "Bearer "+cookies['access_token'],
+            },
+            body: JSON.stringify({
+                content: message
+            })
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                getComments()
+            });
         event.currentTarget.reset();
     };
 
-    const comments = Comments["comments"].map((comment) =>
-        <ListGroup.Item>
-            <Row>
-                <Col>
-                    <h6>{comment.author}</h6>
-                </Col>
-                <Col className="comment-likes">
-                    {comment.likes}
-                    <Button className="like-button" onClick={() => like(comment.id)}>
-                        <FiThumbsUp  className="mb-2"/>
-                    </Button>
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    {comment.content}
-                </Col>
-            </Row>
-        </ListGroup.Item>
-    );
+
     return (
         <div>
             <Form onSubmit={handleSubmit}>

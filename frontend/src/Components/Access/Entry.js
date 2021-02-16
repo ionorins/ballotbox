@@ -5,11 +5,13 @@ import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import { FiLink } from "react-icons/fi";
 import {Link, useHistory} from "react-router-dom";
-import Event from "../Attendee/Event";
+import {useCookies} from "react-cookie";
 
 const Entry = ({ setToken }) => {
 
     const history = useHistory();
+
+    const [cookies, setCookies] = useCookies(['access_token']);
 
     const handleSubmit = (event) => {
         const roomCode = event.target[0].value;
@@ -19,14 +21,15 @@ const Entry = ({ setToken }) => {
             method: 'POST',
             body: "",
         }).then((response) => {
-            if (response.status === 201) {
-                setToken(roomCode);
-                history.push("/event");
-
-            }
-            else {
+            if (response.status !== 200) {
                 alert("Event doesn't exist");
+                return;
             }
+            response.json().then((responseJson) => {
+                setCookies('access_token', responseJson["access_token"]);
+                history.push("/event");
+            })
+
         });
         event.preventDefault();
         event.stopPropagation();
@@ -36,7 +39,7 @@ const Entry = ({ setToken }) => {
 
     return (
         <div className="container">
-            <h1 className="display-1">BallotBox 🗳️</h1>
+            <h1 className="display-3">BallotBox 🗳️</h1>
             <Form className="forms mx-auto my-3" onSubmit={handleSubmit}>
                 <InputGroup className="my-2">
                     <InputGroup.Prepend>
@@ -44,7 +47,7 @@ const Entry = ({ setToken }) => {
                             <FiLink/>
                         </InputGroup.Text>
                     </InputGroup.Prepend>
-                    <Form.Control size="lg" placeholder="Event Code" maxLength="5" />
+                    <Form.Control size="lg" placeholder="Event Code" maxLength="8" />
                 </InputGroup>
                 <Button className="buttons my-2" type="submit">
                 Join

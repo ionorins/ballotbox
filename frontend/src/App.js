@@ -26,7 +26,7 @@ function App() {
                 <Host token={token}/>
             </Route>
             <Route path="/event/">
-                <Event token={token}/>
+                <Event />
             </Route>
         </Switch>
         </Router>

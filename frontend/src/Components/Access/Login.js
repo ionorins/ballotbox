@@ -2,8 +2,7 @@ import '../../App.css';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
-import {FiUser, FiLock, FiMail} from "react-icons/fi";
-import {sha256} from 'js-sha256';
+import {FiLock, FiMail} from "react-icons/fi";
 import { useHistory } from "react-router-dom";
 import {useCookies, withCookies} from "react-cookie";
 
@@ -14,7 +13,7 @@ const Login = ({setToken}) => {
 
     const handleSubmit = (event) => {
         const email = event.target[0].value;
-        const pass = sha256(event.target[1].value);
+        const pass = event.target[1].value;
         let form = new FormData();
         form.append("username", email);
         form.append("password", pass);

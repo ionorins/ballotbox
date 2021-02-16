@@ -39,6 +39,14 @@
     background-color: transparent !important;
     border: none !important;
     width: 100%;
+    max-width: 50vh;
+    margin-left: auto;
+    margin-right: auto;
+}
+.standard-card {
+    background-color: transparent !important;
+    border: none !important;
+    width: 100%;
     max-width: 100vh;
     margin-left: auto;
     margin-right: auto;

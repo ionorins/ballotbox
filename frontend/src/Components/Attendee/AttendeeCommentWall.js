@@ -1,12 +1,11 @@
 import '../../App.css';
-import {FiPlay, FiThumbsUp} from "react-icons/fi";
+import {FiThumbsUp} from "react-icons/fi";
 import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
-import {sha256} from "js-sha256";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useCookies} from "react-cookie";
@@ -63,6 +62,7 @@ const AttendeeCommentWall = () => {
                 );
                 setComments(commentList);
             });
+        setTimeout(getComments, 3000);
     }
 
     useEffect(() => {
@@ -86,7 +86,6 @@ const AttendeeCommentWall = () => {
             .then((responseJson) => {
                 console.log(responseJson);
             });
-        console.log("FUCK")
         event.currentTarget.reset();
         getComments();
     };
