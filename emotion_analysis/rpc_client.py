@@ -1,17 +1,18 @@
-import pika
-import uuid
 import json
+import uuid
+
+import pika
 
 
 class DeepMojiRpcClient(object):
 
     def __init__(self):
         self.connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host='localhost'))
+            pika.ConnectionParameters(host="localhost"))
 
         self.channel = self.connection.channel()
 
-        result = self.channel.queue_declare(queue='', exclusive=True)
+        result = self.channel.queue_declare(queue="", exclusive=True)
         self.callback_queue = result.method.queue
 
         self.channel.basic_consume(
@@ -27,8 +28,8 @@ class DeepMojiRpcClient(object):
         self.response = None
         self.corr_id = str(uuid.uuid4())
         self.channel.basic_publish(
-            exchange='',
-            routing_key='deepmoji',
+            exchange="",
+            routing_key="deepmoji",
             properties=pika.BasicProperties(
                 reply_to=self.callback_queue,
                 correlation_id=self.corr_id,
@@ -41,6 +42,6 @@ class DeepMojiRpcClient(object):
 
 analyse = DeepMojiRpcClient().call
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     response = analyse("this is amazing")
     print(response)

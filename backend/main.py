@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import FastAPI
-from motor.motor_asyncio import AsyncIOMotorClient
 from fastapi.middleware.cors import CORSMiddleware
+from motor.motor_asyncio import AsyncIOMotorClient
 
 from apps.attendee.routers import router as attendee_router
 from apps.auth.routers import router as auth_router

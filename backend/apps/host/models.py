@@ -6,8 +6,12 @@ from typing import List, Optional
 from pydantic import BaseModel, Field
 
 alphabet = string.ascii_letters + string.digits
-event_code_factory = lambda : "".join(secrets.choice(alphabet) for _ in range(8))
-id_factory = lambda : secrets.token_urlsafe(64)
+def event_code_factory(): return "".join(secrets.choice(alphabet)
+                                         for _ in range(8))
+
+
+def id_factory(): return secrets.token_urlsafe(64)
+
 
 class EventModel(BaseModel):
     code: str = Field(index=True, default_factory=event_code_factory)
@@ -19,9 +23,11 @@ class EventModel(BaseModel):
     class Config:
         allow_population_by_field_name = True
 
+
 class PostEventModel(BaseModel):
     name: str = Field(...)
     timestamp: int = Field(...)
+
 
 class UpdateEventModel(BaseModel):
     active: bool = Field(default=True)
@@ -30,6 +36,7 @@ class UpdateEventModel(BaseModel):
 
     class Config:
         allow_population_by_field_name = True
+
 
 class CommentModel(BaseModel):
     id: str = Field(index=True, default_factory=id_factory, alias="_id")
@@ -44,8 +51,10 @@ class CommentModel(BaseModel):
     class Config:
         allow_population_by_field_name = True
 
+
 class PostCommentModel(BaseModel):
     content: str
+
 
 class PollModel(BaseModel):
     id: str = Field(index=True, default_factory=id_factory, alias="_id")
@@ -53,12 +62,15 @@ class PollModel(BaseModel):
     content: dict = Field(default=None)
     answers: List = Field(default=[])
 
+
 class PostPollModel(BaseModel):
     content: dict = Field(default=None)
+
 
 class AnswerModel(BaseModel):
     id: str = Field(index=True, default_factory=id_factory, alias="_id")
     content: dict = Field(default=None)
+
 
 class PostAnswerModel(BaseModel):
     content: dict = Field(default=None)
