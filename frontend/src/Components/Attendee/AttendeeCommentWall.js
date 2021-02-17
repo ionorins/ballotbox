@@ -44,7 +44,7 @@ const AttendeeCommentWall = () => {
                     <ListGroup.Item>
                         <Row>
                             <Col>
-                                <h6>Anonymous</h6>
+                                <h6>{(comment.author.name === null ? 'Anonymous' : 'Host')}</h6>
                             </Col>
                             <Col className="comment-likes">
                                 {comment.likes}

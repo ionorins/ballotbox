@@ -16,6 +16,7 @@ const NewEvent = ({ show, setShow }) => {
 
     const handleSubmit = (event) => {
         const name = event.target[0].value;
+        const date = new Date(event.target[1].value).getTime();
         event.preventDefault();
         event.stopPropagation();
         fetch('http://localhost:8000/host/event', {
@@ -25,6 +26,7 @@ const NewEvent = ({ show, setShow }) => {
             },
             body: JSON.stringify({
                 name: name,
+                timestamp: date,
             }),
         }).then((response) => {
             alert("Added succesfully!");

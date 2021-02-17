@@ -14,10 +14,13 @@ const Signup = () => {
     const handleSubmit = (event) => {
         const email = event.target[0].value;
         const pass = event.target[1].value;
-        // form validation
+        // form validation!!!!!
+
+        // check passwords
+
         event.preventDefault();
         event.stopPropagation();
-        fetch('http://localhost:8000/auth/create', {
+        fetch('/auth/create', {
             method: 'POST',
             body: JSON.stringify({
                 username: email,
