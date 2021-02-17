@@ -161,8 +161,35 @@ async def comment(code: str, request: Request, access_token: str = Depends(oauth
 
     return JSONResponse(status_code=status.HTTP_200_OK, content="ok")
 
+@router.post("/event/{code}/comment/like/{id}")
+async def like_comment(code: str, id: str, request: Request, access_token: str = Depends(oauth2_scheme)):
+    host = await get_host_profile(request, access_token)
 
-@router.get("/event/{code}/comment")
+    await check_event(request, host["username"], code)
+
+    comment = await request.app.mongodb["comments"].find_one({
+        "_id": id,
+        "event": code
+    })
+
+    if comment is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
+
+    if access_token in comment["likes"]:
+        comment["likes"].remove("Host")
+    else:
+        comment["likes"].append("Host")
+
+    await request.app.mongodb["comments"].update_one({
+        "_id": id
+    }, {
+        "$set": comment
+    })
+
+    return JSONResponse(status_code=status.HTTP_200_OK, content="ok")
+
+@router.get("/event/{code}/comments")
 async def get_comments(code: str, request: Request, access_token: str = Depends(oauth2_scheme)):
     host = await get_host_profile(request, access_token)
 
