@@ -20,12 +20,7 @@ const FormBuilder = () => {
     const questions = <ListGroup.Item>Test</ListGroup.Item>
 
     return (
-        <Card className="access-card">
-            <Card.Header style={{backgroundColor: "transparent"}}>
-                <h1>Poll Creator</h1>
-            </Card.Header>
-            <Card.Body className="access-card-body">
-                <Accordion>
+                <Accordion className="text-center">
                     <Card>
                         <Card.Header>
                             <Accordion.Toggle eventKey="0" className="builder-toggle">
@@ -57,8 +52,6 @@ const FormBuilder = () => {
                         </Accordion.Collapse>
                     </Card>
                 </Accordion>
-            </Card.Body>
-        </Card>
     )
 }
 export default FormBuilder;

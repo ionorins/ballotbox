@@ -3,9 +3,9 @@ import React, {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Route, Switch, BrowserRouter as Router} from "react-router-dom";
 import Access from "./Components/Access/Access";
-import Host from "./Components/Host";
+import Host from "./Components/Host/Host";
 import Event from "./Components/Attendee/Event";
-import ControlPanel from "./Components/Host/ControlPanel";
+import ControlPanel from "./Components/Host/Event/ControlPanel";
 
 function App() {
     const [token, setToken] = useState();

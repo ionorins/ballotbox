@@ -6,6 +6,8 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Signup from "./Signup";
 import {Link, useHistory} from "react-router-dom";
+import {FiChevronLeft} from "react-icons/fi";
+import Button from "react-bootstrap/Button";
 
 const Access = ({setToken}) => {
     const [currentView, setView] = useState(<Login setToken={setToken}/>);
@@ -35,7 +37,13 @@ const Access = ({setToken}) => {
             <Card.Body className="access-card-body">
                 { currentView }
             </Card.Body>
+            <Card.Footer style={{background: "none",}}>
+                <Button className="back-button" onClick={() => history.push("/")}>
+                    <FiChevronLeft />
+                </Button>
+            </Card.Footer>
         </Card>
+
             <Navbar fixed="bottom">
                 <Navbar.Text className="mx-auto navbar-text">
                     DBCampus Project 2021

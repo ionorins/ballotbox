@@ -25,10 +25,10 @@ const AttendeeCommentWall = () => {
             },
         }).then((response) => response.json())
             .then((responseJson) => {
-                console.log("FUCK YOU!!!!");
+                getComments();
             });
 
-        getComments();
+
     }
 
     async function getComments() {
@@ -84,25 +84,25 @@ const AttendeeCommentWall = () => {
             })
         }).then((response) => response.json())
             .then((responseJson) => {
-                console.log(responseJson);
+                getComments()
             });
         event.currentTarget.reset();
-        getComments();
     };
 
 
     return (
         <div>
+            <div className="comment-wall-container m-1">
+                <ListGroup variant="flush" className="comment-list">
+                    {comments}
+                </ListGroup>
+            </div>
             <Form onSubmit={handleSubmit}>
                 <InputGroup className="my-2">
                     <Form.Control size="lg" placeholder="Add a comment..."/>
                 </InputGroup>
             </Form>
-            <ListGroup className="comment-list">
-                {comments}
-            </ListGroup>
         </div>
-
     );
 }
 export default AttendeeCommentWall;

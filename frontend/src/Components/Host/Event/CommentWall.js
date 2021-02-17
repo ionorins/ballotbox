@@ -1,4 +1,4 @@
-import '../../App.css';
+import '../../../App.css';
 import {FiThumbsUp} from "react-icons/fi";
 import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
@@ -7,7 +7,7 @@ import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
 import {useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {useCookies} from "react-cookie";
 
 
@@ -37,7 +37,6 @@ const CommentWall = () => {
             }
         }).then((response) => response.json())
             .then((responseJson) => {
-                console.log(responseJson);
                 const commentList = responseJson.map((comment) =>
                     <ListGroup.Item>
                         <Row>
@@ -90,14 +89,16 @@ const CommentWall = () => {
 
     return (
         <div>
+            <div className="comment-wall-container m-1">
+            <ListGroup variant="flush" className="comment-list">
+                {comments}
+            </ListGroup>
+            </div>
             <Form onSubmit={handleSubmit}>
                 <InputGroup className="my-2">
                     <Form.Control size="lg" placeholder="Add a comment..."/>
                 </InputGroup>
             </Form>
-            <ListGroup className="comment-list">
-                {comments}
-            </ListGroup>
         </div>
 
     );

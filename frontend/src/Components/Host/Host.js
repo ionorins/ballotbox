@@ -1,13 +1,14 @@
-import '../App.css';
+import '../../App.css';
 import { useHistory } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Tab from "react-bootstrap/Tab";
 import Nav from "react-bootstrap/Nav";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import EventList from "./Host/EventList";
+import EventList from "./EventList";
 import React, {useState} from "react";
 import {useCookies} from "react-cookie";
+import Navbar from "react-bootstrap/Navbar";
 
 const Host = () => {
 
@@ -35,6 +36,7 @@ const Host = () => {
     if (load) {
         return (
             <div className="container">
+
                 <h1 className="display-4">BallotBox 🗳️</h1>
                 <Card className="main-card">
                     <Tab.Container defaultActiveKey="events">
