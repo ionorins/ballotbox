@@ -14,7 +14,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 async def create(request: Request, host: HostModel = Body(...)):
     # check if email already exists
     check = await request.app.mongodb["hosts"].find_one({
-        "email": host.username,
+        "username": host.username,
     })
 
     if check is not None:
