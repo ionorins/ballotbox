@@ -239,6 +239,7 @@ async def get_polls(code: str, request: Request, access_token: str = Depends(oau
         "event": code
     }).to_list(length=maxsize):
         poll["id"] = poll.pop("_id")
+        poll["answers"] = [x["content"] for x in poll["answers"]]
         polls.append(poll)
 
     return JSONResponse(status_code=status.HTTP_200_OK, content=polls)
