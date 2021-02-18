@@ -176,7 +176,7 @@ async def like_comment(code: str, id: str, request: Request, access_token: str =
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
 
-    if access_token in comment["likes"]:
+    if "Host" in comment["likes"]:
         comment["likes"].remove("Host")
     else:
         comment["likes"].append("Host")
