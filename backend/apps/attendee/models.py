@@ -40,4 +40,4 @@ class PostAnswerModel(BaseModel):
 
 class AnswerModel(BaseModel):
     attendee: str = Field(default=None)
-    content: dict
+    content: dict = Field(default=None)
