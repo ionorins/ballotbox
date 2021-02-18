@@ -35,5 +35,9 @@ class PostCommentModel(BaseModel):
     content: str
 
 
+class PostAnswerModel(BaseModel):
+    content: dict
+
 class AnswerModel(BaseModel):
+    attendee: str = Field(default=None)
     content: dict

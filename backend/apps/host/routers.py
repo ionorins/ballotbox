@@ -202,6 +202,7 @@ async def get_comments(code: str, request: Request, access_token: str = Depends(
     }).to_list(length=maxsize):
         comment["id"] = comment.pop("_id")
         comment["author"] = await get_alias(request, comment["author"])
+        comment["liked"] = "Host" in comment["likes"]
         comment["likes"] = len(comment["likes"])
         comments.append(comment)
 
