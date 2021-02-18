@@ -9,6 +9,7 @@ import Form from "react-bootstrap/Form";
 import {useParams} from "react-router-dom";
 import {useEffect, useRef, useState} from "react";
 import {useCookies} from "react-cookie";
+import {RiThumbUpFill, RiThumbUpLine} from "react-icons/ri";
 
 
 const CommentWall = () => {
@@ -17,20 +18,20 @@ const CommentWall = () => {
     const [cookies, setCookies] = useCookies(['access_token']);
     const [comments, setComments] = useState("");
 
-    const like = (id) => {
-        fetch('http://localhost:8000/attendee/comment/like/'+id, {
+    const like = (commentId) => {
+        fetch('http://localhost:8000/host/event/'+id+'/comment/like/'+commentId, {
             method: 'POST',
             headers: {
                 "Authorization": "Bearer "+cookies['access_token'],
             },
         }).then((response) => response.json())
             .then((responseJson) => {
-                console.log(responseJson);
+                getComments();
             });
     }
 
     async function getComments() {
-        fetch('http://localhost:8000/host/event/'+id+"/comment", {
+        fetch('http://localhost:8000/host/event/'+id+"/comments", {
             method: 'GET',
             headers: {
                 "Authorization": "Bearer "+cookies['access_token'],
@@ -46,7 +47,7 @@ const CommentWall = () => {
                             <Col className="comment-likes">
                                 {comment.likes}
                                 <Button className="like-button" onClick={() => like(comment.id)}>
-                                    <FiThumbsUp  className="mb-2"/>
+                                    {(comment.liked ? <RiThumbUpFill className="mb-2 like-button-liked"/> : <RiThumbUpLine  className="mb-2 "/>)}
                                 </Button>
                             </Col>
                         </Row>

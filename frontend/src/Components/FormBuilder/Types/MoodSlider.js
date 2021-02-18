@@ -7,10 +7,38 @@ import Button from "react-bootstrap/Button";
 import RangeSlider from 'react-bootstrap-range-slider';
 import {useState} from "react";
 import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
+import {useParams} from "react-router-dom";
+import {useCookies} from "react-cookie";
 
 const MoodSlider = () => {
 
     const [value, setValue] = useState(0);
+
+    let {id} = useParams();
+    const [cookies, setCookies] = useCookies(['access_token']);
+
+    const handleSubmit = (event) => {
+        const prompt = event.target[0].value;
+        event.preventDefault();
+        event.stopPropagation();
+        fetch('http://localhost:8000/host/event/'+id+"/poll", {
+            method: 'POST',
+            headers: {
+                "Authorization": "Bearer "+cookies['access_token'],
+            },
+            body: JSON.stringify({
+                content: {
+                    "prompt": prompt,
+                    "type": "moodSlider",
+                }
+            })
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                // u
+            });
+        event.currentTarget.reset();
+    };
+
 
     function tooltipLabeller() {
         console.log(value)
@@ -37,7 +65,7 @@ const MoodSlider = () => {
     }
 
     return (
-        <Form className="px-3">
+        <Form className="px-3" onSubmit={handleSubmit}>
             <InputGroup controlId="email" className="my-4" size="lg">
                 <Form.Control type="text" placeholder="Question prompt"/>
             </InputGroup>

@@ -26,41 +26,47 @@ const Polls = () => {
 
     useEffect(() => {
         fetch('http://localhost:8000/host/event/'+id+'/polls', {
-            method: 'GET',
-            headers: {
-                "Authorization": "Bearer "+cookies['access_token'],
-            }
-        }).then((response) => response.json())
-            .then((responseJson) => {
-                const polls = responseJson.map((poll) =>
-                    <Card>
-                        <Card.Header>
-                            <Accordion.Toggle eventKey="d" className="builder-toggle">
-                                {poll.content['prompt']}
-                            </Accordion.Toggle>
-                        </Card.Header>
-                        <Accordion.Collapse eventKey="d">
-                            <Card.Body>
-                                guck
-                            </Card.Body>
-                        </Accordion.Collapse>
-                    </Card>
-                );
-                setPollsList(polls);
-            });
-    }, []);
+        method: 'GET',
+        headers: {
+            "Authorization": "Bearer "+cookies['access_token'],
+        }
+    }).then((response) => response.json())
+        .then((responseJson) => {
+            const polls = responseJson.map((poll) =>
+                <Card>
+                    <Card.Header>
+                        <Accordion.Toggle eventKey={poll.id} className="builder-toggle">
+                            {poll.content['prompt']}
+                        </Accordion.Toggle>
+                    </Card.Header>
+                    <Accordion.Collapse eventKey={poll.id}>
+                        <Card.Body>
+                            guck
+                        </Card.Body>
+                    </Accordion.Collapse>
+                </Card>
+            );
+            setPollsList(polls);
+        });
+}, []);
 
     return (
         <div>
-            <ListGroup variant="flush">
-            {pollsList}
-            <ListGroup.Item>
-                <Card style={{cursor: "pointer",}} onClick={() => setShow(true)}>
-                    <Card.Header>Create a new poll...</Card.Header>
-                </Card>
+                <Accordion>
+                    {pollsList}
+                    <Card style={{cursor: "pointer",}} onClick={() => setShow(true)}>
+                        <Card.Header>
+                            <Accordion.Toggle eventKey="#'" className="builder-toggle">
+                                Create a new poll...
+                            </Accordion.Toggle>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="#">
+                            <Card.Body>
+                            </Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+                </Accordion>
                 <NewPoll show={show} setShow={setShow} />
-            </ListGroup.Item>
-            </ListGroup>
         </div>
 
     );

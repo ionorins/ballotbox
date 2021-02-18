@@ -3,6 +3,8 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import {useEffect, useState} from "react";
+import {useCookies} from "react-cookie";
+import {useParams} from "react-router-dom";
 
 
 const FreeText = () => {
@@ -17,6 +19,37 @@ const FreeText = () => {
         </InputGroup>
         </div>
     );
+    const [cookies, setCookies] = useCookies(['access_token']);
+    let {id} = useParams();
+
+    const handleSubmit = (event) => {
+        const prompt = event.target[0].value;
+        let choices = [];
+        let i;
+        for (i = 1; i < event.target.length; i++) {
+            if (event.target[i].value !== "")
+                choices.push(event.target[i].value);
+        }
+        event.preventDefault();
+        event.stopPropagation();
+        fetch('http://localhost:8000/host/event/'+id+"/poll", {
+            method: 'POST',
+            headers: {
+                "Authorization": "Bearer "+cookies['access_token'],
+            },
+            body: JSON.stringify({
+                content: {
+                    "prompt": prompt,
+                    "type": "multipleChoice",
+                    "options": choices,
+                }
+            })
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                // u
+            });
+        event.currentTarget.reset();
+    };
 
     const [optionsList, setOptionsList] = useState([1,2]);
 
@@ -34,7 +67,7 @@ const FreeText = () => {
 
 
     return (
-        <Form className="px-3 mx-auto">
+        <Form className="px-3 mx-auto" onSubmit={handleSubmit}>
             <InputGroup className="my-4" size="lg">
                 <Form.Control type="text" placeholder="Question prompt"/>
             </InputGroup>

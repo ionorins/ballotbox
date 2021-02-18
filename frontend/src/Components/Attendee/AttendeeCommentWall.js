@@ -9,6 +9,7 @@ import Form from "react-bootstrap/Form";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useCookies} from "react-cookie";
+import {RiThumbUpFill, RiThumbUpLine} from "react-icons/ri";
 
 
 const AttendeeCommentWall = () => {
@@ -49,7 +50,7 @@ const AttendeeCommentWall = () => {
                             <Col className="comment-likes">
                                 {comment.likes}
                                 <Button className="like-button" onClick={() => like(comment.id)}>
-                                    <FiThumbsUp  className="mb-2"/>
+                                    {(comment.liked ? <RiThumbUpFill className="mb-2 like-button-liked"/> : <RiThumbUpLine  className="mb-2 "/>)}
                                 </Button>
                             </Col>
                         </Row>

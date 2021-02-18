@@ -22,7 +22,8 @@ const FreeText = () => {
             },
             body: JSON.stringify({
                 content: {
-                    "prompt": prompt
+                    "prompt": prompt,
+                    "type": "freeText",
                 }
             })
         }).then((response) => response.json())

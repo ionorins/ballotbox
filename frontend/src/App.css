@@ -102,12 +102,9 @@
 }
 .like-button {
     background-color: transparent !important;
-    color: blue !important;
+    color: mediumblue !important;
     border: none !important;
     padding: .2rem .5rem !important;
-}
-.like-button:active {
-    color: purple !important;
 }
 .comment-append {
     background: none !important;
@@ -138,4 +135,7 @@
     border: none !important;
     font-weight: bold !important;
     font-size: x-large !important;
+}
+.like-button-liked {
+    color: blue !important;
 }
