@@ -6,7 +6,9 @@ import Row from "react-bootstrap/Row";
 import {useCookies} from "react-cookie";
 import {useParams} from "react-router-dom";
 import RangeSlider from "react-bootstrap-range-slider";
-import {useState} from "react";
+import React, {useState} from "react";
+import Card from "react-bootstrap/Card";
+import Accordion from "react-bootstrap/Accordion";
 
 
 const PollForm = ({poll}) => {
@@ -39,7 +41,35 @@ const PollForm = ({poll}) => {
             return "😍";
     }
 
+    const getAnswer = (event) => {
+        let answers = [];
+        if (poll.content.type === "multipleChoice") {
+            let i;
+            for (i = 0; i < event.target.length; i++) {
+                if (event.target[i].checked)
+                    answers.push(event.target[i].id);
+            }
+            return answers;
+        }
+        else return event.target[0].value;
+    }
+
     const handleSubmit = (event) => {
+        fetch('http://localhost:8000/attendee/poll/'+poll.id+'/answer', {
+            method: 'POST',
+            headers: {
+                "Authorization": "Bearer "+cookies['access_token'],
+            },
+            body: JSON.stringify({
+                content: {
+                    answer: getAnswer(event)
+                }
+            })
+
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                // u
+            });
         event.preventDefault();
         event.stopPropagation();
 
@@ -59,7 +89,7 @@ const PollForm = ({poll}) => {
         else if (poll.content.type === "multipleChoice") {
             console.log(poll.content.options);
             const optionMap = poll.content.options.map((option) =>
-                <Form.Check label={option}/>
+                <Form.Check id={option} label={option}/>
                 );
             return optionMap;
         }

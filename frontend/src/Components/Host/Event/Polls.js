@@ -32,6 +32,7 @@ const Polls = () => {
         }
     }).then((response) => response.json())
         .then((responseJson) => {
+            console.log(responseJson);
             const polls = responseJson.map((poll) =>
                 <Card>
                     <Card.Header>
@@ -41,7 +42,12 @@ const Polls = () => {
                     </Card.Header>
                     <Accordion.Collapse eventKey={poll.id}>
                         <Card.Body>
-                            guck
+                            {poll.answers.map((answer) =>
+                                    <ListGroup.Item>
+                                        {answer.answer}
+                                    </ListGroup.Item>
+                                )
+                            }
                         </Card.Body>
                     </Accordion.Collapse>
                 </Card>

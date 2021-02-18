@@ -8,6 +8,8 @@ import FreeText from "./Types/FreeText";
 import MultipleChoice from "./Types/MultipleChoice";
 import MoodSlider from "./Types/MoodSlider";
 import Accordion from "react-bootstrap/Accordion";
+import {ImBubble} from "react-icons/im";
+import {FaTheaterMasks, MdFormatListBulleted} from "react-icons/all";
 
 const FormBuilder = () => {
 
@@ -24,7 +26,7 @@ const FormBuilder = () => {
                     <Card>
                         <Card.Header>
                             <Accordion.Toggle eventKey="0" className="builder-toggle">
-                                Free Text
+                                Free Text <ImBubble  className="mb-1 mx-1"/>
                             </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="0">
@@ -34,7 +36,7 @@ const FormBuilder = () => {
                     <Card>
                         <Card.Header>
                             <Accordion.Toggle eventKey="1" className="builder-toggle">
-                                Multiple Choice
+                                Multiple Choice <MdFormatListBulleted className="mx-1 mb-1"/>
                             </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="1">
@@ -44,7 +46,7 @@ const FormBuilder = () => {
                     <Card>
                         <Card.Header>
                             <Accordion.Toggle eventKey="2" className="builder-toggle">
-                                Mood Slider
+                                Mood Slider <FaTheaterMasks className="mx-1 mb-1"/>
                             </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="2">

@@ -21,6 +21,7 @@ const AttendeePolls = () => {
             }
         }).then((response) => response.json())
             .then((responseJson) => {
+                console.log(responseJson);
                 const polls = responseJson.map((poll) =>
                     <Card>
                         <Card.Header>
