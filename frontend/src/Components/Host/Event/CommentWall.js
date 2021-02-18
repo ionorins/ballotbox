@@ -58,7 +58,9 @@ const CommentWall = () => {
                         </Row>
                     </ListGroup.Item>
                 );
-                setComments(commentList);
+                if (responseJson.length === 0)
+                    setComments("No one has commented yet :(");
+                else setComments(commentList);
             });
         setTimeout(getComments, 3000);
     }

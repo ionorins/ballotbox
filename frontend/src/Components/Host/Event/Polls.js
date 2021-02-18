@@ -42,11 +42,11 @@ const Polls = () => {
                     </Card.Header>
                     <Accordion.Collapse eventKey={poll.id}>
                         <Card.Body>
-                            {poll.answers.map((answer) =>
+                            { (poll.answers.length > 0  ? poll.answers.map((answer) =>
                                     <ListGroup.Item>
                                         {answer.answer}
                                     </ListGroup.Item>
-                                )
+                                ) : "No one has answered yet :(")
                             }
                         </Card.Body>
                     </Accordion.Collapse>
