@@ -5,6 +5,7 @@ FROM node
 ENV PATH /node_modules/.bin:$PATH
 
 # install app dependencies
+RUN npm install -g increase-memory-limit
 COPY package.json ./
 COPY package-lock.json ./
 RUN npm install --silent
