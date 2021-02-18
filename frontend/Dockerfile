@@ -8,8 +8,8 @@ ENV PATH /node_modules/.bin:$PATH
 RUN npm install -g increase-memory-limit
 COPY package.json ./
 COPY package-lock.json ./
-RUN node --max-old-space-size=4096 $(which npm) install --silent
-RUN node --max-old-space-size=4096 $(which npm) install react-scripts@4.0.0 -g --silent
+RUN npm install --silent 
+RUN npm install react-scripts@4.0.0 -g --silent
 
 # start app
 CMD ["npm", "start"]

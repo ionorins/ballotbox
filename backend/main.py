@@ -34,7 +34,7 @@ app.mongodb = app.mongodb_client[settings.DB_NAME]
 # app.include_router(todo_router, tags=["tasks"], prefix="/task")
 app.include_router(auth_router, tags=["auth"], prefix="/auth")
 app.include_router(attendee_router, tags=["attendee"], prefix="/attendee")
-# app.include_router(host_router, tags=["host"], prefix="/host")
+app.include_router(host_router, tags=["host"], prefix="/host")
 
 
 if __name__ == "__main__":
