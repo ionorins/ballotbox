@@ -62,11 +62,15 @@ const CommentWall = () => {
                     setComments("No one has commented yet :(");
                 else setComments(commentList);
             });
-        setTimeout(getComments, 3000);
+    }
+
+    async function getCommentsRefresh() {
+        getComments();
+        setTimeout(getCommentsRefresh, 3000);
     }
 
     useEffect(() => {
-        getComments();
+        getCommentsRefresh();
     },[])
 
 
