@@ -220,6 +220,7 @@ async def answer(id: str, request: Request, access_token: str = Depends(oauth2_s
     answer = AnswerModel()
     answer.attendee = access_token
     answer.content = new_answer.content
+    answer = jsonable_encoder(answer)
 
     poll["answers"].append(answer)
 
