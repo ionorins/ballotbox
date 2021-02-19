@@ -6,7 +6,7 @@ from fastapi.param_functions import Body
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer
 
-from .models import AnswerModel, AttendeeModel, CommentModel, PostCommentModel
+from .models import AnswerModel, AttendeeModel, CommentModel, PostAnswerModel, PostCommentModel
 
 router = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="attendee/login/{event}")
@@ -197,13 +197,15 @@ async def get_polls(request: Request, access_token: str = Depends(oauth2_scheme)
         "event": attendee["event"]
     }).to_list(length=maxsize):
         poll["id"] = poll.pop("_id")
+        poll["answered"] = any(x["attendee"] == access_token for x in poll["answers"])
+        del poll["answers"]
         polls.append(poll)
 
     return JSONResponse(status_code=status.HTTP_200_OK, content=polls)
 
 
 @router.post("/poll/{id}/answer")
-async def answer(id: str, request: Request, access_token: str = Depends(oauth2_scheme), answer: AnswerModel = Body(...)):
+async def answer(id: str, request: Request, access_token: str = Depends(oauth2_scheme), new_answer: PostAnswerModel = Body(...)):
     attendee = await get_attendee_profile(request, access_token)
 
     poll = await request.app.mongodb["polls"].find_one({
@@ -214,8 +216,13 @@ async def answer(id: str, request: Request, access_token: str = Depends(oauth2_s
     if poll is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
+    
+    answer = AnswerModel()
+    answer.attendee = access_token
+    answer.content = new_answer.content
+    answer = jsonable_encoder(answer)
 
-    poll["answers"].append(answer.content)
+    poll["answers"].append(answer)
 
     await request.app.mongodb["polls"].update_one({
         "_id": id
