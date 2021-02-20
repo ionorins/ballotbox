@@ -5,9 +5,12 @@ from typing import List, Optional
 
 from pydantic import BaseModel, Field
 
+# factory for creating event code with length 8 (62^4 > 2e14 possibilities)
 alphabet = string.ascii_letters + string.digits
 def event_code_factory(): return "".join(secrets.choice(alphabet)
                                          for _ in range(8))
+
+# generates 512 bit url safe token
 
 
 def id_factory(): return secrets.token_urlsafe(64)

@@ -11,6 +11,7 @@ client = TestClient(app)
 
 
 def before_each_test():
+    # empty db
     app.mongodb["attendees"].drop()
     app.mongodb["comments"].drop()
     app.mongodb["events"].drop()
@@ -19,7 +20,7 @@ def before_each_test():
     app.mongodb["polls"].drop()
 
 
-def test_create_account_nobody():
+def test_create_account_nodata():
     before_each_test()
     response = client.post("/auth/create")
     assert response.status_code == 422

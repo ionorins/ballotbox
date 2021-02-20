@@ -13,6 +13,7 @@ client = TestClient(app)
 
 
 def before_each_test():
+    # empty db
     app.mongodb["attendees"].drop()
     app.mongodb["comments"].drop()
     app.mongodb["events"].drop()
@@ -22,6 +23,7 @@ def before_each_test():
     sleep(0.3)
 
 
+# return valid attendee token
 def authenticate():
     # create host account
     response = client.post("/auth/create",

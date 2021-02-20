@@ -4,7 +4,7 @@ from typing import List
 
 from pydantic import BaseModel, Field
 
-
+# generates 512 bit url safe token
 def id_factory(): return secrets.token_urlsafe(64)
 
 

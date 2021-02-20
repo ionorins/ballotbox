@@ -40,7 +40,7 @@ async def get_host_profile(request, access_token):
 
     return host
 
-
+# returns alias given access token
 async def get_alias(request, access_token):
     if access_token == "Host":
         return {"id": "Host", "name": "Host"}
@@ -54,7 +54,7 @@ async def get_alias(request, access_token):
 
     return {"id": str(attendee["_id"]), "name": attendee["alias"]}
 
-
+# check if host owns event with specified code
 async def check_event(request, host, code):
     if code == "{event}":
         return
@@ -91,6 +91,7 @@ async def get_events(request: Request, access_token: str = Depends(oauth2_scheme
 
     events = []
 
+    # get events from database
     for event in await request.app.mongodb["events"].find({
         "host": host["username"]
     }).to_list(length=maxsize):
@@ -104,11 +105,13 @@ async def get_events(request: Request, access_token: str = Depends(oauth2_scheme
 async def get_event(code: str, request: Request, access_token: str = Depends(oauth2_scheme)):
     host = await get_host_profile(request, access_token)
 
+    # get event from database
     event = await request.app.mongodb["events"].find_one({
         "host": host["username"],
         "code": code
-    })
+    }) 
 
+    # return error if event was not found
     if event is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Event not found")
@@ -121,13 +124,16 @@ async def get_event(code: str, request: Request, access_token: str = Depends(oau
 async def update_event(code: str, request: Request, new_event: UpdateEventModel = Body(...), access_token: str = Depends(oauth2_scheme)):
     host = await get_host_profile(request, access_token)
 
+    # create dict from UpdateEventModel object
     event = {k: v for k, v in new_event.dict().items() if v is not None}
 
+    # update event
     if len(event) >= 1:
         update_result = await request.app.mongodb["events"].update_one(
             {"code": code, "host": host["username"]}, {"$set": event}
         )
 
+    # if succesfull, return ok
         if update_result.modified_count == 1:
             if (
                await request.app.mongodb["events"].find_one({"code": code})
@@ -139,6 +145,7 @@ async def update_event(code: str, request: Request, new_event: UpdateEventModel 
     ) is not None:
         return JSONResponse(status_code=status.HTTP_200_OK, content="ok")
 
+    # otherwise, return error
     raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                         detail="Event not found")
 
@@ -167,20 +174,24 @@ async def like_comment(code: str, id: str, request: Request, access_token: str =
 
     await check_event(request, host["username"], code)
 
+    # find comment in database
     comment = await request.app.mongodb["comments"].find_one({
         "_id": id,
         "event": code
     })
 
+    # return error if not found
     if comment is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
 
+    # like if comment was not liked, unlike if it was already liked
     if "Host" in comment["likes"]:
         comment["likes"].remove("Host")
     else:
         comment["likes"].append("Host")
 
+    # update in db
     await request.app.mongodb["comments"].update_one({
         "_id": id
     }, {
@@ -197,12 +208,16 @@ async def get_comments(code: str, request: Request, access_token: str = Depends(
 
     comments = []
 
+    # go through each comment in database
     for comment in await request.app.mongodb["comments"].find({
         "event": code
     }).to_list(length=maxsize):
         comment["id"] = comment.pop("_id")
+        # change author id to alias
         comment["author"] = await get_alias(request, comment["author"])
+        # check whether attendee has liked the comment
         comment["liked"] = "Host" in comment["likes"]
+        # count number of likes
         comment["likes"] = len(comment["likes"])
         comments.append(comment)
 
@@ -235,10 +250,12 @@ async def get_polls(code: str, request: Request, access_token: str = Depends(oau
 
     polls = []
 
+    # go through each poll in database
     for poll in await request.app.mongodb["polls"].find({
         "event": code
     }).to_list(length=maxsize):
         poll["id"] = poll.pop("_id")
+        # remove ids from answers
         poll["answers"] = [x["content"] for x in poll["answers"]]
         polls.append(poll)
 
@@ -256,13 +273,15 @@ async def update_poll(code: str, id: str, request: Request, new_poll: PostPollMo
         "event": code
     })
 
+    # return error if poll was not found
     if poll is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail="Event not found")
+                            detail="Poll not found")
 
-    # update poll
+    # update poll content
     poll["content"] = new_poll.content
 
+    # update database
     await request.app.mongodb["polls"].update_one(
         {"_id": id}, {"$set": poll}
     )
@@ -278,9 +297,11 @@ async def get_attendees(code: str, request: Request, access_token: str = Depends
 
     attendees = []
 
+    # go through each attendee in database
     for attendee in await request.app.mongodb["attendees"].find({
         "event": code
     }).to_list(length=maxsize):
+        # change id to alias
         attendee = await get_alias(request, attendee["access_token"])
         attendees.append(attendee)
 

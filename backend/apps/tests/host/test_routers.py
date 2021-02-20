@@ -12,12 +12,15 @@ client = TestClient(app)
 
 
 def before_each_test():
+    # empty db
     app.mongodb["attendees"].drop()
     app.mongodb["comments"].drop()
     app.mongodb["events"].drop()
     app.mongodb["hostSessions"].drop()
     app.mongodb["hosts"].drop()
     app.mongodb["polls"].drop()
+
+# returns valid host token
 
 
 def authenticate():
