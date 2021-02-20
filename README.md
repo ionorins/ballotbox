@@ -1,5 +1,7 @@
 # BallotBox 🗳️
 
+![BallotBox.png](BallotBox.png)
+
 ## Launching the project
 Run `docker-compose up`.
 
