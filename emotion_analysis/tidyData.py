@@ -13,7 +13,7 @@ data = data[data.label != "surprise"]
 
 # [JOY ANGER FEAR SADNESS LOVE] 
 # [0.35 0.10 0.05 0.20 0.30]
-# [1914 547 274 1094 1641]
+# [1914 547 274 1094 1641] = 5470
 
 dataJoy = data[data.label == "joy"][0:1914]
 dataAnger = data[data.label == "anger"][0:547]
@@ -45,13 +45,14 @@ dataSadnessTest = dataSadness[766+164:766+2*164]
 
 dataLoveTrain = dataLove[0:1149]
 dataLoveVal = dataLove[1149:1149+246]
-dataLoveTest = dataLove[1149:1149+2*246]
+dataLoveTest = dataLove[1149+246:1149+2*246]
 
 tidyDataTrain = pd.concat([dataJoyTrain,dataAngerTrain,dataFearTrain,dataSadnessTrain,dataLoveTrain])
 tidyDataVal = pd.concat([dataJoyVal,dataAngerVal,dataFearVal, dataSadnessVal, dataLoveVal])
 tidyDataTest = pd.concat([dataJoyTest,dataAngerTest,dataFearTest,dataSadnessTest,dataLoveTest])
 
 # Shuffle the Tidy Data!
+
 
 tidyDataTrain = shuffle(tidyDataTrain)
 tidyDataVal = shuffle(tidyDataVal)
