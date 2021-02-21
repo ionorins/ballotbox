@@ -52,4 +52,4 @@ while True:
         channel.start_consuming()
     except Exception as e:
         print(e)
-        sleep(3)
+        sleep(0.5)
