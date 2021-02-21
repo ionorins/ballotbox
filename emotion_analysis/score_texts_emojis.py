@@ -5,7 +5,7 @@ from rpc_client import analyse
 OUTPUT_PATH = 'gold_mine.csv'
 INPUT_PATH = 'emotions.csv'
 
-df = pd.read_csv('tidyTest.csv', header=None, sep=',')
+df = pd.read_csv('tidyTrain.csv', header=None, sep=',')
 
 TEST_SENTENCES = list(df[0])
 EMOTIONS = list(df[1])
