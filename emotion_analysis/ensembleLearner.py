@@ -4,10 +4,17 @@ from rpc_client import analyse
 
 alpha = 0.5
 
-distText = np.random.uniform(0,1,64)
-distEmoji = np.random.uniform(0,1,64)
-distText = distText/sum(distText)
+distEmoji = np.zeros(64)
+distEmoji[4] = 1
+distEmoji[8] = 1
 distEmoji = distEmoji/sum(distEmoji)
+
+text = "This workshop changed my life. It was amazing!"
+distText = np.array(analyse(text))
+
+# print(distText)
+# print(distEmoji)
+
 
 v = alpha*distText + (1-alpha)*distEmoji
 
@@ -15,11 +22,9 @@ v = alpha*distText + (1-alpha)*distEmoji
 j2c = pd.read_csv('emojiProbabilityDistribution.csv', header=None).to_numpy().transpose()
 
 
-text = "This workshop changed my life. It was amazing!"
-response = analyse(text)
-
 print(j2c.dot(v))
-print(sum(j2c.dot(v)))
+
+
 
 
 
