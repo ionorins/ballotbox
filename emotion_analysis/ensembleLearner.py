@@ -12,7 +12,7 @@ class ensembleLearner:
     # To be added when the j2p dataset is available.
     # j2p = pd.read_csv('j2p.csv', header=None).to_numpy().transpose()
 
-    def getComplexEmotion(self, distEmoji, text):
+    def getComplexEmotion(self, distEmoji = np.zeros(64), text = ""):
         if text != "" and np.count_nonzero(distEmoji) != 0:
             distText = np.array(analyse(text))
             emojiVector = self.alpha*distText + (1-self.alpha)*distEmoji
@@ -23,11 +23,7 @@ class ensembleLearner:
 
         elif text == "" and np.count_nonzero(distEmoji) != 0:
             emojiVector = distEmoji
-        
-        else:
-            emojiVector = np.zeros(5)
 
-        
         complexEmotion = self.j2c.dot(emojiVector)
         return(complexEmotion)
 
@@ -38,4 +34,4 @@ class ensembleLearner:
 # distEmoji = np.zeros(64)
 # # distEmoji[14] = 1
 # print(el.getComplexEmotion(distEmoji, "dafuq is dis shyeet"))
-# print(el.getComplexEmotion(distEmoji, "this is fucking awesome"))    
+# print(el.getComplexEmotion(distEmoji, "this is just spectacular"))    
