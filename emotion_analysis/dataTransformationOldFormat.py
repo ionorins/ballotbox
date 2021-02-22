@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-gold = pd.read_csv("gold_mine.csv", header=None)
+gold = pd.read_csv("gold_mine_EF.csv", header=None)
 
 silver = gold.iloc[:,0:65].to_numpy()
 
@@ -11,8 +11,7 @@ likelihoodFear = np.zeros(64)
 likelihoodSadness = np.zeros(64)
 likelihoodLove = np.zeros(64)
 
-nRows = 820
-
+nRows = 8200
 probDistEmojis = np.zeros((64,5))
 emotions = ["joy", "anger", "fear", "sadness", "love"]
 counter = [0]*5
@@ -53,7 +52,7 @@ for i in range(64):
     print(str(i) + " " + emotions[np.argmax(probDistEmojis[i])])
 
 
-pd.DataFrame(probDistEmojis).to_csv("emojiProbabilityDistribution.csv", header=None, index=None)
+pd.DataFrame(probDistEmojis).to_csv("j2c_8200_EF.csv", header=None, index=None)
 
 
 

@@ -2,39 +2,40 @@ import pandas as pd
 import numpy as np
 from rpc_client import analyse
 
-alpha = 0.5
+class ensembleLearner:
 
-distEmoji = np.zeros(64)
-distEmoji[4] = 1
-distEmoji[8] = 1
-distEmoji = distEmoji/sum(distEmoji)
+    # Alpha is the ensemble parameter
+    alpha = 0.5
+    # j2c is Emoji to Complex Emotion matrix. Going from emoji space to complex emotion is a linear transformation. 
+    j2c = pd.read_csv('j2c_EF.csv', header=None).to_numpy().transpose()
 
-text = "This workshop changed my life. It was amazing!"
-distText = np.array(analyse(text))
+    # To be added when the j2p dataset is available.
+    # j2p = pd.read_csv('j2p.csv', header=None).to_numpy().transpose()
 
-# print(distText)
-# print(distEmoji)
+    def getComplexEmotion(self, distEmoji, text):
+        if text != "" and np.count_nonzero(distEmoji) != 0:
+            distText = np.array(analyse(text))
+            emojiVector = self.alpha*distText + (1-self.alpha)*distEmoji
+
+        elif text != "" and np.count_nonzero(distEmoji) == 0:
+            distText = np.array(analyse(text))
+            emojiVector = distText
+
+        elif text == "" and np.count_nonzero(distEmoji) != 0:
+            emojiVector = distEmoji
+        
+        else:
+            emojiVector = np.zeros(5)
+
+        
+        complexEmotion = self.j2c.dot(emojiVector)
+        return(complexEmotion)
 
 
-v = alpha*distText + (1-alpha)*distEmoji
+# # Some Extravagant Examples!
 
-
-j2c = pd.read_csv('emojiProbabilityDistribution.csv', header=None).to_numpy().transpose()
-
-
-print(j2c.dot(v))
-
-
-
-
-
-# alpha the weight from the ensemble
-
-# distEmoji
-# distText 
-
-# v = alpha*distText + (1-alpha)*distEmoji
-
-# j2c matrix
-
-# compEmotion = matrix vector product of j2c and v
+# el = ensembleLearner()
+# distEmoji = np.zeros(64)
+# # distEmoji[14] = 1
+# print(el.getComplexEmotion(distEmoji, "dafuq is dis shyeet"))
+# print(el.getComplexEmotion(distEmoji, "this is fucking awesome"))    
