@@ -140,3 +140,13 @@
 .like-button-liked {
     color: blue !important;
 }
+.polls-container {
+    overflow-y: auto;
+    min-height: 55vh;
+    max-height: 50vh;
+}
+.answers-container {
+    overflow-y: auto;
+    max-height: 20vh;
+    border: 1px solid rgba(0,0,0,.125);
+}

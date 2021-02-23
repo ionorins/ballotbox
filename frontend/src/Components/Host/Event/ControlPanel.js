@@ -11,6 +11,7 @@ import {useCookies} from "react-cookie";
 import Navbar from "react-bootstrap/Navbar";
 import {FiLink,  FiUser} from "react-icons/fi";
 import Polls from "./Polls";
+import Spinner from "react-bootstrap/Spinner";
 
 
 const ControlPanel = () => {
@@ -57,7 +58,7 @@ const ControlPanel = () => {
                 </Navbar.Text>
                 <Navbar.Text className="ml-auto">
                     <h1 className="nav-stats-font">
-                        { attendees } <FiUser className="mb-1"/>
+                        <span id="attendees" className="">{ attendees }</span> <FiUser className="mb-1"/>
                     </h1>
                 </Navbar.Text>
             </Navbar>
@@ -86,13 +87,16 @@ const ControlPanel = () => {
                 <Card.Body className="access-card-body">
                     <Tab.Content>
                         <Tab.Pane eventKey="emotion">
-                            <img src={Loading}/>
+                            Calculating... <br/>
+                            <Spinner animation="border" role="status">
+                                <span className="sr-only">Loading...</span>
+                            </Spinner>
                         </Tab.Pane>
                         <Tab.Pane eventKey="comments">
                             <CommentWall />
                         </Tab.Pane>
                         <Tab.Pane eventKey="polls">
-                            <Polls />
+                            <Polls attendees={attendees}/>
                         </Tab.Pane>
                     </Tab.Content>
                 </Card.Body>

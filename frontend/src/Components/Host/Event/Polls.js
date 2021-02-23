@@ -7,22 +7,33 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import {FiThumbsUp} from "react-icons/fi";
+import {FiThumbsUp, FiUser} from "react-icons/fi";
 import {FaPlus} from "react-icons/fa";
 import NewEvent from "../NewEvent";
 import Card from "react-bootstrap/Card";
 import NewPoll from "./NewPoll";
 import Accordion from "react-bootstrap/Accordion";
 import FreeText from "../../FormBuilder/Types/FreeText";
+import {ImBubble} from "react-icons/im";
+import {FaTheaterMasks, MdFormatListBulleted} from "react-icons/all";
 
 
-const Polls = () => {
+const Polls = ({attendees}) => {
 
 
     let { id } = useParams();
     const [cookies, setCookies] = useCookies(['access_token']);
-    const [pollsList, setPollsList] = useState(<></>);
+    const [pollsList, setPollsList] = useState([]);
     const [show, setShow] = useState(false);
+    const [or, setOr] = useState("");
+
+    const getIcon = (type) => {
+        if (type === "freeText")
+            return <ImBubble  className="mb-1 mx-1"/>;
+        else if (type === "multipleChoice")
+            return <MdFormatListBulleted className="mx-1 mb-1"/>;
+        else return <FaTheaterMasks className="mx-1 mb-1"/>;
+    }
 
     useEffect(() => {
         fetch('http://localhost:8000/host/event/'+id+'/polls', {
@@ -33,33 +44,52 @@ const Polls = () => {
     }).then((response) => response.json())
         .then((responseJson) => {
             console.log(responseJson);
-            const polls = responseJson.map((poll) =>
-                <Card>
-                    <Card.Header>
-                        <Accordion.Toggle eventKey={poll.id} className="builder-toggle">
-                            {poll.content['prompt']}
-                        </Accordion.Toggle>
-                    </Card.Header>
-                    <Accordion.Collapse eventKey={poll.id}>
-                        <Card.Body>
-                            { (poll.answers.length > 0  ? poll.answers.map((answer) =>
-                                    <ListGroup.Item>
-                                        {answer.answer}
-                                    </ListGroup.Item>
-                                ) : "No one has answered yet :(")
-                            }
-                        </Card.Body>
-                    </Accordion.Collapse>
-                </Card>
-            );
-            setPollsList(polls);
+            if (responseJson.length > 0)
+                setOr("or");
+            setPollsList(responseJson);
         });
+
 }, []);
 
     return (
         <div>
+            <div className="polls-container">
                 <Accordion>
-                    {pollsList}
+                    {pollsList.map((poll) =>
+                        <Card>
+                            <Card.Header>
+                                <Accordion.Toggle eventKey={poll.id} className="builder-toggle">
+                                    {poll.content['prompt']} {getIcon(poll.content.type)}
+                                </Accordion.Toggle>
+                            </Card.Header>
+                            <Accordion.Collapse eventKey={poll.id}>
+                                <Card.Body>
+                                    <Row>
+                                        <Col sm={8}>
+                                            Responses
+                                            <ListGroup variant="flush" className="answers-container">
+                                            { (poll.answers.length > 0  ? poll.answers.map((answer) =>
+                                                <ListGroup.Item>
+                                                    {answer.answer}
+                                                </ListGroup.Item>
+                                            ) : "No one has answered yet :(")
+                                            }
+                                            </ListGroup>
+                                        </Col>
+                                        <Col sm={3}>
+                                            {poll.answers.length} / {attendees} <FiUser className="mb-1"/>
+                                        </Col>
+                                    </Row>
+                                </Card.Body>
+                            </Accordion.Collapse>
+                        </Card>
+                    )}
+                </Accordion>
+            </div>
+            <div className="my-2">
+                {or}
+            </div>
+            <Accordion>
                     <Card style={{cursor: "pointer",}} onClick={() => setShow(true)}>
                         <Card.Header>
                             <Accordion.Toggle eventKey="#'" className="builder-toggle">
@@ -71,7 +101,7 @@ const Polls = () => {
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>
-                </Accordion>
+            </Accordion>
                 <NewPoll show={show} setShow={setShow} />
         </div>
 
