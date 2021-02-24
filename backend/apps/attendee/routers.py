@@ -5,6 +5,7 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.param_functions import Body
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer
+from starlette.status import HTTP_403_FORBIDDEN
 
 from .models import AnswerModel, AttendeeModel, CommentModel, PostAnswerModel, PostCommentModel
 
@@ -216,7 +217,7 @@ async def get_polls(request: Request, access_token: str = Depends(oauth2_scheme)
         poll["id"] = poll.pop("_id")
         # check whether attendee has answered the poll
         poll["answered"] = any(
-            x["attendee"] == access_token for x in poll["answers"])
+            ans["attendee"] == access_token for ans in poll["answers"])
         # remove answers
         del poll["answers"]
         polls.append(poll)
@@ -238,6 +239,10 @@ async def answer(id: str, request: Request, access_token: str = Depends(oauth2_s
     if poll is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
+
+    if any(ans["attendee"] == access_token for ans in poll["answers"]):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN, detail="Poll was already answered")
 
     # create anwer object containing received content
     answer = AnswerModel()
