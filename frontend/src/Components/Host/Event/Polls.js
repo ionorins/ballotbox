@@ -15,7 +15,8 @@ import NewPoll from "./NewPoll";
 import Accordion from "react-bootstrap/Accordion";
 import FreeText from "../../FormBuilder/Types/FreeText";
 import {ImBubble} from "react-icons/im";
-import {FaTheaterMasks, MdFormatListBulleted} from "react-icons/all";
+import {FaTheaterMasks} from "react-icons/fa";
+import {MdFormatListBulleted} from "react-icons/md";
 
 
 const Polls = ({attendees}) => {
@@ -55,7 +56,7 @@ const Polls = ({attendees}) => {
         <div>
             <div className="polls-container">
                 <Accordion>
-                    {pollsList.map((poll) =>
+                    {pollsList.length > 0 ? pollsList.map((poll) =>
                         <Card>
                             <Card.Header>
                                 <Accordion.Toggle eventKey={poll.id} className="builder-toggle">
@@ -83,7 +84,7 @@ const Polls = ({attendees}) => {
                                 </Card.Body>
                             </Accordion.Collapse>
                         </Card>
-                    )}
+                    ) : "No polls submitted yet :("}
                 </Accordion>
             </div>
             <div className="my-2">

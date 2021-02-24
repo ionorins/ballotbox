@@ -8,9 +8,10 @@ import Signup from "./Signup";
 import {Link, useHistory} from "react-router-dom";
 import {FiChevronLeft} from "react-icons/fi";
 import Button from "react-bootstrap/Button";
+import TitleLogo from "../TitleLogo";
 
-const Access = ({setToken}) => {
-    const [currentView, setView] = useState(<Login setToken={setToken}/>);
+const Access = () => {
+    const [currentView, setView] = useState(<Login/>);
     let history = useHistory();
 
     if (JSON.parse(localStorage.getItem('loggedIn')) === "true") {
@@ -20,7 +21,7 @@ const Access = ({setToken}) => {
     return (
         <div className="container">
             <Link to="/" className="clickable-link">
-                <h1 className="display-3">BallotBox🗳️</h1>
+                    <h1 className="display-3">BallotBox <TitleLogo /></h1>
             </Link>
         <Card className="access-card mx-auto my-3">
             <Card.Header style={{borderBottom: "none", backgroundColor: "transparent",}}>

@@ -28,6 +28,7 @@
     cursor:pointer;
     color:black;
     text-decoration:none;
+    flex-direction: row;
 }
 
 .tab-bar {

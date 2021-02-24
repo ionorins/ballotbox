@@ -29,7 +29,6 @@ const NewEvent = ({ show, setShow }) => {
                 timestamp: date,
             }),
         }).then((response) => {
-            alert("Added succesfully!");
             setShow(false);
             window.location.reload();
         });

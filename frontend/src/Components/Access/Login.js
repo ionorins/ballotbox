@@ -5,11 +5,13 @@ import InputGroup from "react-bootstrap/InputGroup";
 import {FiLock, FiMail} from "react-icons/fi";
 import { useHistory } from "react-router-dom";
 import {useCookies, withCookies} from "react-cookie";
+import {useState} from "react";
 
-const Login = ({setToken}) => {
+const Login = () => {
     let history = useHistory();
 
     const [cookies, setCookie] = useCookies(['access_token']);
+    const [validated, setValidated] = useState("");
 
     const handleSubmit = (event) => {
         const email = event.target[0].value;
@@ -26,7 +28,7 @@ const Login = ({setToken}) => {
             body: form,
         }).then((response) => {
             if (response.status !== 201) {
-                alert("Incorrect details");
+                setValidated("Invalid email/password combination")
                 return;
             }
             response.json().then((responseJson) => {
@@ -40,7 +42,7 @@ const Login = ({setToken}) => {
 
     return (
             <Form className="forms mx-auto" onSubmit={handleSubmit}>
-                <InputGroup controlId="email" className="my-4" size="lg">
+                <InputGroup className="mt-4" size="lg">
                     <InputGroup.Prepend>
                         <InputGroup.Text>
                             <FiMail/>
@@ -49,7 +51,7 @@ const Login = ({setToken}) => {
                     <Form.Control type="email" placeholder="Email"/>
                 </InputGroup>
 
-                <InputGroup controlId="password" className="my-4" size="lg">
+                <InputGroup className="mt-4" size="lg">
                     <InputGroup.Prepend>
                         <InputGroup.Text>
                             <FiLock/>
@@ -57,7 +59,10 @@ const Login = ({setToken}) => {
                     </InputGroup.Prepend>
                     <Form.Control type="password" placeholder="Password"/>
                 </InputGroup>
-            <Button variant="primary" type="submit" className="buttons my-2">
+                <Form.Text style={{color: "crimson",}}>
+                    {validated}
+                </Form.Text>
+            <Button variant="primary" type="submit" className="buttons mt-4 mb-2">
                 Log in
             </Button>
             </Form>

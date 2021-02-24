@@ -9,7 +9,8 @@ import MultipleChoice from "./Types/MultipleChoice";
 import MoodSlider from "./Types/MoodSlider";
 import Accordion from "react-bootstrap/Accordion";
 import {ImBubble} from "react-icons/im";
-import {FaTheaterMasks, MdFormatListBulleted} from "react-icons/all";
+import {FaTheaterMasks} from "react-icons/fa";
+import {MdFormatListBulleted} from "react-icons/md";
 
 const FormBuilder = () => {
 

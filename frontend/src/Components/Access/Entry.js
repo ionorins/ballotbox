@@ -7,8 +7,9 @@ import { FiLink } from "react-icons/fi";
 import {Link, useHistory} from "react-router-dom";
 import {useCookies} from "react-cookie";
 import {useState} from "react";
+import TitleLogo from "../TitleLogo";
 
-const Entry = ({ setToken }) => {
+const Entry = () => {
 
     const history = useHistory();
 
@@ -45,9 +46,9 @@ const Entry = ({ setToken }) => {
 
     return (
         <div className="container">
-            <h1 className="display-4">BallotBox 🗳️</h1>
+            <h1 className="display-3">BallotBox <TitleLogo /></h1>
             <Form className="forms mx-auto my-3 flex-column" onSubmit={handleSubmit}>
-                <InputGroup hasValidation className="mt-2">
+                <InputGroup className="mt-2">
                     <InputGroup.Prepend>
                         <InputGroup.Text>
                             <FiLink/>

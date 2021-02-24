@@ -8,22 +8,20 @@ import Event from "./Components/Attendee/Event";
 import ControlPanel from "./Components/Host/Event/ControlPanel";
 
 function App() {
-    const [token, setToken] = useState();
-
     return (
         <Router>
         <Switch>
             <Route exact path="/">
-                <Entry setToken={setToken}/>
+                <Entry/>
             </Route>
             <Route path="/login">
-                <Access setToken={setToken}/>
+                <Access/>
             </Route>
             <Route path="/host/event/:id">
                 <ControlPanel />
             </Route>
             <Route path="/host">
-                <Host token={token}/>
+                <Host />
             </Route>
             <Route path="/event/">
                 <Event />

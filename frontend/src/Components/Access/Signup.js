@@ -5,10 +5,13 @@ import InputGroup from "react-bootstrap/InputGroup";
 import {FiLock, FiMail} from "react-icons/fi";
 import {useCookies} from "react-cookie";
 import { useHistory } from "react-router-dom";
+import {useState} from "react";
 
 const Signup = () => {
 
     const [cookies, setCookies] = useCookies(['access_token']);
+    const [emailValidated, setEmailValidated] = useState("");
+    const [passValidated, setPassValidated] = useState("");
     let history = useHistory();
 
     const handleSubmit = (event) => {
@@ -27,12 +30,16 @@ const Signup = () => {
                 password: pass,
             }),
         }).then((response) => {
-            if (response.status !== 201) {
-                alert("Signup failed");
+            if (response.status === 403) {
+                setPassValidated("");
+                setEmailValidated("Email already in use");
                 return;
             }
+            else if (response.status === 422) {
+                setEmailValidated("");
+                setPassValidated("Password requires 8 characters and at least 1 number")
+            }
             else {
-                alert("Signup succesful");
                 response.json().then((responseJson) => {
                     setCookies('access_token', responseJson["access_token"]);
                     history.push("/host");
@@ -44,7 +51,10 @@ const Signup = () => {
 
     return (
             <Form className="forms mx-auto" onSubmit={handleSubmit}>
-                <InputGroup controlId="email" className="my-4" size="lg">
+                <Form.Text style={{color: "crimson",}}>
+                    {emailValidated}
+                </Form.Text>
+                <InputGroup controlId="email" className="mb-4" size="lg">
                     <InputGroup.Prepend>
                         <InputGroup.Text>
                             <FiMail />
@@ -52,6 +62,9 @@ const Signup = () => {
                     </InputGroup.Prepend>
                     <Form.Control type="email" placeholder="Email" size="lg" />
                 </InputGroup>
+                <Form.Text style={{color: "crimson",}}>
+                    {passValidated}
+                </Form.Text>
                 <InputGroup size="lg">
                     <InputGroup.Prepend>
                         <InputGroup.Text>

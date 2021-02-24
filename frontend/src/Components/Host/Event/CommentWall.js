@@ -59,7 +59,11 @@ const CommentWall = () => {
                     </ListGroup.Item>
                 );
                 if (responseJson.length === 0)
-                    setComments("No one has commented yet :(");
+                    setComments(
+                        <ListGroup.Item className="mx-auto my-auto">
+                            No one has commented yet :(
+                        </ListGroup.Item>
+                    );
                 else setComments(commentList);
             });
     }
