@@ -1,13 +1,15 @@
 from sys import maxsize
 
+import numpy as np
+from random import random
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.param_functions import Body
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer
-from starlette.status import HTTP_403_FORBIDDEN
 
-from .models import AnswerModel, AttendeeModel, CommentModel, PostAnswerModel, PostCommentModel
+from .models import (AnswerModel, AttendeeModel, CommentModel, PostAnswerModel,
+                     PostCommentModel)
 
 router = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="attendee/login/{event}")
@@ -143,6 +145,8 @@ async def comment(request: Request, access_token: str = Depends(oauth2_scheme), 
     new_comment.content = comment.content
     new_comment.author = attendee["access_token"]
     new_comment.event = attendee["event"]
+    new_comment.moods = list(np.random.dirichlet(np.ones(5), size=1)[0])
+    new_comment.polarity = 2 * random() - 1
     new_comment = jsonable_encoder(new_comment)
 
     # save comment

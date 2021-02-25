@@ -24,7 +24,7 @@ class CommentModel(BaseModel):
     author: str = Field(default=None)
     likes: List[str] = Field(default=[])
     moods: List[float] = Field(default=None)
-    positivity: float = Field(default=None)
+    polarity: float = Field(default=None)
     timestamp: float = Field(default_factory=time)
 
     class Config:
