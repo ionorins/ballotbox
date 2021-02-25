@@ -6,8 +6,11 @@ from typing import Optional
 from pydantic import BaseModel, Field, validator
 from pydantic.networks import EmailStr
 
+# regex cheking for at least 8 characters and at least one number
 password_regex = "^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
 pattern = re.compile(password_regex)
+
+# returns expiration time (current time + 3 days)
 def expiration_factory(): return time() + 259200
 
 

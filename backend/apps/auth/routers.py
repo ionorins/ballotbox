@@ -27,7 +27,7 @@ async def create(request: Request, host: HostModel = Body(...)):
     host = jsonable_encoder(host)
     await request.app.mongodb["hosts"].insert_one(host)
 
-    # create and return session
+    # create, save and return session
     session = HostSessionModel()
     session.username = host['username']
     session.token_type = "bearer"
@@ -50,7 +50,7 @@ async def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN, detail="Email or password is incorrect")
 
-    # create and return session
+    # create, save and return session
     session = HostSessionModel()
     session.username = form_data.username
     session.token_type = "bearer"
