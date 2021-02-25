@@ -1,9 +1,8 @@
 import copy
+from math import sqrt
 from random import random
 from sys import maxsize
 from time import time
-
-from starlette.status import HTTP_404_NOT_FOUND
 
 import numpy as np
 from fastapi import APIRouter, Body, Depends, HTTPException, Request, status
@@ -45,6 +44,8 @@ async def get_host_profile(request, access_token):
     return host
 
 # returns alias given access token
+
+
 async def get_alias(request, access_token):
     if access_token == "Host":
         return {"id": "Host", "name": "Host"}
@@ -59,6 +60,8 @@ async def get_alias(request, access_token):
     return {"id": str(attendee["_id"]), "name": attendee["alias"]}
 
 # check if host owns event with specified code
+
+
 async def check_event(request, host, code):
     if code == "{event}":
         return
@@ -113,7 +116,7 @@ async def get_event(code: str, request: Request, access_token: str = Depends(oau
     event = await request.app.mongodb["events"].find_one({
         "host": host["username"],
         "code": code
-    }) 
+    })
 
     # return error if event was not found
     if event is None:
@@ -173,6 +176,7 @@ async def comment(code: str, request: Request, access_token: str = Depends(oauth
 
     return JSONResponse(status_code=status.HTTP_200_OK, content="ok")
 
+
 @router.post("/event/{code}/comment/like/{id}")
 async def like_comment(code: str, id: str, request: Request, access_token: str = Depends(oauth2_scheme)):
     host = await get_host_profile(request, access_token)
@@ -203,6 +207,7 @@ async def like_comment(code: str, id: str, request: Request, access_token: str =
     })
 
     return JSONResponse(status_code=status.HTTP_200_OK, content="ok")
+
 
 @router.get("/event/{code}/comments")
 async def get_comments(code: str, request: Request, access_token: str = Depends(oauth2_scheme)):
@@ -307,11 +312,13 @@ async def get_attendees(code: str, request: Request, access_token: str = Depends
 
     return JSONResponse(status_code=status.HTTP_200_OK, content=attendees)
 
-@router.get("/event/{event}/mood/polarity")
-async def get_attendees(code: str, request: Request, access_token: str = Depends(oauth2_scheme), interval: int = 300):
+
+@router.get("/event/{code}/mood/polarity")
+async def get_polarity(code: str, request: Request, access_token: str = Depends(oauth2_scheme), interval: int = 300):
     host = await get_host_profile(request, access_token)
     await check_event(request, host["username"], code)
 
+    # return error if interval is non-positive
     if interval <= 0:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Interval must be positive")
@@ -323,50 +330,117 @@ async def get_attendees(code: str, request: Request, access_token: str = Depends
     for comment in await request.app.mongodb["comments"].find({
         "event": code
     }).sort("timestamp").to_list(length=maxsize):
+        # remember time of first comment
         if first_time is None:
             first_time = comment["timestamp"]
 
-        time_bin = (comment["timestamp"] - first_time) // interval
+        # calculate the index of the interval the comment is in
+        time_bin = int(comment["timestamp"] - first_time) // interval
+
+        # add probablity to interval and weight it by (1 + no likes)
         if time_bin not in polarities:
             polarities[time_bin] = []
+        polarities[time_bin] += (1 + len(comment["likes"])
+                                 ) * [comment["polarity"]]
 
-        polarities[time_bin] += (1 + len(comment["likes"])) * [comment["polarity"]]
+    # average each interval
+    last_bin = int(time() - first_time) // interval
 
-    polarities = {k: sum(v)/len(v) for k, v in polarities.items()}
+    polarities_list = []
 
-    return JSONResponse(status_code=status.HTTP_200_OK, content=polarities)
+    for i in range(last_bin + 1):
+        polarity = polarities.get(i, [0])
+        polarities_list.append(sum(polarity) / len(polarity))
 
-@router.get("/event/{event}/mood/{emotion}")
-async def get_attendees(code: str, emotion: str, request: Request, access_token: str = Depends(oauth2_scheme), interval: int = 300):
+    return JSONResponse(status_code=status.HTTP_200_OK, content=polarities_list)
+
+
+@router.get("/event/{code}/mood/{emotion}")
+async def get_mood(code: str, emotion: str, request: Request, access_token: str = Depends(oauth2_scheme), interval: int = 300):
     host = await get_host_profile(request, access_token)
     await check_event(request, host["username"], code)
 
     emotions = ["joy", "anger", "fear", "sadness", "love"]
 
+    # return error if interval is non-positive
     if interval <= 0:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Interval must be positive")
 
+    # return error if emotion is not in list
     if emotion not in emotions:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Mood not found :(")
 
-    polarities = {}
+    moods = {}
     first_time = None
 
     # go through each comment in database
     for comment in await request.app.mongodb["comments"].find({
         "event": code
     }).sort("timestamp").to_list(length=maxsize):
+        # remember time of first comment
         if first_time is None:
             first_time = comment["timestamp"]
 
-        time_bin = (comment["timestamp"] - first_time) // interval
-        if time_bin not in polarities:
-            polarities[time_bin] = []
+        # calculate the index of the interval the comment is in
+        time_bin = int(comment["timestamp"] - first_time) // interval
 
-        polarities[time_bin] += (1 + len(comment["likes"])) * [comment["moods"][emotions.index(emotion)]]
+        # add probablity to interval and weight it by (1 + no likes)
+        if time_bin not in moods:
+            moods[time_bin] = []
+        moods[time_bin] += (1 + len(comment["likes"])) * \
+            [comment["moods"][emotions.index(emotion)]]
 
-    polarities = {k: sum(v)/len(v) for k, v in polarities.items()}
+    # average each interval
+    last_bin = int(time() - first_time) // interval
 
-    return JSONResponse(status_code=status.HTTP_200_OK, content=polarities)
+    moods_list = []
+
+    for i in range(last_bin + 1):
+        mood = moods.get(i, [0])
+        moods_list.append(sum(mood) / len(mood))
+
+    return JSONResponse(status_code=status.HTTP_200_OK, content=moods_list)
+
+
+@router.get("/event/{code}/mood")
+async def get_current_mood(code: str, request: Request, access_token: str = Depends(oauth2_scheme), interval: int = 300):
+    host = await get_host_profile(request, access_token)
+    await check_event(request, host["username"], code)
+
+    emotions = ["joy", "anger", "fear", "sadness", "love"]
+
+    # return error if interval is non-positive
+    if interval <= 0:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Interval must be positive")
+
+    moods = []
+
+    # go through each comment in database and remember weighted by likes mood
+    for comment in await request.app.mongodb["comments"].find({
+        "event": code,
+        "timestamp": {"$gt": time() - interval}
+    }).to_list(length=maxsize):
+        moods += (1 + len(comment["likes"])) * [comment["moods"]]
+
+    if len(moods) == 0:
+        return JSONResponse(status_code=status.HTTP_200_OK, content={
+            "joy": 0,
+            "anger": 0,
+            "fear": 0,
+            "sadness": 0,
+            "love": 0
+        })
+
+    # average mood and take square root (moods will be represented as areas)
+    moods = [sqrt(sum(i) / len(i)) for i in zip(*moods)]
+
+    # label avarages
+    result = {}
+
+    for k, v in zip(emotions, moods):
+        result[k] = v
+
+    return JSONResponse(status_code=status.HTTP_200_OK, content=result)
