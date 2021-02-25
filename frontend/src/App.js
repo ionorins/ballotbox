@@ -1,59 +1,33 @@
-import "antd/dist/antd.css"
-
-import { CheckCircleOutlined, MinusCircleOutlined } from "@ant-design/icons"
-import { Col, Row, Timeline } from "antd"
-import { useEffect, useState } from "react"
+import Entry from './Components/Access/Entry.js';
+import React, {useState, useEffect} from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Route, Switch, BrowserRouter as Router} from "react-router-dom";
+import Access from "./Components/Access/Access";
+import Host from "./Components/Host/Host";
+import Event from "./Components/Attendee/Event";
+import ControlPanel from "./Components/Host/Event/ControlPanel";
 
 function App() {
-    const [tasks, setTasks] = useState([])
-    const [timeline, setTimeline] = useState([])
-
-    useEffect(() => {
-        const fetchAllTasks = async () => {
-            const response = await fetch("/task/")
-            const fetchedTasks = await response.json()
-            setTasks(fetchedTasks)
-        }
-
-        const interval = setInterval(fetchAllTasks, 1000)
-
-        return () => {
-            clearInterval(interval)
-        }
-    }, [])
-
-    useEffect(() => {
-        const timelineItems = tasks.reverse().map((task) => {
-            return task.completed ? (
-                <Timeline.Item
-                    dot={<CheckCircleOutlined />}
-                    color="green"
-                    style={{ textDecoration: "line-through", color: "green" }}
-                >
-                    {task.name} <small>({task._id})</small>
-                </Timeline.Item>
-            ) : (
-                <Timeline.Item
-                    dot={<MinusCircleOutlined />}
-                    color="blue"
-                    style={{ textDecoration: "initial" }}
-                >
-                    {task.name} <small>({task._id})</small>
-                </Timeline.Item>
-            )
-        })
-
-        setTimeline(timelineItems)
-    }, [tasks])
-
     return (
-        <>
-            <Row style={{ marginTop: 50 }}>
-                <Col span={14} offset={5}>
-                    <Timeline mode="alternate">{timeline}</Timeline>
-                </Col>
-            </Row>
-        </>
+        <Router>
+        <Switch>
+            <Route exact path="/">
+                <Entry/>
+            </Route>
+            <Route path="/login">
+                <Access/>
+            </Route>
+            <Route path="/host/event/:id">
+                <ControlPanel />
+            </Route>
+            <Route path="/host">
+                <Host />
+            </Route>
+            <Route path="/event/">
+                <Event />
+            </Route>
+        </Switch>
+        </Router>
     )
 }
 
