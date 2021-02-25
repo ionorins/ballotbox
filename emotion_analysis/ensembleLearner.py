@@ -24,14 +24,17 @@ class ensembleLearner:
         elif text == "" and np.count_nonzero(distEmoji) != 0:
             emojiVector = distEmoji
 
+        else:
+            emojiVector = distEmoji    
+
         complexEmotion = self.j2c.dot(emojiVector)
         return(complexEmotion)
 
 
-# # Some Extravagant Examples!
+# Some Extravagant Examples!
 
-# el = ensembleLearner()
-# distEmoji = np.zeros(64)
-# # distEmoji[14] = 1
-# print(el.getComplexEmotion(distEmoji, "dafuq is dis shyeet"))
-# print(el.getComplexEmotion(distEmoji, "this is just spectacular"))    
+el = ensembleLearner()
+distEmoji = np.zeros(64)
+# distEmoji[31] = 1
+print(el.getComplexEmotion(distEmoji, ""))
+print(el.getComplexEmotion(distEmoji, "Cha cha real smooth"))    
