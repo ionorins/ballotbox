@@ -12,7 +12,7 @@ import {ImBubble} from "react-icons/im";
 import {FaTheaterMasks} from "react-icons/fa";
 import {MdFormatListBulleted} from "react-icons/md";
 
-const FormBuilder = () => {
+const FormBuilder = ({setShow}) => {
 
     const [option, setOption] = useState(<p> Select a module to add</p>);
 
@@ -31,7 +31,7 @@ const FormBuilder = () => {
                             </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="0">
-                            <FreeText/>
+                                <FreeText setShow={setShow}/>
                         </Accordion.Collapse>
                     </Card>
                     <Card>
@@ -41,7 +41,7 @@ const FormBuilder = () => {
                             </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="1">
-                            <MultipleChoice/>
+                            <MultipleChoice setShow={setShow}/>
                         </Accordion.Collapse>
                     </Card>
                     <Card>
@@ -51,7 +51,7 @@ const FormBuilder = () => {
                             </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="2">
-                            <MoodSlider/>
+                            <MoodSlider setShow={setShow}/>
                         </Accordion.Collapse>
                     </Card>
                 </Accordion>

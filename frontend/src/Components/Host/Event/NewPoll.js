@@ -5,22 +5,26 @@ import Modal from "react-bootstrap/Modal";
 import FormBuilder from "../../FormBuilder/FormBuilder";
 
 
-const NewPoll = ({ show, setShow }) => {
+const NewPoll = ({ show, setShow, getPolls }) => {
 
+    const hideModal = () => {
+        getPolls();
+        setShow(false);
+    }
 
     return (
         <Modal
             show={show}
-            onHide={() => setShow(false)}
+            onHide={() => hideModal()}
         >
             <Modal.Header closeButton>
                 <Modal.Title>New Poll </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <FormBuilder />
+                    <FormBuilder setShow={hideModal}/>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={() => setShow(false)}>
+                <Button variant="secondary" onClick={() => hideModal()}>
                     Close
                 </Button>
             </Modal.Footer>
@@ -30,3 +34,4 @@ const NewPoll = ({ show, setShow }) => {
 }
 export default NewPoll;
 
+export const ShowContext = React.createContext('');

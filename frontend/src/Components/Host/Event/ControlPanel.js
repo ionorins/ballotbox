@@ -12,6 +12,9 @@ import Navbar from "react-bootstrap/Navbar";
 import {FiLink,  FiUser} from "react-icons/fi";
 import Polls from "./Polls";
 import Spinner from "react-bootstrap/Spinner";
+import EmotionAnalysis from "./EmotionAnalysis";
+import Overlay from "react-bootstrap/Overlay";
+import Tooltip from "react-bootstrap/Tooltip";
 
 
 const ControlPanel = () => {
@@ -21,6 +24,8 @@ const ControlPanel = () => {
     const [eventName, setEventName] = useState("Loading...");
     const [eventCode, setEventCode] = useState("Loading...");
     const [attendees, setAttendees] = useState(0);
+    const [show, setShow] = useState(false);
+    const target = useRef(null);
 
     async function getAttendees() {
         fetch('http://localhost:8000/host/event/'+id+"/attendees", {
@@ -53,8 +58,16 @@ const ControlPanel = () => {
     return (
         <div className="container">
             <Navbar fixed="top">
-                <Navbar.Text onClick={() => {navigator.clipboard.writeText(eventCode)}}>
+                <Navbar.Text ref={target} onClick={() => {setShow(!show); navigator.clipboard.writeText(eventCode)}}>
                     <h1 className="nav-stats-font"> <FiLink className="mb-1"/> { eventCode }</h1>
+                    <Overlay target={target.current} show={show} placement="bottom">
+                        {(props) => (
+                            <Tooltip id="overlay-example" {...props}>
+                                Copied!
+                            </Tooltip>
+
+                        )}
+                    </Overlay>
                 </Navbar.Text>
                 <Navbar.Text className="ml-auto">
                     <h1 className="nav-stats-font">
@@ -87,10 +100,7 @@ const ControlPanel = () => {
                 <Card.Body className="access-card-body">
                     <Tab.Content>
                         <Tab.Pane eventKey="emotion">
-                            Calculating... <br/>
-                            <Spinner animation="border" role="status">
-                                <span className="sr-only">Loading...</span>
-                            </Spinner>
+                            <EmotionAnalysis />
                         </Tab.Pane>
                         <Tab.Pane eventKey="comments">
                             <CommentWall />

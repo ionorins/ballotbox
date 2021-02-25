@@ -36,20 +36,24 @@ const Polls = ({attendees}) => {
         else return <FaTheaterMasks className="mx-1 mb-1"/>;
     }
 
-    useEffect(() => {
+    async function getPolls() {
+        console.log("TEST")
         fetch('http://localhost:8000/host/event/'+id+'/polls', {
-        method: 'GET',
-        headers: {
-            "Authorization": "Bearer "+cookies['access_token'],
-        }
-    }).then((response) => response.json())
-        .then((responseJson) => {
-            console.log(responseJson);
-            if (responseJson.length > 0)
-                setOr("or");
-            setPollsList(responseJson);
-        });
+            method: 'GET',
+            headers: {
+                "Authorization": "Bearer "+cookies['access_token'],
+            }
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                console.log(responseJson);
+                if (responseJson.length > 0)
+                    setOr("or");
+                setPollsList(responseJson);
+            });
+    }
 
+    useEffect(() => {
+        getPolls();
 }, []);
 
     return (
@@ -103,7 +107,7 @@ const Polls = ({attendees}) => {
                         </Accordion.Collapse>
                     </Card>
             </Accordion>
-                <NewPoll show={show} setShow={setShow} />
+                <NewPoll show={show} onS setShow={setShow} getPolls={getPolls}/>
         </div>
 
     );

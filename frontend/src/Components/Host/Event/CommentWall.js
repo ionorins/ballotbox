@@ -16,7 +16,7 @@ const CommentWall = () => {
 
     let { id } = useParams();
     const [cookies, setCookies] = useCookies(['access_token']);
-    const [comments, setComments] = useState("");
+    const [comments, setComments] = useState(<></>);
 
     const like = (commentId) => {
         fetch('http://localhost:8000/host/event/'+id+'/comment/like/'+commentId, {
@@ -58,13 +58,7 @@ const CommentWall = () => {
                         </Row>
                     </ListGroup.Item>
                 );
-                if (responseJson.length === 0)
-                    setComments(
-                        <ListGroup.Item className="mx-auto my-auto">
-                            No one has commented yet :(
-                        </ListGroup.Item>
-                    );
-                else setComments(commentList);
+                responseJson.length === 0 ? setComments(<ListGroup.Item className="mx-auto my-auto">No one has commented yet :(</ListGroup.Item>) : setComments(commentList);
             });
     }
 

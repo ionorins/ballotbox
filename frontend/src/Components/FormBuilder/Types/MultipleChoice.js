@@ -7,7 +7,7 @@ import {useCookies} from "react-cookie";
 import {useParams} from "react-router-dom";
 
 
-const FreeText = () => {
+const FreeText = ({setShow}) => {
 
     const [optionForm, setOptionForm] = useState(
         <div>
@@ -46,7 +46,7 @@ const FreeText = () => {
             })
         }).then((response) => response.json())
             .then((responseJson) => {
-                // u
+                setShow();
             });
         event.currentTarget.reset();
     };

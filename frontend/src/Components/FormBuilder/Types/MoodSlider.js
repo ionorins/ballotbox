@@ -10,7 +10,7 @@ import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
 import {useParams} from "react-router-dom";
 import {useCookies} from "react-cookie";
 
-const MoodSlider = () => {
+const MoodSlider = ({setShow}) => {
 
     const [value, setValue] = useState(0);
 
@@ -34,7 +34,7 @@ const MoodSlider = () => {
             })
         }).then((response) => response.json())
             .then((responseJson) => {
-                // u
+                setShow();
             });
         event.currentTarget.reset();
     };

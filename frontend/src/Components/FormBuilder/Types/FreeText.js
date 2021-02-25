@@ -6,10 +6,11 @@ import {useCookies} from "react-cookie";
 import {useParams} from "react-router-dom";
 
 
-const FreeText = () => {
+const FreeText = ({setShow}) => {
 
     let {id} = useParams();
     const [cookies, setCookies] = useCookies(['access_token']);
+
 
     const handleSubmit = (event) => {
         const prompt = event.target[0].value;
@@ -28,7 +29,7 @@ const FreeText = () => {
             })
         }).then((response) => response.json())
             .then((responseJson) => {
-                // u
+                setShow(false);
             });
         event.currentTarget.reset();
     };

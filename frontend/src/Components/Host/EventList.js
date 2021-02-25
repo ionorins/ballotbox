@@ -57,7 +57,7 @@ const EventList = () => {
                         </Row>
                     </ListGroup.Item>
                 );
-                setEvents(eventMap);
+                setEvents(responseJson.length > 0 ? eventMap : <p>Looks like you haven't made an event yet, get started by creating an event below!</p>);
             });
     }, []);
 
