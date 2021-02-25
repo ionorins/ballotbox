@@ -11,7 +11,7 @@ import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
 
 
-const PollForm = ({poll}) => {
+const PollForm = ({poll, getPolls}) => {
 
     let {id} = useParams();
     const [cookies, setCookies] = useCookies(['access_token']);
@@ -68,7 +68,7 @@ const PollForm = ({poll}) => {
 
         }).then((response) => response.json())
             .then((responseJson) => {
-                // u
+                getPolls();
             });
         event.preventDefault();
         event.stopPropagation();

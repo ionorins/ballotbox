@@ -18,6 +18,13 @@ import {ImBubble} from "react-icons/im";
 import {FaTheaterMasks} from "react-icons/fa";
 import {MdFormatListBulleted} from "react-icons/md";
 
+export const getIcon = (type) => {
+    if (type === "freeText")
+        return <ImBubble  className="mb-1 mx-1"/>;
+    else if (type === "multipleChoice")
+        return <MdFormatListBulleted className="mx-1 mb-1"/>;
+    else return <FaTheaterMasks className="mx-1 mb-1"/>;
+}
 
 const Polls = ({attendees}) => {
 
@@ -27,14 +34,6 @@ const Polls = ({attendees}) => {
     const [pollsList, setPollsList] = useState([]);
     const [show, setShow] = useState(false);
     const [or, setOr] = useState("");
-
-    const getIcon = (type) => {
-        if (type === "freeText")
-            return <ImBubble  className="mb-1 mx-1"/>;
-        else if (type === "multipleChoice")
-            return <MdFormatListBulleted className="mx-1 mb-1"/>;
-        else return <FaTheaterMasks className="mx-1 mb-1"/>;
-    }
 
     async function getPolls() {
         console.log("TEST")
@@ -113,3 +112,4 @@ const Polls = ({attendees}) => {
     );
 }
 export default Polls;
+

@@ -81,7 +81,7 @@ const Signup = () => {
                     </InputGroup.Prepend>
                     <Form.Control type="password" placeholder="Confirm Password"/>
                 </InputGroup>
-            <Button type="submit" className="buttons my-4">
+            <Button type="submit" className="buttons my-2">
                 Sign up
             </Button>
             </Form>

@@ -5,15 +5,20 @@ import Accordion from "react-bootstrap/Accordion";
 import {useParams} from "react-router-dom";
 import {useCookies} from "react-cookie";
 import PollForm from "./PollForm";
+import { getIcon } from "../Host/Event/Polls";
 
 
-const AttendeePolls = () => {
+const AttendeePolls = ({setUnansweredPolls}) => {
 
     let {id} = useParams();
     const [cookies, setCookies] = useCookies(['access_token']);
-    const [pollsList, setPollsList] = useState(<></>);
+    const [unansweredPollsList, setUnansweredPollsList] = useState(<></>);
+    const [answeredPollsList, setAnsweredPollsList] = useState(<></>);
 
-    useEffect(() => {
+    async function getPolls() {
+        let answered = [];
+        let unanswered = [];
+        let i;
         fetch('http://localhost:8000/attendee/polls', {
             method: 'GET',
             headers: {
@@ -22,28 +27,69 @@ const AttendeePolls = () => {
         }).then((response) => response.json())
             .then((responseJson) => {
                 console.log(responseJson);
-                const polls = responseJson.map((poll) =>
+                for (i = 0; i < responseJson.length; i++) {
+                    if (responseJson[i].answered)
+                        answered.push(responseJson[i]);
+                    else unanswered.push(responseJson[i]);
+                }
+                const unansweredPolls = unanswered.map((poll) =>
                     <Card>
                         <Card.Header>
                             <Accordion.Toggle eventKey={poll.id} className="builder-toggle">
-                                {poll.content['prompt']}
+                                {poll.content['prompt']} {getIcon(poll.content.type)}
                             </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey={poll.id}>
                             <Card.Body>
-                                <PollForm poll={poll} />
+                                <PollForm getPolls={getPolls} poll={poll} />
                             </Card.Body>
                         </Accordion.Collapse>
                     </Card>
                 );
-                setPollsList(polls);
+                const answeredPolls = unanswered.map((poll) =>
+                    <Card>
+                        <Card.Header>
+                            {poll.content['prompt']} {getIcon(poll.content.type)}
+                        </Card.Header>
+                    </Card>
+                );
+                setUnansweredPollsList(unansweredPolls);
+                setAnsweredPollsList(answeredPolls);
+                setUnansweredPolls(unansweredPolls.length);
             });
-    }, []);
+    }
+
+    async function getPollsRefresh() {
+        getPolls();
+        setTimeout(getPollsRefresh, 3000);
+    }
+
+    useEffect(() => {
+        getPollsRefresh();
+    },[])
+
 
     return (
         <div>
             <Accordion>
-                {pollsList}
+                {unansweredPollsList}
+            </Accordion>
+
+            <Accordion className="mt-4">
+                <Card>
+                    <Card.Header>
+                        <Accordion.Toggle eventKey="answered" className="builder-toggle">
+                            <h4 className="my-3">Answered</h4>
+                        </Accordion.Toggle>
+                    </Card.Header>
+                    <Accordion.Collapse eventKey="answered">
+                        <Card.Body>
+                            <Accordion>
+                                {answeredPollsList}
+                            </Accordion>
+                        </Card.Body>
+                    </Accordion.Collapse>
+                </Card>
             </Accordion>
         </div>
 

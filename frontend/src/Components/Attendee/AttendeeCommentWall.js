@@ -63,11 +63,15 @@ const AttendeeCommentWall = () => {
                 );
                 setComments(commentList);
             });
-        setTimeout(getComments, 3000);
+    }
+
+    async function getCommentsRefresh() {
+        getComments();
+        setTimeout(getCommentsRefresh, 3000);
     }
 
     useEffect(() => {
-        getComments();
+        getCommentsRefresh();
     },[])
 
 

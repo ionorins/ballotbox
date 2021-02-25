@@ -15,6 +15,7 @@ import Spinner from "react-bootstrap/Spinner";
 import EmotionAnalysis from "./EmotionAnalysis";
 import Overlay from "react-bootstrap/Overlay";
 import Tooltip from "react-bootstrap/Tooltip";
+import Badge from "react-bootstrap/Badge";
 
 
 const ControlPanel = () => {
