@@ -1,0 +1,153 @@
+.container {
+    min-height: 100vh;
+    min-width: 100vw;
+    display: flex;
+    flex-direction: column;
+    background: rgb(104,38,110);
+    background: linear-gradient(90deg, rgba(104,38,110,.7) 0%, rgba(127,237,255,.7) 100%);
+    align-content: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 !important;
+}
+.buttons {
+    background-color: black !important;
+    outline: none !important;
+    border: none !important;
+}
+.buttons:hover {
+    background-color:white !important;
+    color: black !important;
+}
+
+.navbar {
+    color: black;
+}
+
+.clickable-link, .clickable-link:active, .clickable-link:hover {
+    cursor:pointer;
+    color:black;
+    text-decoration:none;
+    flex-direction: row;
+}
+
+.tab-bar {
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+.access-card {
+    background-color: transparent !important;
+    border: none !important;
+    width: 100%;
+    max-width: 50vh;
+    margin-left: auto;
+    margin-right: auto;
+}
+.standard-card {
+    background-color: transparent !important;
+    border: none !important;
+    width: 100%;
+    max-width: 100vh;
+    margin-left: auto;
+    margin-right: auto;
+}
+.main-card {
+    max-width: 100vh;
+    min-height: 50vh;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.access-card-body {
+    background-color: white !important;
+    border-radius: .75rem;
+}
+.custom-nav-tabs {
+    background-color: rgb(128,128,128);
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+}
+
+.custom-nav-links, .custom-nav-links:hover {
+    color: white;
+}
+.custom-nav-links:active {
+    color: black;
+}
+.builder-row {
+    min-height: inherit;
+}
+.builder-cols-left {
+    border-right: 1px solid #C0C0C0;
+}
+.builder-cols-right {
+    border-left: 1px solid #C0C0C0;
+}
+.builder-option:hover {
+    background-color: lightblue;
+    color:white;
+
+}
+.builder-option {
+    cursor: pointer;
+}
+.form-builder-col {
+    width: 100%;
+}
+.comment-list {
+    text-align: left;
+}
+.comment-likes {
+    text-align: right;
+}
+.like-button {
+    background-color: transparent !important;
+    color: mediumblue !important;
+    border: none !important;
+    padding: .2rem .5rem !important;
+}
+.comment-append {
+    background: none !important;
+    border-left: none !important;
+}
+.builder-toggle {
+    border: none;
+    background: transparent;
+}
+.event-select-button {
+    color: dodgerblue !important;
+    background: none !important;
+    border: none !important;
+}
+.comment-wall-container {
+    overflow-y: auto;
+    min-height: 50vh;
+    max-height: 60vh;
+    display: flex;
+    flex-direction: column-reverse;
+    border: 1px solid rgba(0,0,0,.125);
+}
+.nav-stats-font {
+    font-size: xx-large;
+}
+.back-button, .back-button:active {
+    color: black !important;
+    background: none !important;
+    border: none !important;
+    font-weight: bold !important;
+    font-size: x-large !important;
+}
+.like-button-liked {
+    color: blue !important;
+}
+.polls-container {
+    overflow-y: auto;
+    min-height: 55vh;
+    max-height: 50vh;
+}
+.answers-container {
+    overflow-y: auto;
+    max-height: 20vh;
+    border: 1px solid rgba(0,0,0,.125);
+}
