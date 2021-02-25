@@ -1,7 +1,11 @@
 import copy
+from random import random
 from sys import maxsize
 from time import time
 
+from starlette.status import HTTP_404_NOT_FOUND
+
+import numpy as np
 from fastapi import APIRouter, Body, Depends, HTTPException, Request, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
@@ -153,7 +157,6 @@ async def update_event(code: str, request: Request, new_event: UpdateEventModel 
 @router.post("/event/{code}/comment")
 async def comment(code: str, request: Request, access_token: str = Depends(oauth2_scheme), comment: PostCommentModel = Body(...)):
     host = await get_host_profile(request, access_token)
-
     await check_event(request, host["username"], code)
 
     # create comment
@@ -161,6 +164,8 @@ async def comment(code: str, request: Request, access_token: str = Depends(oauth
     new_comment.content = comment.content
     new_comment.author = "Host"
     new_comment.event = code
+    new_comment.moods = list(np.random.dirichlet(np.ones(5), size=1)[0])
+    new_comment.polarity = 2 * random() - 1
     new_comment = jsonable_encoder(new_comment)
 
     # save comment
@@ -171,7 +176,6 @@ async def comment(code: str, request: Request, access_token: str = Depends(oauth
 @router.post("/event/{code}/comment/like/{id}")
 async def like_comment(code: str, id: str, request: Request, access_token: str = Depends(oauth2_scheme)):
     host = await get_host_profile(request, access_token)
-
     await check_event(request, host["username"], code)
 
     # find comment in database
@@ -203,7 +207,6 @@ async def like_comment(code: str, id: str, request: Request, access_token: str =
 @router.get("/event/{code}/comments")
 async def get_comments(code: str, request: Request, access_token: str = Depends(oauth2_scheme)):
     host = await get_host_profile(request, access_token)
-
     await check_event(request, host["username"], code)
 
     comments = []
@@ -227,7 +230,6 @@ async def get_comments(code: str, request: Request, access_token: str = Depends(
 @router.post("/event/{code}/poll")
 async def create_poll(code: str, request: Request, access_token: str = Depends(oauth2_scheme), poll: PostPollModel = Body(...)):
     host = await get_host_profile(request, access_token)
-
     await check_event(request, host["username"], code)
 
     # create comment
@@ -245,7 +247,6 @@ async def create_poll(code: str, request: Request, access_token: str = Depends(o
 @router.get("/event/{code}/polls")
 async def get_polls(code: str, request: Request, access_token: str = Depends(oauth2_scheme)):
     host = await get_host_profile(request, access_token)
-
     await check_event(request, host["username"], code)
 
     polls = []
@@ -292,7 +293,6 @@ async def update_poll(code: str, id: str, request: Request, new_poll: PostPollMo
 @router.get("/event/{code}/attendees")
 async def get_attendees(code: str, request: Request, access_token: str = Depends(oauth2_scheme)):
     host = await get_host_profile(request, access_token)
-
     await check_event(request, host["username"], code)
 
     attendees = []
@@ -306,3 +306,67 @@ async def get_attendees(code: str, request: Request, access_token: str = Depends
         attendees.append(attendee)
 
     return JSONResponse(status_code=status.HTTP_200_OK, content=attendees)
+
+@router.get("/event/{event}/mood/polarity")
+async def get_attendees(code: str, request: Request, access_token: str = Depends(oauth2_scheme), interval: int = 300):
+    host = await get_host_profile(request, access_token)
+    await check_event(request, host["username"], code)
+
+    if interval <= 0:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Interval must be positive")
+
+    polarities = {}
+    first_time = None
+
+    # go through each comment in database
+    for comment in await request.app.mongodb["comments"].find({
+        "event": code
+    }).sort("timestamp").to_list(length=maxsize):
+        if first_time is None:
+            first_time = comment["timestamp"]
+
+        time_bin = (comment["timestamp"] - first_time) // interval
+        if time_bin not in polarities:
+            polarities[time_bin] = []
+
+        polarities[time_bin] += (1 + len(comment["likes"])) * [comment["polarity"]]
+
+    polarities = {k: sum(v)/len(v) for k, v in polarities.items()}
+
+    return JSONResponse(status_code=status.HTTP_200_OK, content=polarities)
+
+@router.get("/event/{event}/mood/{emotion}")
+async def get_attendees(code: str, emotion: str, request: Request, access_token: str = Depends(oauth2_scheme), interval: int = 300):
+    host = await get_host_profile(request, access_token)
+    await check_event(request, host["username"], code)
+
+    emotions = ["joy", "anger", "fear", "sadness", "love"]
+
+    if interval <= 0:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Interval must be positive")
+
+    if emotion not in emotions:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Mood not found :(")
+
+    polarities = {}
+    first_time = None
+
+    # go through each comment in database
+    for comment in await request.app.mongodb["comments"].find({
+        "event": code
+    }).sort("timestamp").to_list(length=maxsize):
+        if first_time is None:
+            first_time = comment["timestamp"]
+
+        time_bin = (comment["timestamp"] - first_time) // interval
+        if time_bin not in polarities:
+            polarities[time_bin] = []
+
+        polarities[time_bin] += (1 + len(comment["likes"])) * [comment["moods"][emotions.index(emotion)]]
+
+    polarities = {k: sum(v)/len(v) for k, v in polarities.items()}
+
+    return JSONResponse(status_code=status.HTTP_200_OK, content=polarities)

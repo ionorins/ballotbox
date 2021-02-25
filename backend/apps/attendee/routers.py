@@ -1,7 +1,7 @@
+from random import random
 from sys import maxsize
 
 import numpy as np
-from random import random
 from fastapi import APIRouter, Depends, HTTPException, Request, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.param_functions import Body
@@ -244,6 +244,7 @@ async def answer(id: str, request: Request, access_token: str = Depends(oauth2_s
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
 
+    # do not allow multiple responses to the same poll
     if any(ans["attendee"] == access_token for ans in poll["answers"]):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN, detail="Poll was already answered")
