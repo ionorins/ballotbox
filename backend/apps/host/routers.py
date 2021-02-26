@@ -335,7 +335,7 @@ async def get_polarity(code: str, request: Request, access_token: str = Depends(
             first_time = comment["timestamp"]
 
         # calculate the index of the interval the comment is in
-        time_bin = int(comment["timestamp"] - first_time) // interval
+        time_bin = int(comment["timestamp"] - first_time) // (interval * 60)
 
         # add probablity to interval and weight it by (1 + no likes)
         if time_bin not in polarities:
@@ -344,7 +344,7 @@ async def get_polarity(code: str, request: Request, access_token: str = Depends(
                                  ) * [comment["polarity"]]
 
     # average each interval
-    last_bin = int(time() - first_time) // interval
+    last_bin = int(time() - first_time) // (interval * 60)
 
     polarities_list = []
 
@@ -352,7 +352,18 @@ async def get_polarity(code: str, request: Request, access_token: str = Depends(
         polarity = polarities.get(i, [0])
         polarities_list.append(sum(polarity) / len(polarity))
 
-    return JSONResponse(status_code=status.HTTP_200_OK, content=polarities_list)
+    for i in range(last_bin + 1):
+        polarity = polarities.get(i, [0])
+        polarities_list.append({
+            # time since first comment in minutes with one decimal place
+            "x": "{:.1f}".format(interval * i),
+            "y": sum(polarity) / len(polarity)
+        })
+
+    return JSONResponse(status_code=status.HTTP_200_OK, content=[{
+        "id": "Polarity",
+        "data": polarities_list
+    }])
 
 
 @router.get("/event/{code}/mood/{emotion}")
@@ -384,7 +395,7 @@ async def get_mood(code: str, emotion: str, request: Request, access_token: str 
             first_time = comment["timestamp"]
 
         # calculate the index of the interval the comment is in
-        time_bin = int(comment["timestamp"] - first_time) // interval
+        time_bin = int(comment["timestamp"] - first_time) // (interval * 60)
 
         # add probablity to interval and weight it by (1 + no likes)
         if time_bin not in moods:
@@ -393,7 +404,7 @@ async def get_mood(code: str, emotion: str, request: Request, access_token: str 
             [comment["moods"][emotions.index(emotion)]]
 
     # average each interval
-    last_bin = int(time() - first_time) // interval
+    last_bin = int(time() - first_time) // (interval * 60)
 
     moods_list = []
 
@@ -421,7 +432,7 @@ async def get_current_mood(code: str, request: Request, access_token: str = Depe
     # go through each comment in database and remember weighted by likes mood
     for comment in await request.app.mongodb["comments"].find({
         "event": code,
-        "timestamp": {"$gt": time() - interval}
+        "timestamp": {"$gt": time() - 60 * interval}
     }).to_list(length=maxsize):
         moods += (1 + len(comment["likes"])) * [comment["moods"]]
 
