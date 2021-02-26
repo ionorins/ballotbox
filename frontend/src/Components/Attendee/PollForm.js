@@ -1,19 +1,14 @@
 import '../../App.css';
 import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
-import Row from "react-bootstrap/Row";
 import {useCookies} from "react-cookie";
-import {useParams} from "react-router-dom";
 import RangeSlider from "react-bootstrap-range-slider";
 import React, {useState} from "react";
-import Card from "react-bootstrap/Card";
-import Accordion from "react-bootstrap/Accordion";
 
 
 const PollForm = ({poll, getPolls}) => {
 
-    let {id} = useParams();
+    // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token']);
     const [value, setValue] = useState(0);
 

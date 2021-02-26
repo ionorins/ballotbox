@@ -1,5 +1,5 @@
 import Entry from './Components/Access/Entry.js';
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Route, Switch, BrowserRouter as Router} from "react-router-dom";
 import Access from "./Components/Access/Access";

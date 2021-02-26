@@ -2,7 +2,6 @@ import '../../App.css';
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import {useHistory} from "react-router-dom";
 import React from "react";
 import Modal from "react-bootstrap/Modal";
 import {useCookies} from "react-cookie";
@@ -10,9 +9,9 @@ import {useCookies} from "react-cookie";
 
 const NewEvent = ({ show, setShow }) => {
 
+    // eslint-disable-next-line no-unused-vars
     const [cookies, setCookie] = useCookies(['access_token']);
 
-    let history = useHistory();
 
     const handleSubmit = (event) => {
         const name = event.target[0].value;

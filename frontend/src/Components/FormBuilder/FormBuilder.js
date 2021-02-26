@@ -1,9 +1,6 @@
 import '../../App.css';
 import Card from "react-bootstrap/Card";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import ListGroup from "react-bootstrap/ListGroup";
-import React, {useState} from "react";
+import React from "react";
 import FreeText from "./Types/FreeText";
 import MultipleChoice from "./Types/MultipleChoice";
 import MoodSlider from "./Types/MoodSlider";
@@ -13,14 +10,6 @@ import {FaTheaterMasks} from "react-icons/fa";
 import {MdFormatListBulleted} from "react-icons/md";
 
 const FormBuilder = ({setShow}) => {
-
-    const [option, setOption] = useState(<p> Select a module to add</p>);
-
-    const select = (option) => {
-        setOption(option)
-    };
-
-    const questions = <ListGroup.Item>Test</ListGroup.Item>
 
     return (
                 <Accordion className="text-center">

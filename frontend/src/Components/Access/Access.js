@@ -1,5 +1,5 @@
 import '../../App.css';
-import React, {useState} from "react";
+import React from "react";
 import Login from "./Login.js";
 import Card from "react-bootstrap/Card";
 import Nav from "react-bootstrap/Nav";
@@ -10,9 +10,6 @@ import {Link, useHistory} from "react-router-dom";
 import {FiChevronLeft} from "react-icons/fi";
 import Button from "react-bootstrap/Button";
 import TitleLogo from "../TitleLogo";
-import EmotionAnalysis from "../Host/Event/EmotionAnalysis";
-import CommentWall from "../Host/Event/CommentWall";
-import Polls from "../Host/Event/Polls";
 
 const Access = () => {
 

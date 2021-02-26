@@ -4,14 +4,11 @@ import Nav from "react-bootstrap/Nav";
 import React, {useState} from "react";
 import AttendeeCommentWall from "./AttendeeCommentWall";
 import Tab from "react-bootstrap/Tab";
-import EventList from "../Host/EventList";
 import AttendeePolls from "./AttendeePolls";
-import Polls from "../Host/Event/Polls";
 import Badge from "react-bootstrap/Badge";
 
 const Event = () => {
 
-    const [view, setView] = useState(<AttendeeCommentWall />);
     const [unansweredPolls, setUnansweredPolls] = useState(0);
 
     return (

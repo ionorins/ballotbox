@@ -1,12 +1,10 @@
 import '../../App.css';
-import {FiThumbsUp} from "react-icons/fi";
 import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
-import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {useCookies} from "react-cookie";
 import {RiThumbUpFill, RiThumbUpLine} from "react-icons/ri";
@@ -14,7 +12,7 @@ import {RiThumbUpFill, RiThumbUpLine} from "react-icons/ri";
 
 const AttendeeCommentWall = () => {
 
-    let { id } = useParams();
+    // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token']);
     const [comments, setComments] = useState("");
 

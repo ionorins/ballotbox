@@ -9,6 +9,7 @@ import {useState} from "react";
 
 const Signup = () => {
 
+    // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token']);
     const [emailValidated, setEmailValidated] = useState("");
     const [passValidated, setPassValidated] = useState("");
@@ -33,7 +34,6 @@ const Signup = () => {
             if (response.status === 403) {
                 setPassValidated("");
                 setEmailValidated("Email already in use");
-                return;
             }
             else if (response.status === 422) {
                 setEmailValidated("");

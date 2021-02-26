@@ -10,6 +10,7 @@ import {useState} from "react";
 const Login = () => {
     let history = useHistory();
 
+    // eslint-disable-next-line no-unused-vars
     const [cookies, setCookie] = useCookies(['access_token']);
     const [validated, setValidated] = useState("");
 

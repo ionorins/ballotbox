@@ -14,6 +14,7 @@ const EventList = () => {
 
     let history = useHistory();
 
+    // eslint-disable-next-line no-unused-vars
     const [cookies, setCookie] = useCookies(['access_token']);
 
     const [show, setShow] = useState(false);

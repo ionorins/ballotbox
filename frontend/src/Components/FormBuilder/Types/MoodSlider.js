@@ -15,6 +15,7 @@ const MoodSlider = ({setShow}) => {
     const [value, setValue] = useState(0);
 
     let {id} = useParams();
+    // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token']);
 
     const handleSubmit = (event) => {

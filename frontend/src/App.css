@@ -156,3 +156,6 @@
     margin-left: auto;
     margin-right: auto;
 }
+.chart-container {
+    height: 30vh;
+}

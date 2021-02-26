@@ -2,7 +2,7 @@ import '../../../App.css';
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {useCookies} from "react-cookie";
 import {useParams} from "react-router-dom";
 
@@ -19,6 +19,7 @@ const FreeText = ({setShow}) => {
         </InputGroup>
         </div>
     );
+    // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token']);
     let {id} = useParams();
 

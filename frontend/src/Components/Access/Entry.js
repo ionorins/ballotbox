@@ -13,12 +13,12 @@ const Entry = () => {
 
     const history = useHistory();
 
+    // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token']);
     const [validated, setValidated] = useState(<></>);
 
     const handleSubmit = (event) => {
         const roomCode = event.target[0].value;
-        const form = event.currentTarget;
 
         fetch('http://localhost:8000/attendee/login/'+roomCode, {
             method: 'POST',

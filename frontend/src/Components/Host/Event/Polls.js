@@ -1,19 +1,14 @@
 import '../../../App.css';
-import FormBuilder from "../../FormBuilder/FormBuilder";
 import React, {useEffect, useState} from "react";
 import {useCookies} from "react-cookie";
 import {useParams} from "react-router-dom";
 import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import {FiThumbsUp, FiUser} from "react-icons/fi";
-import {FaPlus} from "react-icons/fa";
-import NewEvent from "../NewEvent";
+import {FiUser} from "react-icons/fi";
 import Card from "react-bootstrap/Card";
 import NewPoll from "./NewPoll";
 import Accordion from "react-bootstrap/Accordion";
-import FreeText from "../../FormBuilder/Types/FreeText";
 import {ImBubble} from "react-icons/im";
 import {FaTheaterMasks} from "react-icons/fa";
 import {MdFormatListBulleted} from "react-icons/md";
@@ -30,6 +25,7 @@ const Polls = ({attendees}) => {
 
 
     let { id } = useParams();
+    // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token']);
     const [pollsList, setPollsList] = useState([]);
     const [show, setShow] = useState(false);
@@ -76,7 +72,7 @@ const Polls = ({attendees}) => {
                                                 <ListGroup.Item>
                                                     {answer.answer}
                                                 </ListGroup.Item>
-                                            ) : "No one has answered yet :(")
+                                            ) : <div className="my-3">No one has answered yet :(</div>)
                                             }
                                             </ListGroup>
                                         </Col>

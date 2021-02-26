@@ -2,7 +2,6 @@ import '../../App.css';
 import React, {useEffect, useState} from "react";
 import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
-import {useParams} from "react-router-dom";
 import {useCookies} from "react-cookie";
 import PollForm from "./PollForm";
 import { getIcon } from "../Host/Event/Polls";
@@ -10,7 +9,7 @@ import { getIcon } from "../Host/Event/Polls";
 
 const AttendeePolls = ({setUnansweredPolls}) => {
 
-    let {id} = useParams();
+    // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token']);
     const [unansweredPollsList, setUnansweredPollsList] = useState(<></>);
     const [answeredPollsList, setAnsweredPollsList] = useState(<></>);
@@ -46,7 +45,7 @@ const AttendeePolls = ({setUnansweredPolls}) => {
                         </Accordion.Collapse>
                     </Card>
                 );
-                const answeredPolls = unanswered.map((poll) =>
+                const answeredPolls = answered.map((poll) =>
                     <Card>
                         <Card.Header>
                             {poll.content['prompt']} {getIcon(poll.content.type)}

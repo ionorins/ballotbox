@@ -9,6 +9,7 @@ import {useParams} from "react-router-dom";
 const FreeText = ({setShow}) => {
 
     let {id} = useParams();
+    // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token']);
 
 
