@@ -3,14 +3,15 @@ import Col from "react-bootstrap/Col";
 import {useParams} from "react-router-dom";
 import {useCookies} from "react-cookie";
 import {useEffect, useState} from "react";
-import Twemoji from "react-twemoji";
-import EmotionBarChart from "./EmotionBarChart";
+import EmotionEmoji from "./Emotion/EmotionEmoji";
+import EmotionBarChart from "./Emotion/EmotionBarChart";
 
 const EmotionAnalysis = () => {
 
     let { id } = useParams();
     // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token']);
+    const [emojiSize, setEmojiSize] = useState([]);
     const [emotionData, setEmotionData] = useState([
         {
             id: "Anger",
@@ -100,8 +101,20 @@ const EmotionAnalysis = () => {
             });
     }
 
+    async function getCurrent() {
+        fetch('http://localhost:8000/host/event/'+id+"/mood", {
+            method: 'GET',
+            headers: {
+                "Authorization": "Bearer "+cookies['access_token'],
+            },
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                setEmojiSize(responseJson);
+            });
+    }
     useEffect(() => {
         getValues(600);
+        getCurrent();
     },[])
 
     return (
@@ -109,33 +122,23 @@ const EmotionAnalysis = () => {
             <div className="emoji-grid">
                 <Row noGutters={true}>
                     <Col className="ml-auto">
-                        <Twemoji>
-                            😄
-                        </Twemoji>
+                        <EmotionEmoji type={"joy"} size={emojiSize['joy']} toggled={true}/>
                     </Col>
                     <Col className="mr-auto">
-                        <Twemoji>
-                            😨
-                        </Twemoji>
+                        <EmotionEmoji type={"fear"} size={emojiSize['fear']} oggled={false}/>
                     </Col>
                 </Row>
                 <Row noGutters={true}>
                     <Col className="mx-auto">
-                        <Twemoji>
-                            😡
-                        </Twemoji>
+                        <EmotionEmoji type={"anger"} size={emojiSize['anger']} toggled={true}/>
                     </Col>
                 </Row>
                 <Row noGutters={true}>
                     <Col className="ml-auto">
-                        <Twemoji>
-                            😍
-                        </Twemoji>
+                        <EmotionEmoji type={"love"} size={emojiSize['love']} toggled={false}/>
                     </Col>
                     <Col className="mr-auto">
-                        <Twemoji>
-                            😭
-                        </Twemoji>
+                        <EmotionEmoji type={"sadness"} size={emojiSize['sadness']} toggled={false}/>
                     </Col>
                 </Row>
             </div>
