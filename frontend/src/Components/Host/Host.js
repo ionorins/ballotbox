@@ -5,6 +5,7 @@ import EventList from "./EventList";
 import React, {useState} from "react";
 import {useCookies} from "react-cookie";
 import TitleLogo from "../Utils/TitleLogo";
+import Logout from "../Access/Logout.js";
 
 const Host = () => {
 
@@ -41,7 +42,9 @@ const Host = () => {
                         <EventList />
                     </Card.Body>
                 </Card>
-
+                <Card.Footer style={{background: "none", borderTop: "none"}}>
+                    <Logout />
+                </Card.Footer>
             </div>
         );
     }

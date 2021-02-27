@@ -15,6 +15,7 @@ import Tooltip from "react-bootstrap/Tooltip";
 import {Fade, Row} from "react-bootstrap";
 import TitleLogo from "../../Utils/TitleLogo";
 import Col from "react-bootstrap/Col";
+import Logout from "../../Access/Logout";
 
 
 const ControlPanel = () => {
@@ -60,8 +61,13 @@ const ControlPanel = () => {
         <div className="container">
             <Navbar fixed="top" className="flex-column">
                 <Row className="min-vw-100">
-                    <Navbar.Text className="mx-auto display-4">
-                        BallotBox
+                    <Navbar.Text className="mx-auto display-4 flex-row">
+                        <Link to="/host" className="clickable-link">
+                            {eventName} <TitleLogo />
+                        </Link>
+                    </Navbar.Text>
+                    <Navbar.Text>
+                            <Logout />
                     </Navbar.Text>
                 </Row>
                 <Row className="min-vw-100">
@@ -87,7 +93,6 @@ const ControlPanel = () => {
 
             </Navbar>
             <Card className="standard-card">
-                <h2 className="display-5" style={{color: "dimgray",}}>{ eventName }</h2>
                 <Tab.Container defaultActiveKey="comments">
                 <Card.Header style={{borderBottom: "none", backgroundColor: "transparent",}}>
                     <Nav variant="tabs" className="tab-bar" >

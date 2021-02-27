@@ -177,4 +177,6 @@
 .chart-container {
     height: 30vh;
 }
-
+.logout-button {
+    font-size: xx-large !important;
+}
