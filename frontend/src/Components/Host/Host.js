@@ -4,7 +4,7 @@ import Card from "react-bootstrap/Card";
 import EventList from "./EventList";
 import React, {useState} from "react";
 import {useCookies} from "react-cookie";
-import TitleLogo from "../TitleLogo";
+import TitleLogo from "../Utils/TitleLogo";
 
 const Host = () => {
 

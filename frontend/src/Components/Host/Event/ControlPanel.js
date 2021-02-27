@@ -1,5 +1,5 @@
 import '../../../App.css';
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Nav from "react-bootstrap/Nav";
 import React, {useEffect, useRef, useState} from "react";
@@ -12,6 +12,9 @@ import Polls from "./Polls";
 import EmotionAnalysis from "./EmotionAnalysis";
 import Overlay from "react-bootstrap/Overlay";
 import Tooltip from "react-bootstrap/Tooltip";
+import {Fade, Row} from "react-bootstrap";
+import TitleLogo from "../../Utils/TitleLogo";
+import Col from "react-bootstrap/Col";
 
 
 const ControlPanel = () => {
@@ -55,26 +58,36 @@ const ControlPanel = () => {
 
     return (
         <div className="container">
-            <Navbar fixed="top">
-                <Navbar.Text ref={target} onClick={() => {setShow(!show); navigator.clipboard.writeText(eventCode)}}>
-                    <h1 className="nav-stats-font"> <FiLink className="mb-1"/> { eventCode }</h1>
-                    <Overlay target={target.current} show={show} placement="bottom">
-                        {(props) => (
-                            <Tooltip id="overlay-example" {...props}>
-                                Copied!
-                            </Tooltip>
+            <Navbar fixed="top" className="flex-column">
+                <Row className="min-vw-100">
+                    <Navbar.Text className="mx-auto display-4">
+                        BallotBox
+                    </Navbar.Text>
+                </Row>
+                <Row className="min-vw-100">
+                    <Col ref={target} onClick={() => {setShow(!show); navigator.clipboard.writeText(eventCode)}} className="text-left">
+                        <div className="nav-stats-font" style={{whiteSpace: "nowrap"}}> <FiLink className="mb-1"/> { eventCode }</div>
+                        <Overlay target={target.current} show={show} placement="bottom">
+                            {(props) => (
+                                <Tooltip id="overlay-example" {...props}>
+                                    Copied!
+                                </Tooltip>
 
-                        )}
-                    </Overlay>
-                </Navbar.Text>
-                <Navbar.Text className="ml-auto">
-                    <h1 className="nav-stats-font">
-                        <span id="attendees" className="">{ attendees }</span> <FiUser className="mb-1"/>
-                    </h1>
-                </Navbar.Text>
+                            )}
+                        </Overlay>
+                    </Col>
+                    <Col className="text-right">
+                        <div className="nav-stats-font">
+                            <span id="attendees" className="">{ attendees }</span> <FiUser className="mb-1"/>
+                        </div>
+                    </Col>
+                </Row>
+            </Navbar>
+            <Navbar>
+
             </Navbar>
             <Card className="standard-card">
-                <h2 className="display-5">{ eventName }</h2>
+                <h2 className="display-5" style={{color: "dimgray",}}>{ eventName }</h2>
                 <Tab.Container defaultActiveKey="comments">
                 <Card.Header style={{borderBottom: "none", backgroundColor: "transparent",}}>
                     <Nav variant="tabs" className="tab-bar" >
@@ -110,11 +123,6 @@ const ControlPanel = () => {
                 </Card.Body>
                 </Tab.Container>
             </Card>
-            <Navbar fixed="bottom">
-                <Navbar.Text className="mx-auto navbar-text">
-                    BallotBox 🗳️ | DBCampus Project 2021
-                </Navbar.Text>
-            </Navbar>
         </div>
 
     );

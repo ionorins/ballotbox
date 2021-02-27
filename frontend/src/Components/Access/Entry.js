@@ -7,7 +7,7 @@ import { FiLink } from "react-icons/fi";
 import {Link, useHistory} from "react-router-dom";
 import {useCookies} from "react-cookie";
 import {useState} from "react";
-import TitleLogo from "../TitleLogo";
+import TitleLogo from "../Utils/TitleLogo";
 
 const Entry = () => {
 

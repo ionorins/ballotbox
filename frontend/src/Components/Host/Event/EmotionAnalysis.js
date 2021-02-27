@@ -2,7 +2,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {useParams} from "react-router-dom";
 import {useCookies} from "react-cookie";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import EmotionEmoji from "./Emotion/EmotionEmoji";
 import EmotionBarChart from "./Emotion/EmotionBarChart";
 
@@ -109,6 +109,7 @@ const EmotionAnalysis = () => {
             },
         }).then((response) => response.json())
             .then((responseJson) => {
+                console.log(responseJson);
                 setEmojiSize(responseJson);
             });
     }

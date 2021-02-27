@@ -9,7 +9,7 @@ import Signup from "./Signup";
 import {Link, useHistory} from "react-router-dom";
 import {FiChevronLeft} from "react-icons/fi";
 import Button from "react-bootstrap/Button";
-import TitleLogo from "../TitleLogo";
+import TitleLogo from "../Utils/TitleLogo";
 
 const Access = () => {
 

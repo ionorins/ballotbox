@@ -105,7 +105,6 @@ const CommentWall = () => {
                 </InputGroup>
             </Form>
         </div>
-
     );
 }
 export default CommentWall;
