@@ -347,7 +347,10 @@ async def get_polarity(code: str, request: Request, access_token: str = Depends(
                                  ) * [comment["polarity"]]
 
     # average each interval
-    last_bin = int(time() - first_time) // (interval * 60)
+    if first_time is None:
+        last_bin = -1
+    else:
+        last_bin = int(time() - first_time) // (interval * 60)
 
     polarities_list = []
 
@@ -401,7 +404,10 @@ async def get_mood(code: str, request: Request, access_token: str = Depends(oaut
                 [comment["moods"][emotions.index(emotion)]]
 
     # average each interval
-    last_bin = int(time() - first_time) // (interval * 60)
+    if first_time is None:
+        last_bin = -1
+    else:
+        last_bin = int(time() - first_time) // (interval * 60)
 
     moods_list = {
         "joy": [], "anger": [], "fear": [], "sadness": [], "love": []
