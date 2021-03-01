@@ -1,10 +1,11 @@
 import json
 import uuid
+from time import sleep
 
 import pika
 
 
-class DeepMojiRpcClient(object):
+class EmotionAnalysisClient(object):
 
     def __init__(self):
         self.connection = pika.BlockingConnection(
@@ -29,7 +30,7 @@ class DeepMojiRpcClient(object):
         self.corr_id = str(uuid.uuid4())
         self.channel.basic_publish(
             exchange="",
-            routing_key="deepmoji",
+            routing_key="emotion_analysis",
             properties=pika.BasicProperties(
                 reply_to=self.callback_queue,
                 correlation_id=self.corr_id,
@@ -40,8 +41,16 @@ class DeepMojiRpcClient(object):
         return json.loads(self.response)
 
 
-analyse = DeepMojiRpcClient().call
+while True:
+    try:
+        client = EmotionAnalysisClient()
+        break
+    except:
+        sleep(0.5)
+        pass
+
+analyse = client.call
 
 if __name__ == "__main__":
-    response = analyse("this is amazing")
+    response = analyse("i love this")
     print(response)

@@ -1,15 +1,14 @@
 import copy
-from math import e, sqrt
-from random import random
+from math import sqrt
 from sys import maxsize
 from time import time
 
-import numpy as np
 from fastapi import APIRouter, Body, Depends, HTTPException, Request, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer
 
+from ..rpc_client import analyse
 from .models import (CommentModel, EventModel, PollModel, PostCommentModel,
                      PostEventModel, PostPollModel, UpdateEventModel)
 
@@ -167,8 +166,12 @@ async def comment(code: str, request: Request, access_token: str = Depends(oauth
     new_comment.content = comment.content
     new_comment.author = "Host"
     new_comment.event = code
-    new_comment.moods = list(np.random.dirichlet(np.ones(5), size=1)[0])
-    new_comment.polarity = 2 * random() - 1
+
+    # perform sentiment analysis on comment content
+    analysis = analyse(comment.content)
+    new_comment.moods = analysis["moods"]
+    new_comment.polarity = analysis["polarity"]
+
     new_comment = jsonable_encoder(new_comment)
 
     # save comment

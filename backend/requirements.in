@@ -4,8 +4,8 @@ uvicorn[standard]
 pydantic[email]
 requests
 bcrypt
-numpy
 python-multipart
+pika
 
 # Database
 motor
