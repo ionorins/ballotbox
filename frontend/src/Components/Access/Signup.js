@@ -18,10 +18,6 @@ const Signup = () => {
     const handleSubmit = (event) => {
         const email = event.target[0].value;
         const pass = event.target[1].value;
-        // form validation!!!!!
-
-        // check passwords
-
         event.preventDefault();
         event.stopPropagation();
         fetch('/auth/create', {
@@ -85,6 +81,6 @@ const Signup = () => {
                 Sign up
             </Button>
             </Form>
-    )
+    );
 }
 export default Signup;

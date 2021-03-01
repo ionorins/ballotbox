@@ -62,9 +62,16 @@
 @media only screen and (max-width: 600px) {
     .standard-card {
         margin-top : auto;
+        max-height: 80vh;
     }
-    .access-card-body {
+    .control-panel-card-body {
         min-height: 70vh !important;
+    }
+    .comment-wall-container {
+        min-height: 55vh !important;
+    }
+    .chart-container {
+        width: 90vw;
     }
 }
 
@@ -179,4 +186,7 @@
 }
 .logout-button {
     font-size: xx-large !important;
+}
+.chart-dropdown {
+    max-width: 20vh;
 }

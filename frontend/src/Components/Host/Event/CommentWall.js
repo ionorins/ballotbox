@@ -42,7 +42,7 @@ const CommentWall = () => {
                     <ListGroup.Item>
                         <Row>
                             <Col>
-                                <h6>{(comment.author.name === null ? 'Anonymous' : 'Host')}</h6>
+                                <h6>{(comment.author.name === null) ? 'Anonymous' : comment.author.name}</h6>
                             </Col>
                             <Col className="comment-likes">
                                 {comment.likes}
@@ -93,7 +93,7 @@ const CommentWall = () => {
 
 
     return (
-        <div>
+        <div className="mt-auto">
             <div className="comment-wall-container m-1">
             <ListGroup variant="flush" className="comment-list">
                 {comments}

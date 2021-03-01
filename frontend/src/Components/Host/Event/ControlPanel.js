@@ -61,7 +61,7 @@ const ControlPanel = () => {
         <div className="container">
             <Navbar fixed="top" className="flex-column">
                 <Row className="min-vw-100">
-                    <Navbar.Text className="mx-auto display-4 flex-row">
+                    <Navbar.Text className="mx-auto nav-stats-font">
                         <Link to="/host" className="clickable-link">
                             {eventName} <TitleLogo />
                         </Link>
@@ -113,7 +113,7 @@ const ControlPanel = () => {
                         </Nav.Item>
                     </Nav>
                 </Card.Header>
-                <Card.Body className="access-card-body">
+                <Card.Body className="access-card-body control-panel-card-body">
                     <Tab.Content>
                         <Tab.Pane eventKey="emotion">
                             <EmotionAnalysis />

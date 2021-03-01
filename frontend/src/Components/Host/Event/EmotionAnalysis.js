@@ -4,7 +4,9 @@ import {useParams} from "react-router-dom";
 import {useCookies} from "react-cookie";
 import React, {useEffect, useState} from "react";
 import EmotionEmoji from "./Emotion/EmotionEmoji";
-import EmotionBarChart from "./Emotion/EmotionBarChart";
+import EmotionLineChart from "./Emotion/EmotionLineChart";
+import ListGroup from "react-bootstrap/ListGroup";
+import Form from "react-bootstrap/Form";
 
 const EmotionAnalysis = () => {
 
@@ -12,6 +14,7 @@ const EmotionAnalysis = () => {
     // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token']);
     const [emojiSize, setEmojiSize] = useState([]);
+    const [interval, setInterval] = useState(1);
     const [emotionData, setEmotionData] = useState([
         {
             id: "Anger",
@@ -89,7 +92,12 @@ const EmotionAnalysis = () => {
         }
     ]);
 
-    async function getValues(interval) {
+    function selectInterval(selected) {
+        setInterval(selected.substring(0,1));
+        getValues();
+    }
+
+    async function getValues() {
         fetch('http://localhost:8000/host/event/'+id+"/mood/polarity?interval="+interval, {
             method: 'GET',
             headers: {
@@ -114,38 +122,58 @@ const EmotionAnalysis = () => {
             });
     }
     useEffect(() => {
-        getValues(600);
+        getValues();
         getCurrent();
     },[])
 
     return (
         <div>
-            <div className="emoji-grid">
-                <Row noGutters={true}>
-                    <Col className="ml-auto">
-                        <EmotionEmoji type={"joy"} size={emojiSize['joy']} toggled={true}/>
-                    </Col>
-                    <Col className="mr-auto">
-                        <EmotionEmoji type={"fear"} size={emojiSize['fear']} oggled={false}/>
-                    </Col>
-                </Row>
-                <Row noGutters={true}>
-                    <Col className="mx-auto">
-                        <EmotionEmoji type={"anger"} size={emojiSize['anger']} toggled={true}/>
-                    </Col>
-                </Row>
-                <Row noGutters={true}>
-                    <Col className="ml-auto">
-                        <EmotionEmoji type={"love"} size={emojiSize['love']} toggled={false}/>
-                    </Col>
-                    <Col className="mr-auto">
-                        <EmotionEmoji type={"sadness"} size={emojiSize['sadness']} toggled={false}/>
-                    </Col>
-                </Row>
-            </div>
-            <div className="chart-container">
-                <EmotionBarChart data={emotionData} />
-            </div>
+            <ListGroup variant="flush">
+                <ListGroup.Item>
+                    <div className="emoji-grid py-4">
+                        <Row noGutters={true}>
+                            <Col className="ml-auto">
+                                <EmotionEmoji type={"joy"} size={emojiSize['joy']} toggled={true}/>
+                            </Col>
+                            <Col className="mr-auto">
+                                <EmotionEmoji type={"fear"} size={emojiSize['fear']} oggled={false}/>
+                            </Col>
+                        </Row>
+                        <Row noGutters={true}>
+                            <Col className="mx-auto">
+                                <EmotionEmoji type={"anger"} size={emojiSize['anger']} toggled={true}/>
+                            </Col>
+                        </Row>
+                        <Row noGutters={true}>
+                            <Col className="ml-auto">
+                                <EmotionEmoji type={"love"} size={emojiSize['love']} toggled={false}/>
+                            </Col>
+                            <Col className="mr-auto">
+                                <EmotionEmoji type={"sadness"} size={emojiSize['sadness']} toggled={false}/>
+                            </Col>
+                        </Row>
+                    </div>
+                </ListGroup.Item>
+                <ListGroup.Item className="p-0">
+                    <Form className="chart-dropdown mt-2">
+                        <Form.Group>
+                            <Form.Control as="select" value={interval}
+                                          onChange={e => {selectInterval(e.target.value)}}
+                                          defaultValue="Select interval"
+                                          >
+                                <option>Select interval</option>
+                                <option>1 minute</option>
+                                <option>2 minutes</option>
+                                <option>5 minutes</option>
+                            </Form.Control>
+                        </Form.Group>
+                    </Form>
+                    <div className="chart-container py-4">
+                        <EmotionLineChart data={emotionData} />
+                    </div>
+                </ListGroup.Item>
+            </ListGroup>
+
         </div>
 
     );

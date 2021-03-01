@@ -1,11 +1,11 @@
 import {ResponsiveBar, ResponsiveLine} from "nivo";
 
-const EmotionBarChart = ({data}) => {
+const EmotionLineChart = ({data}) => {
 
     return (
         <ResponsiveLine
             data={data}
-            margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
+            margin={{ top: 30, right: 30, bottom: 30, left: 30 }}
             yScale={{
                 type: "linear",
                 stacked: false,
@@ -18,7 +18,8 @@ const EmotionBarChart = ({data}) => {
             axisLeft={{
                 legend: 'polarity',
                 legendPosition: 'center',
-                legendOffset: -40
+                legendOffset: -20,
+                tickValues: [0, 1, 2],
             }}
             axisBottom={{
                 legend: 'timestamp',
@@ -30,4 +31,4 @@ const EmotionBarChart = ({data}) => {
     );
 
 }
-export default EmotionBarChart;
+export default EmotionLineChart;

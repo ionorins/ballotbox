@@ -20,8 +20,6 @@ const Login = () => {
         let form = new FormData();
         form.append("username", email);
         form.append("password", pass);
-        console.log(email);
-        console.log(pass);
         event.preventDefault();
         event.stopPropagation();
         fetch('http://localhost:8000/auth/login', {

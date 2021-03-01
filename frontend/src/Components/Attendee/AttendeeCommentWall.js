@@ -8,6 +8,8 @@ import Form from "react-bootstrap/Form";
 import {useEffect, useState} from "react";
 import {useCookies} from "react-cookie";
 import {RiThumbUpFill, RiThumbUpLine} from "react-icons/ri";
+import {Container, OverlayTrigger, Popover} from "react-bootstrap";
+import {FiSettings} from "react-icons/fi";
 
 
 const AttendeeCommentWall = () => {
@@ -43,7 +45,7 @@ const AttendeeCommentWall = () => {
                     <ListGroup.Item>
                         <Row>
                             <Col>
-                                <h6>{(comment.author.name === null ? 'Anonymous' : 'Host')}</h6>
+                                <h6>{(comment.author.name === null) ? 'Anonymous' : comment.author.name}</h6>
                             </Col>
                             <Col className="comment-likes">
                                 {comment.likes}
@@ -92,6 +94,34 @@ const AttendeeCommentWall = () => {
         event.currentTarget.reset();
     };
 
+    const handleAliasChange = (event) => {
+        const alias = event.target[0].value;
+        event.preventDefault();
+        event.stopPropagation();
+        fetch('http://localhost:8000/attendee/alias/'+alias, {
+            method: 'POST',
+            headers: {
+                "Authorization": "Bearer "+cookies['access_token'],
+            },
+        }).then((response) => response.json())
+            .then((responseJson) => {
+                getComments()
+            });
+        event.currentTarget.reset();
+    };
+
+    const aliasPopover = (
+        <Popover id="popover-basic">
+            <Popover.Title as="h3">Set a name</Popover.Title>
+            <Popover.Content>
+                <Form onSubmit={handleAliasChange}>
+                    <InputGroup className="my-2">
+                        <Form.Control placeholder="Enter name"/>
+                    </InputGroup>
+                </Form>
+            </Popover.Content>
+        </Popover>
+    );
 
     return (
         <div>
@@ -100,11 +130,20 @@ const AttendeeCommentWall = () => {
                     {comments}
                 </ListGroup>
             </div>
-            <Form onSubmit={handleSubmit}>
-                <InputGroup className="my-2">
-                    <Form.Control size="lg" placeholder="Add a comment..."/>
-                </InputGroup>
-            </Form>
+                <Row>
+                    <Col xs={10} md={11} className="pr-0">
+                        <Form onSubmit={handleSubmit}>
+                            <InputGroup className="my-2">
+                                <Form.Control size="lg" placeholder="Add a comment..."/>
+                            </InputGroup>
+                        </Form>
+                    </Col>
+                    <Col xs={2} md={1} className="pl-0">
+                        <OverlayTrigger trigger="click" placement="auto" overlay={aliasPopover}>
+                            <Button variant="light" className="p-2 mt-2"><FiSettings/></Button>
+                        </OverlayTrigger>
+                    </Col>
+                </Row>
         </div>
     );
 }
