@@ -15,5 +15,7 @@ RUN wget https://www.dropbox.com/s/xqarafsl6a8f9ny/deepmoji_weights.hdf5\?dl\=0\
 RUN pip2 install tensorflow==1.15.0
 RUN pip2 install pika
 
+COPY ./rpc_server.py /server/rpc_server.py
+
 # start rpc server 
 ENTRYPOINT python2 /server/rpc_server.py && /bin/bash
