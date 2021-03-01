@@ -2,10 +2,10 @@ import csv
 import pandas as pd
 from rpc_client import analyse
 
-OUTPUT_PATH = 'gold_mine_EF.csv'
+OUTPUT_PATH = 'gold_mine_PO.csv'
 INPUT_PATH = 'emotions.csv'
 
-df = pd.read_csv('tidyData_CE_EF.csv', header=None, sep=',')
+df = pd.read_csv('tidyData_PO_EF.csv', header=None, sep=',')
 
 TEST_SENTENCES = list(df[0])
 EMOTIONS = list(df[1])
