@@ -40,6 +40,8 @@ services:
       - 8000:80
     volumes:
       - ./backend:/app
+    environment:
+      - PYTHONUNBUFFERED=1
 
   rabbitmq:
     image: rabbitmq:3-management
@@ -54,3 +56,14 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./deepmoji:/server
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  emtion_analysis:
+    build:
+      context: ./emotion_analysis
+      dockerfile: Dockerfile
+    volumes:
+      - ./emotion_analysis:/emotion_analysis
+    environment:
+      - PYTHONUNBUFFERED=1

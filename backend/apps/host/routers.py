@@ -1,15 +1,14 @@
 import copy
 from math import sqrt
-from random import random
 from sys import maxsize
 from time import time
 
-import numpy as np
 from fastapi import APIRouter, Body, Depends, HTTPException, Request, status
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer
 
+from ..rpc_client import analyse
 from .models import (CommentModel, EventModel, PollModel, PostCommentModel,
                      PostEventModel, PostPollModel, UpdateEventModel)
 
@@ -167,8 +166,12 @@ async def comment(code: str, request: Request, access_token: str = Depends(oauth
     new_comment.content = comment.content
     new_comment.author = "Host"
     new_comment.event = code
-    new_comment.moods = list(np.random.dirichlet(np.ones(5), size=1)[0])
-    new_comment.polarity = 2 * random() - 1
+
+    # perform sentiment analysis on comment content
+    analysis = analyse(comment.content)
+    new_comment.moods = analysis["moods"]
+    new_comment.polarity = analysis["polarity"]
+
     new_comment = jsonable_encoder(new_comment)
 
     # save comment
@@ -314,7 +317,7 @@ async def get_attendees(code: str, request: Request, access_token: str = Depends
 
 
 @router.get("/event/{code}/mood/polarity")
-async def get_polarity(code: str, request: Request, access_token: str = Depends(oauth2_scheme), interval: int = 300):
+async def get_polarity(code: str, request: Request, access_token: str = Depends(oauth2_scheme), interval: int = 1):
     host = await get_host_profile(request, access_token)
     await check_event(request, host["username"], code)
 
@@ -344,13 +347,12 @@ async def get_polarity(code: str, request: Request, access_token: str = Depends(
                                  ) * [comment["polarity"]]
 
     # average each interval
-    last_bin = int(time() - first_time) // (interval * 60)
+    if first_time is None:
+        last_bin = -1
+    else:
+        last_bin = int(time() - first_time) // (interval * 60)
 
     polarities_list = []
-
-    for i in range(last_bin + 1):
-        polarity = polarities.get(i, [0])
-        polarities_list.append(sum(polarity) / len(polarity))
 
     for i in range(last_bin + 1):
         polarity = polarities.get(i, [0])
@@ -361,13 +363,13 @@ async def get_polarity(code: str, request: Request, access_token: str = Depends(
         })
 
     return JSONResponse(status_code=status.HTTP_200_OK, content=[{
-        "id": "Polarity",
+        "id": "polarity",
         "data": polarities_list
     }])
 
 
-@router.get("/event/{code}/mood/{emotion}")
-async def get_mood(code: str, emotion: str, request: Request, access_token: str = Depends(oauth2_scheme), interval: int = 300):
+@router.get("/event/{code}/mood")
+async def get_mood(code: str, request: Request, access_token: str = Depends(oauth2_scheme), interval: int = 1):
     host = await get_host_profile(request, access_token)
     await check_event(request, host["username"], code)
 
@@ -378,12 +380,9 @@ async def get_mood(code: str, emotion: str, request: Request, access_token: str 
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Interval must be positive")
 
-    # return error if emotion is not in list
-    if emotion not in emotions:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail="Mood not found :(")
-
-    moods = {}
+    moods = {
+        "joy": {}, "anger": {}, "fear": {}, "sadness": {}, "love": {}
+    }
     first_time = None
 
     # go through each comment in database
@@ -397,26 +396,42 @@ async def get_mood(code: str, emotion: str, request: Request, access_token: str 
         # calculate the index of the interval the comment is in
         time_bin = int(comment["timestamp"] - first_time) // (interval * 60)
 
-        # add probablity to interval and weight it by (1 + no likes)
-        if time_bin not in moods:
-            moods[time_bin] = []
-        moods[time_bin] += (1 + len(comment["likes"])) * \
-            [comment["moods"][emotions.index(emotion)]]
+        for emotion in emotions:
+            # add probablity to interval and weight it by (1 + no likes)
+            if time_bin not in moods:
+                moods[emotion][time_bin] = []
+            moods[emotion][time_bin] += (1 + len(comment["likes"])) * \
+                [comment["moods"][emotions.index(emotion)]]
 
     # average each interval
-    last_bin = int(time() - first_time) // (interval * 60)
+    if first_time is None:
+        last_bin = -1
+    else:
+        last_bin = int(time() - first_time) // (interval * 60)
 
-    moods_list = []
+    moods_list = {
+        "joy": [], "anger": [], "fear": [], "sadness": [], "love": []
+    }
 
-    for i in range(last_bin + 1):
-        mood = moods.get(i, [0])
-        moods_list.append(sum(mood) / len(mood))
+    for emotion in emotions:
+        for i in range(last_bin + 1):
+            mood = moods[emotion].get(i, [0])
+            moods_list[emotion].append({
+                "x": i * interval,
+                "y": sum(mood) / len(mood)
+            })
 
-    return JSONResponse(status_code=status.HTTP_200_OK, content=moods_list)
+    # format to front-end friendly form
+    response = [{
+        "id": k,
+        "data": v
+    } for k, v in moods_list.items()]
+
+    return JSONResponse(status_code=status.HTTP_200_OK, content=response)
 
 
-@router.get("/event/{code}/mood")
-async def get_current_mood(code: str, request: Request, access_token: str = Depends(oauth2_scheme), interval: int = 300):
+@router.get("/event/{code}/currentmood")
+async def get_current_mood(code: str, request: Request, access_token: str = Depends(oauth2_scheme), interval: int = 1):
     host = await get_host_profile(request, access_token)
     await check_event(request, host["username"], code)
 
