@@ -1,5 +1,5 @@
 import '../../App.css';
-import { useHistory } from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import EventList from "./EventList";
 import React, {useState} from "react";
@@ -34,8 +34,10 @@ const Host = () => {
     if (load) {
         return (
             <div className="container">
+                <Link className="clickable-link" to="/">
+                    <h1 className="display-3">BallotBox <TitleLogo /></h1>
+                </Link>
 
-                <h1 className="display-4">BallotBox <TitleLogo /></h1>
                 <Card className="access-card">
                     <Card.Body className="access-card-body">
                         <h3 className="mb-3">Your Events</h3>

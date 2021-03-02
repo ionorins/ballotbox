@@ -126,7 +126,7 @@ const AttendeeCommentWall = () => {
 
     return (
         <div>
-            <div className="comment-wall-container m-1">
+            <div className="comment-wall-container attendee-comment-wall-container m-1">
                 <ListGroup variant="flush" className="comment-list">
                     {comments}
                 </ListGroup>

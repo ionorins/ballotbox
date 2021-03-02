@@ -6,6 +6,8 @@ import AttendeeCommentWall from "./AttendeeCommentWall";
 import Tab from "react-bootstrap/Tab";
 import AttendeePolls from "./AttendeePolls";
 import Badge from "react-bootstrap/Badge";
+import {Link} from "react-router-dom";
+import TitleLogo from "../Utils/TitleLogo";
 
 const Event = () => {
 
@@ -13,8 +15,10 @@ const Event = () => {
 
     return (
         <div className="container">
-            <h1 className="display-4">BallotBox 🗳️</h1>
-            <Card className="standard-card">
+            <Link className="clickable-link mt-3" to="/">
+                <h1 className="display-4">BallotBox <TitleLogo /></h1>
+            </Link>
+            <Card className="standard-card attendee-event-card">
                 <Tab.Container defaultActiveKey="comments">
                 <Card.Header style={{borderBottom: "none", backgroundColor: "transparent",}}>
                     <Nav variant="tabs" className="tab-bar">

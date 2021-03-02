@@ -69,7 +69,7 @@ const AttendeePolls = ({setUnansweredPolls}) => {
 
 
     return (
-        <div>
+        <div className="polls-container attendee-polls-container">
             <Accordion>
                 {unansweredPollsList}
             </Accordion>

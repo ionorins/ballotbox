@@ -59,7 +59,7 @@ const ControlPanel = () => {
 
     return (
         <div className="container">
-            <Navbar fixed="top" className="flex-column">
+            <Navbar fixed="top" className="flex-column mb-3">
                 <Row className="min-vw-100">
                     <Navbar.Text className="mx-auto nav-stats-font">
                         <Link to="/host" className="clickable-link">
@@ -71,8 +71,10 @@ const ControlPanel = () => {
                     </Navbar.Text>
                 </Row>
                 <Row className="min-vw-100">
-                    <Col ref={target} onClick={() => {setShow(!show); navigator.clipboard.writeText(eventCode)}} className="text-left">
-                        <div className="nav-stats-font" style={{whiteSpace: "nowrap"}}> <FiLink className="mb-1"/> { eventCode }</div>
+                    <Col  className="text-left">
+                        <div className="nav-stats-font copy-link" ref={target} style={{whiteSpace: "nowrap"}} onClick={() => {setShow(!show); navigator.clipboard.writeText(eventCode)}}>
+                            <FiLink className="mb-1"/> { eventCode }
+                        </div>
                         <Overlay target={target.current} show={show} placement="bottom">
                             {(props) => (
                                 <Tooltip id="overlay-example" {...props}>
@@ -88,9 +90,6 @@ const ControlPanel = () => {
                         </div>
                     </Col>
                 </Row>
-            </Navbar>
-            <Navbar>
-
             </Navbar>
             <Card className="standard-card">
                 <Tab.Container defaultActiveKey="comments">
