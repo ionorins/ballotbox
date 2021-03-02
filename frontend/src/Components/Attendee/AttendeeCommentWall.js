@@ -10,6 +10,7 @@ import {useCookies} from "react-cookie";
 import {RiThumbUpFill, RiThumbUpLine} from "react-icons/ri";
 import {Container, OverlayTrigger, Popover} from "react-bootstrap";
 import {FiSettings} from "react-icons/fi";
+import {FaUserEdit} from "react-icons/all";
 
 
 const AttendeeCommentWall = () => {
@@ -61,7 +62,7 @@ const AttendeeCommentWall = () => {
                         </Row>
                     </ListGroup.Item>
                 );
-                setComments(commentList);
+                responseJson.length === 0 ? setComments(<ListGroup.Item className="mx-auto my-auto">No one has commented yet :(</ListGroup.Item>) : setComments(commentList);
             });
     }
 
@@ -140,7 +141,7 @@ const AttendeeCommentWall = () => {
                     </Col>
                     <Col xs={2} md={1} className="pl-0">
                         <OverlayTrigger trigger="click" placement="auto" overlay={aliasPopover}>
-                            <Button variant="light" className="p-2 mt-2"><FiSettings/></Button>
+                            <Button variant="light" className="p-2 mt-2"><FaUserEdit/></Button>
                         </OverlayTrigger>
                     </Col>
                 </Row>
