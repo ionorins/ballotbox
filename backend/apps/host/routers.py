@@ -62,9 +62,6 @@ async def get_alias(request, access_token):
 
 
 async def check_event(request, host, code):
-    if code == "{event}":
-        return
-
     event = await request.app.mongodb["events"].find_one({
         "code": code
     })
