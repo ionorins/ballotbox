@@ -5,7 +5,7 @@ import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {useCookies} from "react-cookie";
 
-const EmojiGrid = () => {
+const EmojiGrid = ({selected, handler}) => {
     const [emojiSize, setEmojiSize] = useState([]);
     const [cookies, setCookies] = useCookies(['access_token']);
 
@@ -17,7 +17,7 @@ const EmojiGrid = () => {
     },[])
 
     async function getCurrent() {
-        fetch('/host/event/'+id+"/mood", {
+        fetch('/host/event/'+id+"/currentmood", {
             method: 'GET',
             headers: {
                 "Authorization": "Bearer "+cookies['access_token'],
@@ -31,30 +31,30 @@ const EmojiGrid = () => {
 
     function getCurrentRefresh() {
         getCurrent();
-        setTimeout(getCurrent, 3000);
+        setTimeout(getCurrentRefresh, 3000);
     }
 
     return(
         <div className="emoji-grid py-4">
             <Row noGutters={true}>
                 <Col className="ml-auto">
-                    <EmotionEmoji type={"joy"} size={emojiSize['joy']} toggled={true}/>
+                    <EmotionEmoji type={"joy"} size={emojiSize['joy']} handler={handler} toggled={selected === 'joy'}/>
                 </Col>
                 <Col className="mr-auto">
-                    <EmotionEmoji type={"fear"} size={emojiSize['fear']} oggled={false}/>
+                    <EmotionEmoji type={"fear"} size={emojiSize['fear']} handler={handler} toggled={selected === 'fear'}/>
                 </Col>
             </Row>
             <Row noGutters={true}>
                 <Col className="mx-auto">
-                    <EmotionEmoji type={"anger"} size={emojiSize['anger']} toggled={true}/>
+                    <EmotionEmoji type={"anger"} size={emojiSize['anger']} handler={handler} toggled={selected === 'anger'}/>
                 </Col>
             </Row>
             <Row noGutters={true}>
                 <Col className="ml-auto">
-                    <EmotionEmoji type={"love"} size={emojiSize['love']} toggled={false}/>
+                    <EmotionEmoji type={"love"} size={emojiSize['love']} handler={handler} toggled={selected === 'love'}/>
                 </Col>
                 <Col className="mr-auto">
-                    <EmotionEmoji type={"sadness"} size={emojiSize['sadness']} toggled={false}/>
+                    <EmotionEmoji type={"sadness"} size={emojiSize['sadness']} handler={handler} toggled={selected === 'sadness'}/>
                 </Col>
             </Row>
         </div>

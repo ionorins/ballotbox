@@ -209,3 +209,6 @@
     cursor: pointer;
     max-width: 30vh;
 }
+.carousel-control-prev, .carousel-control-next {
+    width: 5% !important;
+}

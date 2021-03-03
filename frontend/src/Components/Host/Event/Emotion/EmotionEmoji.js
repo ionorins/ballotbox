@@ -1,9 +1,9 @@
 import Twemoji from "react-twemoji";
 
-const EmotionEmoji = ({type, size, toggleLine, toggled}) => {
+const EmotionEmoji = ({type, size, toggleLine, toggled, handler}) => {
     let dimension = size * size * 250;
-    if (size === 0)
-        dimension = 20;
+    if (size === 0 || size === null)
+        dimension = 40;
     let opc, alt, id;
 
     if (toggled)
@@ -32,6 +32,6 @@ const EmotionEmoji = ({type, size, toggleLine, toggled}) => {
         alt="😍";
         id="1f60d";
     }
-    return <img onClick={() => toggleLine(type)} draggable="false" style={{filter: "opacity("+opc+")", cursor: "pointer", height: dimension, width: dimension}} alt={alt} src={"https://twemoji.maxcdn.com/v/13.0.1/72x72/"+id+".png"} />
+    return <img onClick={handler} id={type} draggable="false" style={{filter: "opacity("+opc+")", cursor: "pointer", height: dimension, width: dimension}} alt={alt} src={"https://twemoji.maxcdn.com/v/13.0.1/72x72/"+id+".png"} />
 }
 export default EmotionEmoji;

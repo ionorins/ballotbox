@@ -4,10 +4,13 @@ import {useParams} from "react-router-dom";
 import {useCookies} from "react-cookie";
 import React, {useEffect, useState} from "react";
 import EmotionEmoji from "./Emotion/EmotionEmoji";
-import EmotionLineChart from "./Emotion/PolarityLineChart";
+import PolarityLineChart from "./Emotion/PolarityLineChart";
 import ListGroup from "react-bootstrap/ListGroup";
 import Form from "react-bootstrap/Form";
 import EmojiGrid from "./Emotion/EmojiGrid";
+import {Carousel} from "react-bootstrap";
+import {NextIcon, PrevIcon} from "../../Utils/CarouselIcons";
+import MoodLineChart from "./Emotion/MoodLineChart";
 
 const EmotionAnalysis = () => {
 
@@ -15,130 +18,25 @@ const EmotionAnalysis = () => {
     // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token']);
     const [intervalValue, setIntervalValue] = useState(5);
-    const [emotionData, setEmotionData] = useState([
-        {
-            id: "Anger",
-            data: [
-                {
-                    x: "2018-01-01",
-                    y: 1.3
-                },
-                {
-                    x: "2018-01-02",
-                    y: 1.4
-                },
-                {
-                    x: "2018-01-03",
-                    y: 1.5
-                },
-                {
-                    x: "2018-01-04",
-                    y: 1.2
-                },
-                {
-                    x: "2018-01-05",
-                    y: 1.3
-                },
-                {
-                    x: "2018-01-06",
-                    y: 1.4
-                },
-                {
-                    x: "2018-01-07",
-                    y: 1.5
-                },
-                {
-                    x: "2018-01-08",
-                    y: 1.2
-                },
-            ]
-        },
-        {
-            id: "Joy",
-            data: [
-                {
-                    x: "2018-01-01",
-                    y: 1.0
-                },
-                {
-                    x: "2018-01-02",
-                    y: 0.9
-                },
-                {
-                    x: "2018-01-03",
-                    y: 0.1
-                },
-                {
-                    x: "2018-01-04",
-                    y: 2.0
-                },
-                {
-                    x: "2018-01-05",
-                    y: 1.0
-                },
-                {
-                    x: "2018-01-06",
-                    y: 0.9
-                },
-                {
-                    x: "2018-01-07",
-                    y: 0.1
-                },
-                {
-                    x: "2018-01-08",
-                    y: 2.0
-                },
-            ]
-        }
-    ]);
+    const [selectedEmoji, setSelectedEmoji] = useState("joy");
+    const [emojiChart, setEmojiChart] = useState(<MoodLineChart mood={"joy"} interval={intervalValue}/>);
 
-    function selectInterval(selected) {
-        setIntervalValue(selected);
-        console.log(selected);
-        getValues();
+    const handleEmojiClick = (event) => {
+        setSelectedEmoji(event.target.id);
     }
 
-    async function getValues() {
-        fetch('/host/event/'+id+"/mood/polarity?interval="+intervalValue, {
-            method: 'GET',
-            headers: {
-                "Authorization": "Bearer "+cookies['access_token'],
-            },
-        }).then((response) => response.json())
-            .then((responseJson) => {
-                setEmotionData(responseJson);
-            });
-
-    }
-
-    async function getEmotionRefresh() {
-        getValues();
-        setTimeout(getEmotionRefresh, 5000);
-    }
-
-    useEffect(() => {
-        fetch('/host/event/'+id+"/mood/polarity?interval="+intervalValue, {
-            method: 'GET',
-            headers: {
-                "Authorization": "Bearer "+cookies['access_token'],
-            },
-        }).then((response) => response.json())
-            .then((responseJson) => {
-                setEmotionData(responseJson);
-            });
-    },[intervalValue])
 
     return (
         <div>
             <ListGroup variant="flush">
                 <ListGroup.Item>
-                    <EmojiGrid />
+                    <EmojiGrid selected={selectedEmoji} handler={handleEmojiClick}/>
                 </ListGroup.Item>
-                <ListGroup.Item className="p-0">
+                <ListGroup.Item className="p-0 my-auto">
                     <Form className="chart-dropdown mt-2">
                         <Form.Group>
                             <Form.Control as="select"
-                                          onChange={e => {selectInterval(e.target.value)}}
+                                          onChange={e => {setIntervalValue(e.target.value)}}
                                           defaultValue="Select interval"
                                           >
                                 <option>Select interval</option>
@@ -148,9 +46,19 @@ const EmotionAnalysis = () => {
                             </Form.Control>
                         </Form.Group>
                     </Form>
-                    <div className="chart-container py-3">
-                        <EmotionLineChart data={emotionData} />
-                    </div>
+                    <Carousel interval={null} nextIcon={<NextIcon />} prevIcon={<PrevIcon />} indicators={false} className="custom-carousel">
+                        <Carousel.Item>
+                            <div className="chart-container py-3">
+                                <PolarityLineChart interval={intervalValue}/>
+                            </div>
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <div className="chart-container py-3">
+                                { emojiChart }
+                            </div>
+                        </Carousel.Item>
+                    </Carousel>
+
                 </ListGroup.Item>
             </ListGroup>
 

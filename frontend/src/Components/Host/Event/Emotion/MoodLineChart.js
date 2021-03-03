@@ -13,7 +13,7 @@ import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {useCookies} from "react-cookie";
 
-const PolarityLineChart = ({interval}) => {
+const MoodLineChart = ({interval, mood}) => {
 
     let { id } = useParams();
 
@@ -21,13 +21,14 @@ const PolarityLineChart = ({interval}) => {
     const [cookies, setCookies] = useCookies(['access_token'])
 
     async function getValues() {
-        fetch('/host/event/'+id+"/mood/polarity?interval="+interval, {
+        fetch('/host/event/'+id+"/mood/"+mood+"?interval="+interval, {
             method: 'GET',
             headers: {
                 "Authorization": "Bearer "+cookies['access_token'],
             },
         }).then((response) => response.json())
             .then((responseJson) => {
+                console.log(responseJson);
                 setEmotionData(responseJson);
             });
 
@@ -58,4 +59,4 @@ const PolarityLineChart = ({interval}) => {
     );
 
 }
-export default PolarityLineChart;
+export default MoodLineChart;
