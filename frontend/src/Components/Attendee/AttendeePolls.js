@@ -58,15 +58,13 @@ const AttendeePolls = ({setUnansweredPolls}) => {
             });
     }
 
-    async function getPollsRefresh() {
-        getPolls();
-        setTimeout(getPollsRefresh, 3000);
-    }
-
     useEffect(() => {
-        getPollsRefresh();
+        getPolls();
+        const timeoutID = setInterval(() => {
+            getPolls();
+        }, 3000);
+        return () => clearInterval(timeoutID);
     },[])
-
 
     return (
         <div className="polls-container attendee-polls-container">

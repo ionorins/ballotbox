@@ -12,10 +12,6 @@ const EmojiGrid = ({selected, handler}) => {
 
     let { id } = useParams();
 
-    useEffect(() => {
-        getCurrentRefresh();
-    },[])
-
     async function getCurrent() {
         fetch('/host/event/'+id+"/currentmood", {
             method: 'GET',
@@ -29,10 +25,13 @@ const EmojiGrid = ({selected, handler}) => {
             });
     }
 
-    function getCurrentRefresh() {
+    useEffect(() => {
         getCurrent();
-        setTimeout(getCurrentRefresh, 3000);
-    }
+        const timeoutID = setInterval(() => {
+            getCurrent();
+        }, 3000);
+        return () => clearInterval(timeoutID);
+    },[])
 
     return(
         <div className="emoji-grid py-4">

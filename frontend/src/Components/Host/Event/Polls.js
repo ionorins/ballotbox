@@ -49,7 +49,11 @@ const Polls = ({attendees}) => {
 
     useEffect(() => {
         getPolls();
-}, []);
+        const timeoutID = setInterval(() => {
+            getPolls();
+        }, 3000);
+        return () => clearInterval(timeoutID);
+    },[])
 
     return (
         <div>

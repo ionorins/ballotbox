@@ -62,13 +62,12 @@ const CommentWall = () => {
             });
     }
 
-    async function getCommentsRefresh() {
-        getComments();
-        setTimeout(getCommentsRefresh, 3000);
-    }
-
     useEffect(() => {
-        getCommentsRefresh();
+        getComments();
+        const timeoutID = setInterval(() => {
+            getComments();
+        }, 3000);
+        return () => clearInterval(timeoutID);
     },[])
 
 

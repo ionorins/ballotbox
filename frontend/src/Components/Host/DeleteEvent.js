@@ -35,11 +35,11 @@ const DeleteEvent = ({ showDelete, setShowDelete, code, name, date }) => {
 
     return (
         <Modal
-            showDelete={showDelete}
-            onHide={() => setShowDelete(false)}
+            show={showDelete}
+            onHide={() => setShowDelete(<DeleteEvent />)}
         >
             <Modal.Header closeButton>
-                <Modal.Title>Create a new event</Modal.Title>
+                <Modal.Title>{code}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={handleSubmit} className="mx-3">

@@ -46,11 +46,8 @@ const MoodLineChart = ({interval, mood}) => {
             <ResponsiveContainer width="90%" className="mr-5 ml-2">
                 <LineChart data={emotionData[0]['data']}>
                     <XAxis dataKey="x"/>
-                    <YAxis>
-                            {console.log(mood)}
-                    </YAxis>
+                    <YAxis domain={[0,1]}/>
                     <CartesianGrid stroke="#c9c9c9" strokeDasharray="5 5"/>
-                    <ReferenceLine y={0} stroke="red" strokeDasharray="3 10" />
                     <Tooltip />
                     <Legend />
                     <Line type="monotone" dataKey="y" stroke="#8884d8" />

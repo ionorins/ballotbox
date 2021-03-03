@@ -43,10 +43,10 @@ const PolarityLineChart = ({interval}) => {
     },[interval])
 
     return (
-            <ResponsiveContainer width="90%" className="mr-5 ml-2">
+            <ResponsiveContainer width="90%" className="">
                 <LineChart data={emotionData[0]['data']}>
                     <XAxis dataKey="x"/>
-                    <YAxis/>
+                    <YAxis domain={[-0.5,0.5]}/>
                     <CartesianGrid stroke="#c9c9c9" strokeDasharray="5 5"/>
                     <ReferenceLine y={0} stroke="red" strokeDasharray="3 10" />
                     <Tooltip />

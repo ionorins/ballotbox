@@ -53,17 +53,21 @@ const EmotionAnalysis = () => {
                                 <option value="1">1 minute</option>
                                 <option value="2">2 minutes</option>
                                 <option value="5">5 minutes</option>
+                                <option value="10">10 minutes</option>
+                                <option value="30">30 minutes</option>
                             </Form.Control>
                         </Form.Group>
                     </Form>
                     <Carousel interval={null} nextIcon={<NextIcon />} prevIcon={<PrevIcon />} indicators={false} className="custom-carousel">
                         <Carousel.Item>
-                            <div className="chart-container py-3">
+                            <div className="chart-container ">
+                                Polarity
                                 { polarityChart }
                             </div>
                         </Carousel.Item>
                         <Carousel.Item>
-                            <div className="chart-container py-3">
+                            <div className="chart-container">
+                                {selectedEmoji.charAt(0).toUpperCase() + selectedEmoji.slice(1)}
                                 { emojiChart }
                             </div>
                         </Carousel.Item>

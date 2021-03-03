@@ -20,9 +20,9 @@ const EventList = () => {
 
     const [show, setShow] = useState(false);
 
-    const [showDelete, setShowDelete] = useState(false);
-
     const [events, setEvents] = useState(<> </>);
+
+    const [deleteModal, setDeleteModal] = useState(<DeleteEvent />);
 
     const selectEvent = (eventId) => {
         console.log(eventId);
@@ -34,6 +34,9 @@ const EventList = () => {
         history.push("/host/event/" + eventId);
     }
 
+    function handleDelete(code) {
+        setDeleteModal(<DeleteEvent showDelete={true} setShowDelete={setDeleteModal} code={code}/>);
+    }
 
     useEffect(() => {
         fetch('/host/events', {
@@ -58,13 +61,11 @@ const EventList = () => {
                             </Col>
                             <Col>
                                 <Row className="float-right">
-
                                     <Button className="mx-2 event-select-button" size={"lg"} onClick={() => selectEvent(event.code)}>
                                         <FaPlay />
                                     </Button>
-                                    <Button className="mx-2 event-select-button" size={"lg"} onClick={() => setShowDelete(true)}>
+                                    <Button className="mx-2 event-select-button" size={"lg"} onClick={() => handleDelete(event.code)}>
                                         <FaTimes />
-                                        <DeleteEvent showDelete={showDelete} setShowDelete={setShowDelete} code={event.code} name={event.name} date={event.date} />
                                     </Button>
                                 </Row>
                             </Col>
@@ -93,6 +94,7 @@ const EventList = () => {
                                 </Button>
                                 <NewEvent show={show} setShow={setShow} />
                             </Row>
+                            { deleteModal }
                         </Col>
                     </Row>
                 </ListGroup.Item>
