@@ -25,9 +25,6 @@ async def get_attendee_profile(request, access_token):
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN, detail="Forbidden")
 
-    if attendee["event"] == "{event}":
-        return attendee
-
     event = await request.app.mongodb["events"].find_one({
         "code": attendee["event"]
     })
@@ -58,9 +55,6 @@ async def get_alias(request, access_token):
 
 
 async def check_event_exists(request, code):
-    if code == "{event}":
-        return
-
     event = await request.app.mongodb["events"].find_one({
         "code": code
     })
@@ -73,9 +67,6 @@ async def check_event_exists(request, code):
 
 
 async def check_event(request, access_token, code):
-    if code == "{event}":
-        return
-
     attendee = await request.app.mongodb["attendees"].find_one({
         "access_token": access_token
     })

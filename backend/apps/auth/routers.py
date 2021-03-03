@@ -29,7 +29,7 @@ async def create(request: Request, host: HostModel = Body(...)):
 
     # create, save and return session
     session = HostSessionModel()
-    session.username = host['username']
+    session.username = host["username"]
     session.token_type = "bearer"
     session = jsonable_encoder(session)
     await request.app.mongodb["hostSessions"].insert_one(session)
