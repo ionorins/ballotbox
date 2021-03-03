@@ -7,7 +7,7 @@ import {
     ResponsiveContainer,
     ReferenceLine,
     Tooltip,
-    Legend
+    Legend, Text
 } from "recharts";
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
@@ -20,7 +20,7 @@ const MoodLineChart = ({interval, mood}) => {
     const [emotionData, setEmotionData] = useState([{x: 0, y: 0}])
     const [cookies, setCookies] = useCookies(['access_token'])
 
-    async function getValues() {
+    async function getMoodValues() {
         fetch('/host/event/'+id+"/mood/"+mood+"?interval="+interval, {
             method: 'GET',
             headers: {
@@ -28,26 +28,27 @@ const MoodLineChart = ({interval, mood}) => {
             },
         }).then((response) => response.json())
             .then((responseJson) => {
-                console.log(responseJson);
                 setEmotionData(responseJson);
             });
 
     }
 
-    async function getValuesRefresh() {
-        getValues();
-        setTimeout(getValuesRefresh, 5000);
-    }
-
     useEffect(() => {
-        getValuesRefresh();
-    },[])
+        getMoodValues();
+        const timeoutID = setInterval(() => {
+            getMoodValues();
+        }, 3000);
+        return () => clearInterval(timeoutID);
+    },[mood, interval])
+
 
     return (
             <ResponsiveContainer width="90%" className="mr-5 ml-2">
                 <LineChart data={emotionData[0]['data']}>
                     <XAxis dataKey="x"/>
-                    <YAxis/>
+                    <YAxis>
+                            {console.log(mood)}
+                    </YAxis>
                     <CartesianGrid stroke="#c9c9c9" strokeDasharray="5 5"/>
                     <ReferenceLine y={0} stroke="red" strokeDasharray="3 10" />
                     <Tooltip />
@@ -55,6 +56,7 @@ const MoodLineChart = ({interval, mood}) => {
                     <Line type="monotone" dataKey="y" stroke="#8884d8" />
                 </LineChart>
             </ResponsiveContainer>
+
 
     );
 

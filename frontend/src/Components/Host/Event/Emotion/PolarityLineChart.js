@@ -33,14 +33,14 @@ const PolarityLineChart = ({interval}) => {
 
     }
 
-    async function getValuesRefresh() {
-        getValues();
-        setTimeout(getValuesRefresh, 5000);
-    }
-
     useEffect(() => {
-        getValuesRefresh();
-    },[])
+        getValues();
+        const timeoutID = setInterval(() => {
+            console.log("CHECKING "+ interval);
+            getValues();
+        }, 3000);
+        return () => clearInterval(timeoutID);
+    },[interval])
 
     return (
             <ResponsiveContainer width="90%" className="mr-5 ml-2">
