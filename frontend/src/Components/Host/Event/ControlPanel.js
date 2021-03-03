@@ -75,14 +75,17 @@ const ControlPanel = () => {
                     <Col className="text-left">
 
                         <div className="nav-stats-font copy-link">
-                            <Link to={ "/qr/" + eventCode } className="clickable-link" target="_blank">
+                            <Link to={"/qr/" + eventCode} className="clickable-link" target="_blank">
                                 <RiQrCodeLine className="mb-1" />
                             </Link>
+
+
+                            <span ref={target} style={{ whiteSpace: "nowrap" }} onClick={() => { setShow(!show); navigator.clipboard.writeText(eventCode) }}>
+                                <FiLink className="mb-1" /> {eventCode}
+                            </span>
+
                         </div>
 
-                        <div className="nav-stats-font copy-link" ref={target} style={{ whiteSpace: "nowrap" }} onClick={() => { setShow(!show); navigator.clipboard.writeText(eventCode) }}>
-                            <FiLink className="mb-1" /> {eventCode}
-                        </div>
                         <Overlay target={target.current} show={show} placement="bottom">
                             {(props) => (
                                 <Tooltip id="overlay-example" {...props}>

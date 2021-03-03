@@ -15,9 +15,6 @@ function App() {
             <Route exact path="/">
                 <Entry/>
             </Route>
-            <Route exact path="/:code">
-                <Entry/>
-            </Route>
             <Route path="/login">
                 <Access/>
             </Route>
@@ -32,6 +29,9 @@ function App() {
             </Route>
             <Route path="/qr/:code">
                 <Qr />
+            </Route>
+            <Route exact path="/:code">
+                <Entry/>
             </Route>
         </Switch>
         </Router>
