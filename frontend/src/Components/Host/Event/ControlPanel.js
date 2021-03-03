@@ -77,9 +77,10 @@ const ControlPanel = () => {
                             <Link to={"/qr/" + eventCode} className="clickable-link" target="_blank">
                                 <RiQrCodeLine className="mb-1" />
                             </Link>
-                        </div>
-                        <div className="nav-stats-font copy-link" ref={target} style={{ whiteSpace: "nowrap" }} onClick={() => { setShow(!show); navigator.clipboard.writeText(eventCode) }}>
-                            {eventCode}
+
+                            <span ref={target} style={{ whiteSpace: "nowrap" }} onClick={() => { setShow(!show); navigator.clipboard.writeText(eventCode) }}>
+                                {eventCode}
+                            </span>
                         </div>
 
                         <Overlay target={target.current} show={show} placement="bottom">
