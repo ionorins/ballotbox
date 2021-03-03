@@ -9,7 +9,7 @@ class EmotionAnalysisClient(object):
 
     def __init__(self):
         self.connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host="rabbitmq"))
+            pika.ConnectionParameters(host="rabbitmq", heartbeat=0))
 
         self.channel = self.connection.channel()
 
