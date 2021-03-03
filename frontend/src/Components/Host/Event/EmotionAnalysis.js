@@ -19,10 +19,20 @@ const EmotionAnalysis = () => {
     const [cookies, setCookies] = useCookies(['access_token']);
     const [intervalValue, setIntervalValue] = useState(5);
     const [selectedEmoji, setSelectedEmoji] = useState("joy");
-    const [emojiChart, setEmojiChart] = useState(<MoodLineChart mood={"joy"} interval={intervalValue}/>);
+    const [emojiChart, setEmojiChart] = useState(<MoodLineChart mood={selectedEmoji} interval={intervalValue}/>);
+    const [polarityChart, setPolarityChart] = useState(<PolarityLineChart interval={intervalValue} />);
 
     const handleEmojiClick = (event) => {
         setSelectedEmoji(event.target.id);
+        setEmojiChart(<MoodLineChart mood={event.target.id} interval={intervalValue}/>)
+    }
+
+    const handleIntervalChange = (event) => {
+        if (event.target.value === "Select interval")
+            return;
+        setIntervalValue(event.target.value);
+        setPolarityChart(<PolarityLineChart interval={event.target.value}/>)
+        setEmojiChart(<MoodLineChart mood={selectedEmoji} interval={event.target.value}/>)
     }
 
 
@@ -36,7 +46,7 @@ const EmotionAnalysis = () => {
                     <Form className="chart-dropdown mt-2">
                         <Form.Group>
                             <Form.Control as="select"
-                                          onChange={e => {setIntervalValue(e.target.value)}}
+                                          onChange={handleIntervalChange}
                                           defaultValue="Select interval"
                                           >
                                 <option>Select interval</option>
@@ -49,7 +59,7 @@ const EmotionAnalysis = () => {
                     <Carousel interval={null} nextIcon={<NextIcon />} prevIcon={<PrevIcon />} indicators={false} className="custom-carousel">
                         <Carousel.Item>
                             <div className="chart-container py-3">
-                                <PolarityLineChart interval={intervalValue}/>
+                                { polarityChart }
                             </div>
                         </Carousel.Item>
                         <Carousel.Item>
