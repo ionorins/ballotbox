@@ -1,13 +1,14 @@
 import '../../App.css';
-import {FaPlay, FaPlus} from "react-icons/fa";
+import { FaPlay, FaPlus, FaTimes } from "react-icons/fa";
 import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import {useHistory} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import { useHistory } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import NewEvent from "./NewEvent";
-import {useCookies} from "react-cookie";
+import DeleteEvent from "./DeleteEvent";
+import { useCookies } from "react-cookie";
 
 
 const EventList = () => {
@@ -19,11 +20,18 @@ const EventList = () => {
 
     const [show, setShow] = useState(false);
 
+    const [showDelete, setShowDelete] = useState(false);
+
     const [events, setEvents] = useState(<> </>);
 
     const selectEvent = (eventId) => {
         console.log(eventId);
-        history.push("/host/event/"+eventId);
+        history.push("/host/event/" + eventId);
+    }
+
+    const deleteEvent = (eventId) => {
+        console.log(eventId);
+        history.push("/host/event/" + eventId);
     }
 
 
@@ -31,12 +39,12 @@ const EventList = () => {
         fetch('/host/events', {
             method: 'GET',
             headers: {
-                "Authorization": "Bearer "+cookies['access_token'],
+                "Authorization": "Bearer " + cookies['access_token'],
             }
         }).then((response) => response.json())
             .then((responseJson) => {
                 console.log(responseJson);
-                const eventMap = responseJson.map((event) =>
+                const eventMap = responseJson.filter((event) => event.active).map((event) =>
                     <ListGroup.Item>
                         <Row>
                             <Col>
@@ -50,8 +58,13 @@ const EventList = () => {
                             </Col>
                             <Col>
                                 <Row className="float-right">
+
                                     <Button className="mx-2 event-select-button" size={"lg"} onClick={() => selectEvent(event.code)}>
                                         <FaPlay />
+                                    </Button>
+                                    <Button className="mx-2 event-select-button" size={"lg"} onClick={() => setShowDelete(true)}>
+                                        <FaTimes />
+                                        <DeleteEvent showDelete={showDelete} setShowDelete={setShowDelete} code={event.code} name={event.name} date={event.date} />
                                     </Button>
                                 </Row>
                             </Col>
@@ -78,7 +91,7 @@ const EventList = () => {
                                 <Button className="mx-2 event-select-button" size={"lg"} onClick={() => setShow(true)}>
                                     <FaPlus />
                                 </Button>
-                                <NewEvent show={show} setShow={setShow}/>
+                                <NewEvent show={show} setShow={setShow} />
                             </Row>
                         </Col>
                     </Row>
