@@ -53,7 +53,7 @@ const Access = () => {
 
             <Navbar fixed="bottom">
                 <Navbar.Text className="mx-auto navbar-text">
-                    DBCampus Project 2021
+                    BallotBox | 2021
                 </Navbar.Text>
             </Navbar>
         </div>
