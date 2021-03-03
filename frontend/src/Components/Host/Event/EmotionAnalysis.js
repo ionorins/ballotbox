@@ -4,7 +4,7 @@ import {useParams} from "react-router-dom";
 import {useCookies} from "react-cookie";
 import React, {useEffect, useState} from "react";
 import EmotionEmoji from "./Emotion/EmotionEmoji";
-import EmotionLineChart from "./Emotion/EmotionLineChart";
+import EmotionLineChart from "./Emotion/PolarityLineChart";
 import ListGroup from "react-bootstrap/ListGroup";
 import Form from "react-bootstrap/Form";
 import EmojiGrid from "./Emotion/EmojiGrid";
