@@ -14,7 +14,6 @@ const EmotionAnalysis = () => {
     let { id } = useParams();
     // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token']);
-    const [emojiSize, setEmojiSize] = useState([]);
     const [intervalValue, setIntervalValue] = useState(5);
     const [emotionData, setEmotionData] = useState([
         {
@@ -112,21 +111,7 @@ const EmotionAnalysis = () => {
 
     }
 
-    async function getCurrent() {
-        fetch('http://localhost:8000/host/event/'+id+"/mood", {
-            method: 'GET',
-            headers: {
-                "Authorization": "Bearer "+cookies['access_token'],
-            },
-        }).then((response) => response.json())
-            .then((responseJson) => {
-                console.log(responseJson);
-                setEmojiSize(responseJson);
-            });
-    }
-
     async function getEmotionRefresh() {
-        getCurrent();
         getValues();
         setTimeout(getEmotionRefresh, 5000);
     }
