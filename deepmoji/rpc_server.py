@@ -23,7 +23,7 @@ while True:
     try:
         # set up rmq
         connection = pika.BlockingConnection(
-            pika.ConnectionParameters(host="rabbitmq"))
+            pika.ConnectionParameters(host="rabbitmq", heartbeat=0))
 
         channel = connection.channel()
 
@@ -40,10 +40,10 @@ while True:
             response = analyse(body)
 
             ch.basic_publish(exchange="",
-                                routing_key=props.reply_to,
-                                properties=pika.BasicProperties(
-                                    correlation_id=props.correlation_id),
-                                body=str(response))
+                             routing_key=props.reply_to,
+                             properties=pika.BasicProperties(
+                                 correlation_id=props.correlation_id),
+                             body=str(response))
             ch.basic_ack(delivery_tag=method.delivery_tag)
 
         channel.basic_qos(prefetch_count=1)
