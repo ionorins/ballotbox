@@ -3,7 +3,7 @@
 ![BallotBox.png](BallotBox.png)
 
 ## Launching the project
-Run `docker-compose up`.
+Run `docker-compose up`. The website is accessible at `http://localhost.com`.
 
 ## Unit testing the backend component
 Run `sh test_backend.sh`.
