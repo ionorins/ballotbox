@@ -18,7 +18,7 @@ const AttendeePolls = ({setUnansweredPolls}) => {
         let answered = [];
         let unanswered = [];
         let i;
-        fetch('http://localhost:8000/attendee/polls', {
+        fetch('/attendee/polls', {
             method: 'GET',
             headers: {
                 "Authorization": "Bearer "+cookies['access_token'],

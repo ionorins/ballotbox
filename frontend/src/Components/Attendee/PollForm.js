@@ -50,7 +50,7 @@ const PollForm = ({poll, getPolls}) => {
     }
 
     const handleSubmit = (event) => {
-        fetch('http://localhost:8000/attendee/poll/'+poll.id+'/answer', {
+        fetch('/attendee/poll/'+poll.id+'/answer', {
             method: 'POST',
             headers: {
                 "Authorization": "Bearer "+cookies['access_token'],

@@ -22,7 +22,7 @@ const Login = () => {
         form.append("password", pass);
         event.preventDefault();
         event.stopPropagation();
-        fetch('http://localhost:8000/auth/login', {
+        fetch('/auth/login', {
             method: 'POST',
             body: form,
         }).then((response) => {

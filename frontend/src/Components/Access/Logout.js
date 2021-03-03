@@ -11,7 +11,7 @@ const Logout = () => {
     const [cookies, setCookie] = useCookies(['access_token']);
 
     const handleLogout = () => {
-        fetch('http://localhost:8000/auth/logout', {
+        fetch('/auth/logout', {
             method: 'POST',
         }).then((response) => {
             response.json().then((responseJson) => {

@@ -99,7 +99,7 @@ const EmotionAnalysis = () => {
     }
 
     async function getValues() {
-        fetch('http://localhost:8000/host/event/'+id+"/mood/polarity?interval="+intervalValue, {
+        fetch('/host/event/'+id+"/mood/polarity?interval="+intervalValue, {
             method: 'GET',
             headers: {
                 "Authorization": "Bearer "+cookies['access_token'],
@@ -117,7 +117,7 @@ const EmotionAnalysis = () => {
     }
 
     useEffect(() => {
-        fetch('http://localhost:8000/host/event/'+id+"/mood/polarity?interval="+intervalValue, {
+        fetch('/host/event/'+id+"/mood/polarity?interval="+intervalValue, {
             method: 'GET',
             headers: {
                 "Authorization": "Bearer "+cookies['access_token'],

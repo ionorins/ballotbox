@@ -17,7 +17,7 @@ const FreeText = ({setShow}) => {
         const prompt = event.target[0].value;
         event.preventDefault();
         event.stopPropagation();
-        fetch('http://localhost:8000/host/event/'+id+"/poll", {
+        fetch('/host/event/'+id+"/poll", {
             method: 'POST',
             headers: {
                 "Authorization": "Bearer "+cookies['access_token'],

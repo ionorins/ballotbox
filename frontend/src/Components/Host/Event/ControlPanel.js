@@ -31,7 +31,7 @@ const ControlPanel = () => {
     const target = useRef(null);
 
     async function getAttendees() {
-        fetch('http://localhost:8000/host/event/' + id + "/attendees", {
+        fetch('/host/event/' + id + "/attendees", {
             method: 'GET',
             headers: {
                 "Authorization": "Bearer " + cookies['access_token'],
@@ -45,7 +45,7 @@ const ControlPanel = () => {
 
 
     useEffect(() => {
-        fetch('http://localhost:8000/host/event/' + id, {
+        fetch('/host/event/' + id, {
             method: 'GET',
             headers: {
                 "Authorization": "Bearer " + cookies['access_token'],

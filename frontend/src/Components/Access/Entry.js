@@ -21,7 +21,7 @@ const Entry = () => {
     const handleSubmit = (event) => {
         const roomCode = event.target[0].value;
 
-        fetch('http://localhost:8000/attendee/login/' + roomCode, {
+        fetch('/attendee/login/' + roomCode, {
             method: 'POST',
             body: "",
         }).then((response) => {

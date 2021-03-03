@@ -15,7 +15,7 @@ function App() {
             <Route exact path="/">
                 <Entry/>
             </Route>
-            <Route path="/:code">
+            <Route exact path="/:code">
                 <Entry/>
             </Route>
             <Route path="/login">

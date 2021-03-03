@@ -33,7 +33,7 @@ const Polls = ({attendees}) => {
 
     async function getPolls() {
         console.log("TEST")
-        fetch('http://localhost:8000/host/event/'+id+'/polls', {
+        fetch('/host/event/'+id+'/polls', {
             method: 'GET',
             headers: {
                 "Authorization": "Bearer "+cookies['access_token'],

@@ -19,7 +19,7 @@ const Host = () => {
     if (cookies['access_token'] == null) {
         history.push('/login');
     }
-    fetch('http://localhost:8000/host/events', {
+    fetch('/host/events', {
         method: 'GET',
         headers: {
                 "Authorization": "Bearer "+cookies['access_token'],

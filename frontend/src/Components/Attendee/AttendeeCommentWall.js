@@ -20,7 +20,7 @@ const AttendeeCommentWall = () => {
     const [comments, setComments] = useState("");
 
     function like(id) {
-        fetch('http://localhost:8000/attendee/comment/like/'+id, {
+        fetch('/attendee/comment/like/'+id, {
             method: 'POST',
             headers: {
                 "Authorization": "Bearer "+cookies['access_token'],
@@ -34,7 +34,7 @@ const AttendeeCommentWall = () => {
     }
 
     async function getComments() {
-        fetch('http://localhost:8000/attendee/comments', {
+        fetch('/attendee/comments', {
             method: 'GET',
             headers: {
                 "Authorization": "Bearer "+cookies['access_token'],
@@ -80,7 +80,7 @@ const AttendeeCommentWall = () => {
         const message = event.target[0].value;
         event.preventDefault();
         event.stopPropagation();
-        fetch('http://localhost:8000/attendee/comment', {
+        fetch('/attendee/comment', {
             method: 'POST',
             headers: {
                 "Authorization": "Bearer "+cookies['access_token'],
@@ -99,7 +99,7 @@ const AttendeeCommentWall = () => {
         const alias = event.target[0].value;
         event.preventDefault();
         event.stopPropagation();
-        fetch('http://localhost:8000/attendee/alias/'+alias, {
+        fetch('/attendee/alias/'+alias, {
             method: 'POST',
             headers: {
                 "Authorization": "Bearer "+cookies['access_token'],

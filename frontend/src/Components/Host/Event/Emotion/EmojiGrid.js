@@ -17,7 +17,7 @@ const EmojiGrid = () => {
     },[])
 
     async function getCurrent() {
-        fetch('http://localhost:8000/host/event/'+id+"/mood", {
+        fetch('/host/event/'+id+"/mood", {
             method: 'GET',
             headers: {
                 "Authorization": "Bearer "+cookies['access_token'],

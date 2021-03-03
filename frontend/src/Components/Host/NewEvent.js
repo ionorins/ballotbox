@@ -18,7 +18,7 @@ const NewEvent = ({ show, setShow }) => {
         const date = new Date(event.target[1].value).getTime();
         event.preventDefault();
         event.stopPropagation();
-        fetch('http://localhost:8000/host/event', {
+        fetch('/host/event', {
             method: 'POST',
             headers: {
                 "Authorization": "Bearer "+cookies['access_token'],
