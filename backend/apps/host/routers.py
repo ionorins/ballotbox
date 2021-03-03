@@ -365,7 +365,7 @@ async def get_polarity(code: str, request: Request, access_token: str = Depends(
     }])
 
 
-@router.get("/event/{event}/mood/{emotion}")
+@router.get("/event/{code}/mood/{emotion}")
 async def get_mood(code: str, emotion: str, request: Request, access_token: str = Depends(oauth2_scheme), interval: int = 1):
     host = await get_host_profile(request, access_token)
     await check_event(request, host["username"], code)
