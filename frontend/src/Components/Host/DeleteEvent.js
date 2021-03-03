@@ -7,7 +7,7 @@ import Modal from "react-bootstrap/Modal";
 import { useCookies } from "react-cookie";
 
 
-const DeleteEvent = ({ showDelete, setShowDelete, code, name, date }) => {
+const DeleteEvent = ({ showDelete, setShowDelete, code, name, timestamp }) => {
 
     // eslint-disable-next-line no-unused-vars
     const [cookies, setCookie] = useCookies(['access_token']);
@@ -16,14 +16,14 @@ const DeleteEvent = ({ showDelete, setShowDelete, code, name, date }) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        fetch('/host/event/' + code, {
+        fetch('http://localhost:8000/host/event/' + code, {
             method: 'PUT',
             headers: {
                 "Authorization": "Bearer " + cookies['access_token'],
             },
             body: JSON.stringify({
                 name: name,
-                timestamp: date,
+                timestamp: timestamp,
                 active: false
             }),
         }).then((response) => {
@@ -39,30 +39,20 @@ const DeleteEvent = ({ showDelete, setShowDelete, code, name, date }) => {
             onHide={() => setShowDelete(<DeleteEvent />)}
         >
             <Modal.Header closeButton>
-                <Modal.Title>{code}</Modal.Title>
+                <Modal.Title>Delete Event</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={handleSubmit} className="mx-3">
-                    <Form.Group as={Row} >
-                        <Form.Label>
-                            Event name
-                        </Form.Label>
-                        <Form.Control type="name" placeholder="Enter event name" required />
-                    </Form.Group>
+                    Are you sure you want do delete the event? <br></br> <br></br>
 
-                    <Form.Group as={Row}>
-                        <Form.Label>
-                            Date
-                        </Form.Label>
-                        <Form.Control type="date" required />
-                    </Form.Group>
-                    <Button variant="primary" type="submit">Create</Button>
+                    <Button variant="primary" type="submit">Delete</Button>
+                    <Button variant="secondary" style={{ float: 'right' }} onClick={() => setShowDelete(false)}>
+                        Close
+                </Button>
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="secondary" onClick={() => setShowDelete(false)}>
-                    Close
-                </Button>
+
             </Modal.Footer>
         </Modal>
 

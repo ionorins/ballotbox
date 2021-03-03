@@ -34,8 +34,8 @@ const EventList = () => {
         history.push("/host/event/" + eventId);
     }
 
-    function handleDelete(code) {
-        setDeleteModal(<DeleteEvent showDelete={true} setShowDelete={setDeleteModal} code={code}/>);
+    function handleDelete(code, name, timestamp) {
+        setDeleteModal(<DeleteEvent showDelete={true} setShowDelete={setDeleteModal} code={code} name={name} timestamp={timestamp} />);
     }
 
     useEffect(() => {
@@ -64,7 +64,7 @@ const EventList = () => {
                                     <Button className="mx-2 event-select-button" size={"lg"} onClick={() => selectEvent(event.code)}>
                                         <FaPlay />
                                     </Button>
-                                    <Button className="mx-2 event-select-button" size={"lg"} onClick={() => handleDelete(event.code)}>
+                                    <Button className="mx-2 event-select-button" size={"lg"} onClick={() => handleDelete(event.code, event.name, event.timestamp)}>
                                         <FaTimes />
                                     </Button>
                                 </Row>
@@ -94,7 +94,7 @@ const EventList = () => {
                                 </Button>
                                 <NewEvent show={show} setShow={setShow} />
                             </Row>
-                            { deleteModal }
+                            {deleteModal}
                         </Col>
                     </Row>
                 </ListGroup.Item>
