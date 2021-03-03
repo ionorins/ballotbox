@@ -6,6 +6,7 @@ import Access from "./Components/Access/Access";
 import Host from "./Components/Host/Host";
 import Event from "./Components/Attendee/Event";
 import ControlPanel from "./Components/Host/Event/ControlPanel";
+import Qr from "./Components/Utils/Qr";
 
 function App() {
     return (
@@ -25,6 +26,9 @@ function App() {
             </Route>
             <Route path="/event/">
                 <Event />
+            </Route>
+            <Route path="/qr/:code">
+                <Qr />
             </Route>
         </Switch>
         </Router>
