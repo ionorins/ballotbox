@@ -365,8 +365,8 @@ async def get_polarity(code: str, request: Request, access_token: str = Depends(
     }])
 
 
-@router.get("/event/{code}/mood")
-async def get_mood(code: str, request: Request, access_token: str = Depends(oauth2_scheme), interval: int = 1):
+@router.get("/event/{event}/mood/{emotion}")
+async def get_mood(code: str, emotion: str, request: Request, access_token: str = Depends(oauth2_scheme), interval: int = 1):
     host = await get_host_profile(request, access_token)
     await check_event(request, host["username"], code)
 
@@ -377,9 +377,12 @@ async def get_mood(code: str, request: Request, access_token: str = Depends(oaut
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST, detail="Interval must be positive")
 
-    moods = {
-        "joy": {}, "anger": {}, "fear": {}, "sadness": {}, "love": {}
-    }
+    # return error if emotion is not valid
+    if emotion not in emotions:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail="Mood not found :(")
+
+    moods = {}
     first_time = None
 
     # go through each comment in database
@@ -393,12 +396,11 @@ async def get_mood(code: str, request: Request, access_token: str = Depends(oaut
         # calculate the index of the interval the comment is in
         time_bin = int(comment["timestamp"] - first_time) // (interval * 60)
 
-        for emotion in emotions:
-            # add probablity to interval and weight it by (1 + no likes)
-            if time_bin not in moods:
-                moods[emotion][time_bin] = []
-            moods[emotion][time_bin] += (1 + len(comment["likes"])) * \
-                [comment["moods"][emotions.index(emotion)]]
+        # add probablity to interval and weight it by (1 + no likes)
+        if time_bin not in moods:
+            moods[time_bin] = []
+        moods[time_bin] += (1 + len(comment["likes"])) * \
+            [comment["moods"][emotions.index(emotion)]]
 
     # average each interval
     if first_time is None:
@@ -406,23 +408,20 @@ async def get_mood(code: str, request: Request, access_token: str = Depends(oaut
     else:
         last_bin = int(time() - first_time) // (interval * 60)
 
-    moods_list = {
-        "joy": [], "anger": [], "fear": [], "sadness": [], "love": []
-    }
+    moods_list = []
 
-    for emotion in emotions:
-        for i in range(last_bin + 1):
-            mood = moods[emotion].get(i, [0])
-            moods_list[emotion].append({
-                "x": i * interval,
-                "y": sum(mood) / len(mood)
-            })
+    for i in range(last_bin + 1):
+        mood = moods.get(i, [0])
+        moods_list.append({
+            "x": i * interval,
+            "y": sum(mood) / len(mood)
+        })
 
     # format to front-end friendly form
     response = [{
-        "id": k,
-        "data": v
-    } for k, v in moods_list.items()]
+        "id": emotion,
+        "data": moods_list
+    }]
 
     return JSONResponse(status_code=status.HTTP_200_OK, content=response)
 
