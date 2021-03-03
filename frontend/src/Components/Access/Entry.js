@@ -4,10 +4,11 @@ import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import { FiLink } from "react-icons/fi";
-import {Link, useHistory} from "react-router-dom";
-import {useCookies} from "react-cookie";
-import {useState} from "react";
+import { Link, useHistory } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { useState } from "react";
 import TitleLogo from "../Utils/TitleLogo";
+import { useParams } from "react-router-dom";
 
 const Entry = () => {
 
@@ -20,7 +21,7 @@ const Entry = () => {
     const handleSubmit = (event) => {
         const roomCode = event.target[0].value;
 
-        fetch('http://localhost:8000/attendee/login/'+roomCode, {
+        fetch('http://localhost:8000/attendee/login/' + roomCode, {
             method: 'POST',
             body: "",
         }).then((response) => {
@@ -40,9 +41,9 @@ const Entry = () => {
         event.preventDefault();
         event.stopPropagation();
 
-      };
+    };
 
-
+    let { code } = useParams();
 
     return (
         <div className="container">
@@ -51,16 +52,16 @@ const Entry = () => {
                 <InputGroup className="mt-2">
                     <InputGroup.Prepend>
                         <InputGroup.Text>
-                            <FiLink/>
+                            <FiLink />
                         </InputGroup.Text>
                     </InputGroup.Prepend>
-                    <Form.Control required size="lg" placeholder="Event Code" maxLength="8" />
+                    <Form.Control required size="lg" placeholder="Event Code" maxLength="8" defaultValue={code} />
                 </InputGroup>
-                <Form.Text style={{color: "crimson",}}>
+                <Form.Text style={{ color: "crimson", }}>
                     {validated}
                 </Form.Text>
                 <Button className="buttons my-3" type="submit">
-                Join
+                    Join
                 </Button>
             </Form>
             <Navbar fixed="bottom">
