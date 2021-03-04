@@ -38,7 +38,6 @@ const Login = () => {
 
     };
 
-
     return (
         <Form className="forms mx-auto" onSubmit={handleSubmit}>
             <InputGroup className="mt-4" size="lg">

@@ -20,7 +20,7 @@ const Access = () => {
         <Div100vh>
         <div className="container">
             <Link to="/" className="clickable-link">
-                <h1 className="display-3">BallotBox <TitleLogo /></h1>
+                <h1 className="display-4">BallotBox <TitleLogo /></h1>
             </Link>
             <Card className="access-card mx-auto my-3">
                 <Tab.Container defaultActiveKey="login">

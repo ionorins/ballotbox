@@ -11,6 +11,7 @@
     padding: 0 !important;
     overscroll-behavior-y: none !important;
 }
+
 .buttons {
     background-color: black !important;
     outline: none !important;
@@ -65,6 +66,21 @@
     margin-right: auto;
 }
 @media only screen and (max-width: 600px) {
+    @supports (-webkit-touch-callout: none) {
+        .standard-card {
+            max-height: 60vh;
+        }
+        .attendee-event-card {
+            max-height: 70vh;
+        }
+        .control-panel-card-body {
+            min-height: 60vh !important;
+        }
+        .comment-wall-container {
+            min-height: 45vh !important;
+            max-height: 50vh !important;
+        }
+    }
     .standard-card {
         margin-top : auto;
         max-height: 80vh;

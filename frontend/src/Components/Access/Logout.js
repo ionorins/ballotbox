@@ -14,24 +14,12 @@ const Logout = () => {
 
     const [show, setShow] = useState(false);
 
-    const handleLogout = () => {
-        fetch('/auth/logout', {
-            method: 'POST',
-        }).then((response) => {
-            response.json().then((responseJson) => {
-                setCookie('access_token', null);
-                history.push("/");
-            })
-        });
-
-    }
-
     return (
         <div>
             <Button onClick={() => setShow(true)} className="logout-button back-button mt-2">
                 <FiLogOut />
             </Button>
-            <LogoutModal show={show} setShow={setShow} handleLogout={handleLogout} />
+            <LogoutModal show={show} setShow={setShow} />
         </div>
 
     );

@@ -7,7 +7,7 @@ import { useCookies } from "react-cookie";
 import { useHistory } from "react-router-dom";
 
 
-const LogoutModal = ({ show, setShow, handleLogout }) => {
+const LogoutModal = ({ show, setShow }) => {
 
     // eslint-disable-next-line no-unused-vars
     const [cookies, setCookie] = useCookies(['access_token']);
@@ -23,10 +23,10 @@ const LogoutModal = ({ show, setShow, handleLogout }) => {
         }).then((response) => {
             response.json().then((responseJson) => {
                 setCookie('access_token', null);
-                console.log("TESTTTTT");
-                history.replace("/");
+
             })
         });
+        history.replace("/");
     }
 
     return (
