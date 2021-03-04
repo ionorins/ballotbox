@@ -356,7 +356,7 @@ async def get_polarity(code: str, request: Request, access_token: str = Depends(
         polarities_list.append({
             # time since first comment in minutes with one decimal place
             "x": "{:.1f}".format(interval * i),
-            "y": sum(polarity) / len(polarity)
+            "polarity": sum(polarity) / len(polarity)
         })
 
     return JSONResponse(status_code=status.HTTP_200_OK, content=[{
@@ -414,7 +414,7 @@ async def get_mood(code: str, emotion: str, request: Request, access_token: str 
         mood = moods.get(i, [0])
         moods_list.append({
             "x": i * interval,
-            "y": sum(mood) / len(mood)
+            emotion: sum(mood) / len(mood)
         })
 
     # format to front-end friendly form
