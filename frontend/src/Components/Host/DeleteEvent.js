@@ -43,9 +43,11 @@ const DeleteEvent = ({ showDelete, setShowDelete, code, name, timestamp }) => {
             </Modal.Header>
             <Modal.Body>
                 <Form onSubmit={handleSubmit} className="mx-3">
-                    Are you sure you want do delete the event? <br></br> <br></br>
+                    <div className="mb-3 text-center">
+                        Are you sure you want to delete {name}?
+                    </div>
 
-                    <Button variant="primary" type="submit">Delete</Button>
+                    <Button variant="danger" type="submit">Delete</Button>
                     <Button variant="secondary" style={{ float: 'right' }} onClick={() => setShowDelete(false)}>
                         Close
                 </Button>
