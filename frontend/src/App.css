@@ -199,8 +199,8 @@
 .chart-container {
     height: 30vh;
 }
-.logout-button {
-    font-size: xx-large !important;
+.logout-button, .logout-button:active {
+    font-size: max(1.75vw, 3vh) !important;
 }
 .chart-dropdown {
     max-width: 20vh;
