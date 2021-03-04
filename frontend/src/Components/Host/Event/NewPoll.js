@@ -21,7 +21,7 @@ const NewPoll = ({ show, setShow, getPolls }) => {
                 <Modal.Title>New Poll </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                    <FormBuilder setShow={hideModal}/>
+                <FormBuilder setShow={hideModal} />
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="secondary" onClick={() => hideModal()}>

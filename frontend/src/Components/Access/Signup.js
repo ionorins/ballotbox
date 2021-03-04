@@ -2,10 +2,10 @@ import '../../App.css';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
-import {FiLock, FiMail} from "react-icons/fi";
-import {useCookies} from "react-cookie";
+import { FiLock, FiMail } from "react-icons/fi";
+import { useCookies } from "react-cookie";
 import { useHistory } from "react-router-dom";
-import {useState} from "react";
+import { useState } from "react";
 
 const Signup = () => {
 
@@ -43,44 +43,44 @@ const Signup = () => {
             }
         });
 
-      };
+    };
 
     return (
-            <Form className="forms mx-auto" onSubmit={handleSubmit}>
-                <Form.Text style={{color: "crimson",}}>
-                    {emailValidated}
-                </Form.Text>
-                <InputGroup controlId="email" className="mb-4" size="lg">
-                    <InputGroup.Prepend>
-                        <InputGroup.Text>
-                            <FiMail />
-                        </InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <Form.Control type="email" placeholder="Email" size="lg" />
-                </InputGroup>
-                <Form.Text style={{color: "crimson",}}>
-                    {passValidated}
-                </Form.Text>
-                <InputGroup size="lg">
-                    <InputGroup.Prepend>
-                        <InputGroup.Text>
-                            <FiLock />
-                        </InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <Form.Control type="password" placeholder="Password" />
-                </InputGroup>
-                <InputGroup controlId="confirmPassword" className="my-4" size="lg">
-                    <InputGroup.Prepend>
+        <Form className="forms mx-auto" onSubmit={handleSubmit}>
+            <Form.Text style={{ color: "crimson", }}>
+                {emailValidated}
+            </Form.Text>
+            <InputGroup controlId="email" className="mb-4" size="lg">
+                <InputGroup.Prepend>
                     <InputGroup.Text>
-                            <FiLock />
-                        </InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <Form.Control type="password" placeholder="Confirm Password"/>
-                </InputGroup>
+                        <FiMail />
+                    </InputGroup.Text>
+                </InputGroup.Prepend>
+                <Form.Control type="email" placeholder="Email" size="lg" />
+            </InputGroup>
+            <Form.Text style={{ color: "crimson", }}>
+                {passValidated}
+            </Form.Text>
+            <InputGroup size="lg">
+                <InputGroup.Prepend>
+                    <InputGroup.Text>
+                        <FiLock />
+                    </InputGroup.Text>
+                </InputGroup.Prepend>
+                <Form.Control type="password" placeholder="Password" />
+            </InputGroup>
+            <InputGroup controlId="confirmPassword" className="my-4" size="lg">
+                <InputGroup.Prepend>
+                    <InputGroup.Text>
+                        <FiLock />
+                    </InputGroup.Text>
+                </InputGroup.Prepend>
+                <Form.Control type="password" placeholder="Confirm Password" />
+            </InputGroup>
             <Button type="submit" className="buttons my-2">
                 Sign up
             </Button>
-            </Form>
+        </Form>
     );
 }
 export default Signup;

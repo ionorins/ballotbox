@@ -4,7 +4,7 @@ import Form from "react-bootstrap/Form";
 import React from "react";
 import Modal from "react-bootstrap/Modal";
 import { useCookies } from "react-cookie";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 
 const LogoutModal = ({ show, setShow, handleLogout }) => {
@@ -18,7 +18,7 @@ const LogoutModal = ({ show, setShow, handleLogout }) => {
         fetch('/auth/logout', {
             method: 'POST',
             headers: {
-                "Authorization": "Bearer "+cookies['access_token'],
+                "Authorization": "Bearer " + cookies['access_token'],
             }
         }).then((response) => {
             response.json().then((responseJson) => {

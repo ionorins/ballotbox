@@ -2,10 +2,10 @@ import '../../App.css';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
-import {FiLock, FiMail} from "react-icons/fi";
+import { FiLock, FiMail } from "react-icons/fi";
 import { useHistory } from "react-router-dom";
-import {useCookies, withCookies} from "react-cookie";
-import {useState} from "react";
+import { useCookies, withCookies } from "react-cookie";
+import { useState } from "react";
 
 const Login = () => {
     let history = useHistory();
@@ -40,31 +40,31 @@ const Login = () => {
 
 
     return (
-            <Form className="forms mx-auto" onSubmit={handleSubmit}>
-                <InputGroup className="mt-4" size="lg">
-                    <InputGroup.Prepend>
-                        <InputGroup.Text>
-                            <FiMail/>
-                        </InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <Form.Control type="email" placeholder="Email"/>
-                </InputGroup>
+        <Form className="forms mx-auto" onSubmit={handleSubmit}>
+            <InputGroup className="mt-4" size="lg">
+                <InputGroup.Prepend>
+                    <InputGroup.Text>
+                        <FiMail />
+                    </InputGroup.Text>
+                </InputGroup.Prepend>
+                <Form.Control type="email" placeholder="Email" />
+            </InputGroup>
 
-                <InputGroup className="mt-4" size="lg">
-                    <InputGroup.Prepend>
-                        <InputGroup.Text>
-                            <FiLock/>
-                        </InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <Form.Control type="password" placeholder="Password"/>
-                </InputGroup>
-                <Form.Text style={{color: "crimson",}}>
-                    {validated}
-                </Form.Text>
+            <InputGroup className="mt-4" size="lg">
+                <InputGroup.Prepend>
+                    <InputGroup.Text>
+                        <FiLock />
+                    </InputGroup.Text>
+                </InputGroup.Prepend>
+                <Form.Control type="password" placeholder="Password" />
+            </InputGroup>
+            <Form.Text style={{ color: "crimson", }}>
+                {validated}
+            </Form.Text>
             <Button variant="primary" type="submit" className="buttons mt-4 mb-2">
                 Log in
             </Button>
-            </Form>
+        </Form>
     )
 }
 export default withCookies(Login);
