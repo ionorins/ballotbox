@@ -1,10 +1,10 @@
 import '../../App.css';
 import Button from "react-bootstrap/Button";
-import {FiLogOut} from "react-icons/fi";
+import { FiLogOut } from "react-icons/fi";
 import { useHistory } from "react-router-dom";
-import {useCookies} from "react-cookie";
+import { useCookies } from "react-cookie";
 import LogoutModal from "./LogoutModal";
-import {useState} from "react";
+import { useState } from "react";
 
 const Logout = () => {
     let history = useHistory();
@@ -31,7 +31,7 @@ const Logout = () => {
             <Button onClick={() => setShow(true)} className="logout-button back-button mt-2">
                 <FiLogOut />
             </Button>
-            <LogoutModal show={show} setShow={setShow} handleLogout={handleLogout}/>
+            <LogoutModal show={show} setShow={setShow} handleLogout={handleLogout} />
         </div>
 
     );

@@ -1,13 +1,13 @@
 import '../../App.css';
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import Accordion from "react-bootstrap/Accordion";
-import {useCookies} from "react-cookie";
+import { useCookies } from "react-cookie";
 import PollForm from "./PollForm";
 import { getIcon } from "../Host/Event/Polls";
 
 
-const AttendeePolls = ({setUnansweredPolls}) => {
+const AttendeePolls = ({ setUnansweredPolls }) => {
 
     // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token']);
@@ -21,7 +21,7 @@ const AttendeePolls = ({setUnansweredPolls}) => {
         fetch('/attendee/polls', {
             method: 'GET',
             headers: {
-                "Authorization": "Bearer "+cookies['access_token'],
+                "Authorization": "Bearer " + cookies['access_token'],
             }
         }).then((response) => response.json())
             .then((responseJson) => {
@@ -64,7 +64,7 @@ const AttendeePolls = ({setUnansweredPolls}) => {
             getPolls();
         }, 3000);
         return () => clearInterval(timeoutID);
-    },[])
+    }, [])
 
     return (
         <div className="polls-container attendee-polls-container">

@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import React from "react";
 import Modal from "react-bootstrap/Modal";
-import {useCookies} from "react-cookie";
+import { useCookies } from "react-cookie";
 
 
 const NewEvent = ({ show, setShow }) => {
@@ -21,7 +21,7 @@ const NewEvent = ({ show, setShow }) => {
         fetch('/host/event', {
             method: 'POST',
             headers: {
-                "Authorization": "Bearer "+cookies['access_token'],
+                "Authorization": "Bearer " + cookies['access_token'],
             },
             body: JSON.stringify({
                 name: name,
@@ -46,16 +46,16 @@ const NewEvent = ({ show, setShow }) => {
                 <Form onSubmit={handleSubmit} className="mx-3">
                     <Form.Group as={Row} >
                         <Form.Label>
-                        Event name
+                            Event name
                         </Form.Label>
-                        <Form.Control type="name" placeholder="Enter event name" required/>
+                        <Form.Control type="name" placeholder="Enter event name" required />
                     </Form.Group>
 
                     <Form.Group as={Row}>
                         <Form.Label>
                             Date
                         </Form.Label>
-                        <Form.Control type="date" required/>
+                        <Form.Control type="date" required />
                     </Form.Group>
                     <Button variant="primary" type="submit">Create</Button>
                 </Form>

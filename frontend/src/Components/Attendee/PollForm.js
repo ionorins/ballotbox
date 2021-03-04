@@ -1,12 +1,12 @@
 import '../../App.css';
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import {useCookies} from "react-cookie";
+import { useCookies } from "react-cookie";
 import RangeSlider from "react-bootstrap-range-slider";
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 
-const PollForm = ({poll, getPolls}) => {
+const PollForm = ({ poll, getPolls }) => {
 
     // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token']);
@@ -50,10 +50,10 @@ const PollForm = ({poll, getPolls}) => {
     }
 
     const handleSubmit = (event) => {
-        fetch('/attendee/poll/'+poll.id+'/answer', {
+        fetch('/attendee/poll/' + poll.id + '/answer', {
             method: 'POST',
             headers: {
-                "Authorization": "Bearer "+cookies['access_token'],
+                "Authorization": "Bearer " + cookies['access_token'],
             },
             body: JSON.stringify({
                 content: {
@@ -72,10 +72,10 @@ const PollForm = ({poll, getPolls}) => {
 
     const formBody = () => {
         if (poll.content.type === "freeText") {
-            return (<Form.Control as="textarea" placeholder="Write your answer here..."/>)
+            return (<Form.Control as="textarea" placeholder="Write your answer here..." />)
         }
         else if (poll.content.type === "moodSlider") {
-            return(<RangeSlider
+            return (<RangeSlider
                 value={value}
                 onChange={changeEvent => setValue(changeEvent.target.value)}
                 tooltipLabel={tooltipLabeller}
@@ -84,8 +84,8 @@ const PollForm = ({poll, getPolls}) => {
         else if (poll.content.type === "multipleChoice") {
             console.log(poll.content.options);
             const optionMap = poll.content.options.map((option) =>
-                <Form.Check id={option} label={option}/>
-                );
+                <Form.Check id={option} label={option} />
+            );
             return optionMap;
         }
     }
@@ -93,7 +93,7 @@ const PollForm = ({poll, getPolls}) => {
     return (
         <Form className="px-3 mx-auto" onSubmit={handleSubmit}>
             <Form.Group className="my-1" size="lg">
-                <Form.Label style={{fontSize: "xx-large",}}>{poll.content.prompt}</Form.Label>
+                <Form.Label style={{ fontSize: "xx-large", }}>{poll.content.prompt}</Form.Label>
                 {formBody()}
             </Form.Group>
             <Button variant="primary" type="submit" className="buttons my-2">

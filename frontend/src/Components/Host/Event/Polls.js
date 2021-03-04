@@ -1,27 +1,27 @@
 import '../../../App.css';
-import React, {useEffect, useState} from "react";
-import {useCookies} from "react-cookie";
-import {useParams} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import { useParams } from "react-router-dom";
 import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import {FiUser} from "react-icons/fi";
+import { FiUser } from "react-icons/fi";
 import Card from "react-bootstrap/Card";
 import NewPoll from "./NewPoll";
 import Accordion from "react-bootstrap/Accordion";
-import {ImBubble} from "react-icons/im";
-import {FaTheaterMasks} from "react-icons/fa";
-import {MdFormatListBulleted} from "react-icons/md";
+import { ImBubble } from "react-icons/im";
+import { FaTheaterMasks } from "react-icons/fa";
+import { MdFormatListBulleted } from "react-icons/md";
 
 export const getIcon = (type) => {
     if (type === "freeText")
-        return <ImBubble  className="mb-1 mx-1"/>;
+        return <ImBubble className="mb-1 mx-1" />;
     else if (type === "multipleChoice")
-        return <MdFormatListBulleted className="mx-1 mb-1"/>;
-    else return <FaTheaterMasks className="mx-1 mb-1"/>;
+        return <MdFormatListBulleted className="mx-1 mb-1" />;
+    else return <FaTheaterMasks className="mx-1 mb-1" />;
 }
 
-const Polls = ({attendees}) => {
+const Polls = ({ attendees }) => {
 
 
     let { id } = useParams();
@@ -33,10 +33,10 @@ const Polls = ({attendees}) => {
 
     async function getPolls() {
         console.log("TEST")
-        fetch('/host/event/'+id+'/polls', {
+        fetch('/host/event/' + id + '/polls', {
             method: 'GET',
             headers: {
-                "Authorization": "Bearer "+cookies['access_token'],
+                "Authorization": "Bearer " + cookies['access_token'],
             }
         }).then((response) => response.json())
             .then((responseJson) => {
@@ -53,7 +53,7 @@ const Polls = ({attendees}) => {
             getPolls();
         }, 3000);
         return () => clearInterval(timeoutID);
-    },[])
+    }, [])
 
     return (
         <div>
@@ -72,16 +72,16 @@ const Polls = ({attendees}) => {
                                         <Col sm={8}>
                                             Responses
                                             <ListGroup variant="flush" className="answers-container">
-                                            { (poll.answers.length > 0  ? poll.answers.map((answer) =>
-                                                <ListGroup.Item>
-                                                    {answer.answer}
-                                                </ListGroup.Item>
-                                            ) : <div className="my-3">No one has answered yet :(</div>)
-                                            }
+                                                {(poll.answers.length > 0 ? poll.answers.map((answer) =>
+                                                    <ListGroup.Item>
+                                                        {answer.answer}
+                                                    </ListGroup.Item>
+                                                ) : <div className="my-3">No one has answered yet :(</div>)
+                                                }
                                             </ListGroup>
                                         </Col>
                                         <Col sm={3}>
-                                            {poll.answers.length} / {attendees} <FiUser className="mb-1"/>
+                                            {poll.answers.length} / {attendees} <FiUser className="mb-1" />
                                         </Col>
                                     </Row>
                                 </Card.Body>
@@ -94,19 +94,19 @@ const Polls = ({attendees}) => {
                 {or}
             </div>
             <Accordion>
-                    <Card style={{cursor: "pointer",}} onClick={() => setShow(true)}>
-                        <Card.Header>
-                            <Accordion.Toggle eventKey="#'" className="builder-toggle">
-                                Create a new poll...
+                <Card style={{ cursor: "pointer", }} onClick={() => setShow(true)}>
+                    <Card.Header>
+                        <Accordion.Toggle eventKey="#'" className="builder-toggle">
+                            Create a new poll...
                             </Accordion.Toggle>
-                        </Card.Header>
-                        <Accordion.Collapse eventKey="#">
-                            <Card.Body>
-                            </Card.Body>
-                        </Accordion.Collapse>
-                    </Card>
+                    </Card.Header>
+                    <Accordion.Collapse eventKey="#">
+                        <Card.Body>
+                        </Card.Body>
+                    </Accordion.Collapse>
+                </Card>
             </Accordion>
-                <NewPoll show={show} onS setShow={setShow} getPolls={getPolls}/>
+            <NewPoll show={show} onS setShow={setShow} getPolls={getPolls} />
         </div>
 
     );

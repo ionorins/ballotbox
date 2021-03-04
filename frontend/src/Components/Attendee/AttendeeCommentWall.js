@@ -5,12 +5,12 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
-import {useEffect, useState} from "react";
-import {useCookies} from "react-cookie";
-import {RiThumbUpFill, RiThumbUpLine} from "react-icons/ri";
-import {Container, OverlayTrigger, Popover} from "react-bootstrap";
-import {FiSettings} from "react-icons/fi";
-import {FaUserEdit} from "react-icons/all";
+import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import { RiThumbUpFill, RiThumbUpLine } from "react-icons/ri";
+import { Container, OverlayTrigger, Popover } from "react-bootstrap";
+import { FiSettings } from "react-icons/fi";
+import { FaUserEdit } from "react-icons/all";
 
 
 const AttendeeCommentWall = () => {
@@ -20,10 +20,10 @@ const AttendeeCommentWall = () => {
     const [comments, setComments] = useState("");
 
     function like(id) {
-        fetch('/attendee/comment/like/'+id, {
+        fetch('/attendee/comment/like/' + id, {
             method: 'POST',
             headers: {
-                "Authorization": "Bearer "+cookies['access_token'],
+                "Authorization": "Bearer " + cookies['access_token'],
             },
         }).then((response) => response.json())
             .then((responseJson) => {
@@ -37,7 +37,7 @@ const AttendeeCommentWall = () => {
         fetch('/attendee/comments', {
             method: 'GET',
             headers: {
-                "Authorization": "Bearer "+cookies['access_token'],
+                "Authorization": "Bearer " + cookies['access_token'],
             }
         }).then((response) => response.json())
             .then((responseJson) => {
@@ -51,7 +51,7 @@ const AttendeeCommentWall = () => {
                             <Col className="comment-likes">
                                 {comment.likes}
                                 <Button className="like-button" onClick={() => like(comment.id)}>
-                                    {(comment.liked ? <RiThumbUpFill className="mb-2 like-button-liked"/> : <RiThumbUpLine  className="mb-2 "/>)}
+                                    {(comment.liked ? <RiThumbUpFill className="mb-2 like-button-liked" /> : <RiThumbUpLine className="mb-2 " />)}
                                 </Button>
                             </Col>
                         </Row>
@@ -73,7 +73,7 @@ const AttendeeCommentWall = () => {
             getComments();
         }, 3000);
         return () => clearInterval(timeoutID);
-    },[])
+    }, [])
 
 
     const handleSubmit = (event) => {
@@ -83,7 +83,7 @@ const AttendeeCommentWall = () => {
         fetch('/attendee/comment', {
             method: 'POST',
             headers: {
-                "Authorization": "Bearer "+cookies['access_token'],
+                "Authorization": "Bearer " + cookies['access_token'],
             },
             body: JSON.stringify({
                 content: message
@@ -99,10 +99,10 @@ const AttendeeCommentWall = () => {
         const alias = event.target[0].value;
         event.preventDefault();
         event.stopPropagation();
-        fetch('/attendee/alias/'+alias, {
+        fetch('/attendee/alias/' + alias, {
             method: 'POST',
             headers: {
-                "Authorization": "Bearer "+cookies['access_token'],
+                "Authorization": "Bearer " + cookies['access_token'],
             },
         }).then((response) => response.json())
             .then((responseJson) => {
@@ -117,7 +117,7 @@ const AttendeeCommentWall = () => {
             <Popover.Content>
                 <Form onSubmit={handleAliasChange}>
                     <InputGroup className="my-2">
-                        <Form.Control placeholder="Enter name"/>
+                        <Form.Control placeholder="Enter name" />
                     </InputGroup>
                 </Form>
             </Popover.Content>
@@ -131,20 +131,20 @@ const AttendeeCommentWall = () => {
                     {comments}
                 </ListGroup>
             </div>
-                <Row>
-                    <Col xs={10} md={11} className="pr-0">
-                        <Form onSubmit={handleSubmit}>
-                            <InputGroup className="my-2">
-                                <Form.Control size="lg" placeholder="Add a comment..."/>
-                            </InputGroup>
-                        </Form>
-                    </Col>
-                    <Col xs={2} md={1} className="pl-0">
-                        <OverlayTrigger trigger="click" placement="auto" overlay={aliasPopover}>
-                            <Button variant="light" className="p-2 mt-2"><FaUserEdit/></Button>
-                        </OverlayTrigger>
-                    </Col>
-                </Row>
+            <Row>
+                <Col xs={10} md={11} className="pr-0">
+                    <Form onSubmit={handleSubmit}>
+                        <InputGroup className="my-2">
+                            <Form.Control size="lg" placeholder="Add a comment..." />
+                        </InputGroup>
+                    </Form>
+                </Col>
+                <Col xs={2} md={1} className="pl-0">
+                    <OverlayTrigger trigger="click" placement="auto" overlay={aliasPopover}>
+                        <Button variant="light" className="p-2 mt-2"><FaUserEdit /></Button>
+                    </OverlayTrigger>
+                </Col>
+            </Row>
         </div>
     );
 }

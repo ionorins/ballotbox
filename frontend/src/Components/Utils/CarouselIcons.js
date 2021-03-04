@@ -1,13 +1,13 @@
-import {MdNavigateBefore, MdNavigateNext} from "react-icons/md";
+import { MdNavigateBefore, MdNavigateNext } from "react-icons/md";
 
 export const PrevIcon = () => {
     return (
-        <MdNavigateBefore style={{color: "black", fontSize: "xx-large"}}/>
+        <MdNavigateBefore style={{ color: "black", fontSize: "xx-large" }} />
     )
 }
 
 export const NextIcon = () => {
     return (
-        <MdNavigateNext style={{color: "black", fontSize: "xx-large"}}/>
+        <MdNavigateNext style={{ color: "black", fontSize: "xx-large" }} />
     )
 }

@@ -1,5 +1,5 @@
 import '../../../App.css';
-import {Link, useHistory, useParams} from "react-router-dom";
+import { Link, useHistory, useParams } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Nav from "react-bootstrap/Nav";
 import React, { useEffect, useRef, useState } from "react";
@@ -75,7 +75,7 @@ const ControlPanel = () => {
                 <Row className="min-vw-100">
                     <Navbar.Text className="mx-auto nav-stats-font">
                         <Link to="/host" className="clickable-link">
-                            {eventName} <TitleLogo size={"-small"}/>
+                            {eventName} <TitleLogo size={"-small"} />
                         </Link>
                     </Navbar.Text>
                     <Navbar.Text>

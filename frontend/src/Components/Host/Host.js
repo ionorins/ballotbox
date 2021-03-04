@@ -1,9 +1,9 @@
 import '../../App.css';
-import {Link, useHistory} from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import EventList from "./EventList";
-import React, {useState} from "react";
-import {useCookies} from "react-cookie";
+import React, { useState } from "react";
+import { useCookies } from "react-cookie";
 import TitleLogo from "../Utils/TitleLogo";
 import Logout from "../Access/Logout.js";
 
@@ -22,7 +22,7 @@ const Host = () => {
     fetch('/host/events', {
         method: 'GET',
         headers: {
-                "Authorization": "Bearer "+cookies['access_token'],
+            "Authorization": "Bearer " + cookies['access_token'],
         }
     }).then((response) => {
         if (response.status === 403)
@@ -44,7 +44,7 @@ const Host = () => {
                         <EventList />
                     </Card.Body>
                 </Card>
-                <Card.Footer style={{background: "none", borderTop: "none"}}>
+                <Card.Footer style={{ background: "none", borderTop: "none" }}>
                     <Logout />
                 </Card.Footer>
             </div>

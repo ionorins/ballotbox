@@ -5,16 +5,16 @@ import Row from "react-bootstrap/Row";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import RangeSlider from 'react-bootstrap-range-slider';
-import {useState} from "react";
+import { useState } from "react";
 import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
-import {useParams} from "react-router-dom";
-import {useCookies} from "react-cookie";
+import { useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
-const MoodSlider = ({setShow}) => {
+const MoodSlider = ({ setShow }) => {
 
     const [value, setValue] = useState(0);
 
-    let {id} = useParams();
+    let { id } = useParams();
     // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token']);
 
@@ -22,10 +22,10 @@ const MoodSlider = ({setShow}) => {
         const prompt = event.target[0].value;
         event.preventDefault();
         event.stopPropagation();
-        fetch('/host/event/'+id+"/poll", {
+        fetch('/host/event/' + id + "/poll", {
             method: 'POST',
             headers: {
-                "Authorization": "Bearer "+cookies['access_token'],
+                "Authorization": "Bearer " + cookies['access_token'],
             },
             body: JSON.stringify({
                 content: {
@@ -43,32 +43,32 @@ const MoodSlider = ({setShow}) => {
 
     function tooltipLabeller() {
         console.log(value)
-            if (value < 10)
-                return "😭";
-            if (value < 20)
-                return "😢";
-            if (value < 30)
-                return "☹️";
-            if (value < 40)
-                return "🙁";
-            if (value < 50)
-                return "😕";
-            if (value < 60)
-                return "😐";
-            if (value < 70)
-                return "🙂";
-            if (value < 80)
-                return "😀";
-            if (value < 90)
-                return "😁";
-            if (value < 101)
-                return "😍";
+        if (value < 10)
+            return "😭";
+        if (value < 20)
+            return "😢";
+        if (value < 30)
+            return "☹️";
+        if (value < 40)
+            return "🙁";
+        if (value < 50)
+            return "😕";
+        if (value < 60)
+            return "😐";
+        if (value < 70)
+            return "🙂";
+        if (value < 80)
+            return "😀";
+        if (value < 90)
+            return "😁";
+        if (value < 101)
+            return "😍";
     }
 
     return (
         <Form className="px-3" onSubmit={handleSubmit}>
             <InputGroup controlId="email" className="my-4" size="lg">
-                <Form.Control type="text" placeholder="Question prompt"/>
+                <Form.Control type="text" placeholder="Question prompt" />
             </InputGroup>
             <Row>
                 <Col>
