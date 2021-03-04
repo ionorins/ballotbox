@@ -73,83 +73,83 @@ const ControlPanel = () => {
 
     return (
         <Div100vh>
-        <div className="container">
-            <Navbar fixed="top" className="flex-column mb-3">
-                <Row className="min-vw-100">
-                    <Navbar.Text className="mx-auto nav-stats-font">
-                        <Link to="/host" className="clickable-link">
-                            {eventName} <TitleLogo size={"-small"} />
-                        </Link>
-                    </Navbar.Text>
-                    <Navbar.Text>
-                        <Logout />
-                    </Navbar.Text>
-                </Row>
-                <Row className="min-vw-100">
-                    <Col className="text-left d-inline-block">
-                        <div className="nav-stats-font copy-link">
-                            <Link to={"/qr/" + eventCode} className="clickable-link" target="_blank">
-                                <RiQrCodeLine className="mr-2 mb-1" />
+            <div className="container">
+                <Navbar fixed="top" className="flex-column mb-3">
+                    <Row className="min-vw-100">
+                        <Navbar.Text className="mx-auto nav-stats-font">
+                            <Link to="/host" className="clickable-link">
+                                {eventName} <TitleLogo size={"-small"} />
                             </Link>
+                        </Navbar.Text>
+                        <Navbar.Text>
+                            <Logout />
+                        </Navbar.Text>
+                    </Row>
+                    <Row className="min-vw-100">
+                        <Col className="text-left d-inline-block">
+                            <div className="nav-stats-font copy-link">
+                                <Link to={"/qr/" + eventCode} className="clickable-link" target="_blank">
+                                    <RiQrCodeLine className="mr-2 mb-1" />
+                                </Link>
 
-                            <span ref={target} style={{ whiteSpace: "nowrap" }} onClick={() => { setShow(!show); navigator.clipboard.writeText(eventCode) }}>
-                                {eventCode}
-                            </span>
-                        </div>
+                                <span ref={target} style={{ whiteSpace: "nowrap" }} onClick={() => { setShow(!show); navigator.clipboard.writeText(eventCode) }}>
+                                    {eventCode}
+                                </span>
+                            </div>
 
-                        <Overlay target={target.current} show={show} placement="bottom">
-                            {(props) => (
-                                <Tooltip id="overlay-example" {...props}>
-                                    Copied!
-                                </Tooltip>
+                            <Overlay target={target.current} show={show} placement="bottom">
+                                {(props) => (
+                                    <Tooltip id="overlay-example" {...props}>
+                                        Copied!
+                                    </Tooltip>
 
-                            )}
-                        </Overlay>
-                    </Col>
-                    <Col className="text-right">
-                        <div className="nav-stats-font">
-                            <span id="attendees" className="">{attendees}</span> <FiUser className="mb-1" />
-                        </div>
-                    </Col>
-                </Row>
-            </Navbar>
-            <Card className="standard-card">
-                <Tab.Container defaultActiveKey="comments">
-                    <Card.Header style={{ borderBottom: "none", backgroundColor: "transparent", }}>
-                        <Nav variant="tabs" className="tab-bar" >
-                            <Nav.Item className="custom-nav-tabs mx-1">
-                                <Nav.Link className="custom-nav-links" eventKey="emotion">
-                                    Mood Analysis
+                                )}
+                            </Overlay>
+                        </Col>
+                        <Col className="text-right">
+                            <div className="nav-stats-font">
+                                <span id="attendees" className="">{attendees}</span> <FiUser className="mb-1" />
+                            </div>
+                        </Col>
+                    </Row>
+                </Navbar>
+                <Card className="standard-card">
+                    <Tab.Container defaultActiveKey="comments">
+                        <Card.Header style={{ borderBottom: "none", backgroundColor: "transparent", }}>
+                            <Nav variant="tabs" className="tab-bar" >
+                                <Nav.Item className="custom-nav-tabs mx-1">
+                                    <Nav.Link className="custom-nav-links" eventKey="emotion">
+                                        Mood Analysis
                             </Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item className="custom-nav-tabs mx-1">
-                                <Nav.Link className="custom-nav-links" eventKey="comments">
-                                    Comments
+                                </Nav.Item>
+                                <Nav.Item className="custom-nav-tabs mx-1">
+                                    <Nav.Link className="custom-nav-links" eventKey="comments">
+                                        Comments
                             </Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item className="custom-nav-tabs mx-1">
-                                <Nav.Link className="custom-nav-links" eventKey="polls">
-                                    Polls
+                                </Nav.Item>
+                                <Nav.Item className="custom-nav-tabs mx-1">
+                                    <Nav.Link className="custom-nav-links" eventKey="polls">
+                                        Polls
                             </Nav.Link>
-                            </Nav.Item>
-                        </Nav>
-                    </Card.Header>
-                    <Card.Body className="access-card-body control-panel-card-body">
-                        <Tab.Content>
-                            <Tab.Pane eventKey="emotion">
-                                <EmotionAnalysis />
-                            </Tab.Pane>
-                            <Tab.Pane eventKey="comments">
-                                <CommentWall />
-                            </Tab.Pane>
-                            <Tab.Pane eventKey="polls">
-                                <Polls attendees={attendees} />
-                            </Tab.Pane>
-                        </Tab.Content>
-                    </Card.Body>
-                </Tab.Container>
-            </Card>
-        </div>
+                                </Nav.Item>
+                            </Nav>
+                        </Card.Header>
+                        <Card.Body className="access-card-body control-panel-card-body">
+                            <Tab.Content>
+                                <Tab.Pane eventKey="emotion">
+                                    <EmotionAnalysis />
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="comments">
+                                    <CommentWall />
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="polls">
+                                    <Polls attendees={attendees} />
+                                </Tab.Pane>
+                            </Tab.Content>
+                        </Card.Body>
+                    </Tab.Container>
+                </Card>
+            </div>
         </Div100vh>
 
     );

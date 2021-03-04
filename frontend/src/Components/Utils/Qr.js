@@ -8,15 +8,15 @@ const Qr = () => {
     let { code } = useParams();
     return (
         <Div100vh>
-        <div className="container">
-            <div className="display-4 mb-4 p-3">
-                Scan this QR code to join the event!
+            <div className="container">
+                <div className="display-4 mb-4 p-3">
+                    Scan this QR code to join the event!
             </div>
-            <div className="py-3">
-                <QRCode size={200} bgColor="transparent" value={"http://ballotbox.ml/" + code} />
-            </div>
+                <div className="py-3">
+                    <QRCode size={200} bgColor="transparent" value={"http://ballotbox.ml/" + code} />
+                </div>
 
-        </div>
+            </div>
         </Div100vh>
     );
 

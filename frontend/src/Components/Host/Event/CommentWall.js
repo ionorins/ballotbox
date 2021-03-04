@@ -5,10 +5,10 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
-import {useParams} from "react-router-dom";
-import {useEffect, useState} from "react";
-import {useCookies} from "react-cookie";
-import {RiThumbUpFill, RiThumbUpLine} from "react-icons/ri";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import { RiThumbUpFill, RiThumbUpLine } from "react-icons/ri";
 
 
 const CommentWall = () => {
@@ -19,10 +19,10 @@ const CommentWall = () => {
     const [comments, setComments] = useState(<></>);
 
     const like = (commentId) => {
-        fetch('/host/event/'+id+'/comment/like/'+commentId, {
+        fetch('/host/event/' + id + '/comment/like/' + commentId, {
             method: 'POST',
             headers: {
-                "Authorization": "Bearer "+cookies['access_token'],
+                "Authorization": "Bearer " + cookies['access_token'],
             },
         }).then((response) => response.json())
             .then((responseJson) => {
@@ -31,10 +31,10 @@ const CommentWall = () => {
     }
 
     async function getComments() {
-        fetch('/host/event/'+id+"/comments", {
+        fetch('/host/event/' + id + "/comments", {
             method: 'GET',
             headers: {
-                "Authorization": "Bearer "+cookies['access_token'],
+                "Authorization": "Bearer " + cookies['access_token'],
             }
         }).then((response) => {
             if (response.status !== 200) {
@@ -50,7 +50,7 @@ const CommentWall = () => {
                             <Col className="comment-likes">
                                 {comment.likes}
                                 <Button className="like-button" onClick={() => like(comment.id)}>
-                                    {(comment.liked ? <RiThumbUpFill className="mb-2 like-button-liked"/> : <RiThumbUpLine  className="mb-2 "/>)}
+                                    {(comment.liked ? <RiThumbUpFill className="mb-2 like-button-liked" /> : <RiThumbUpLine className="mb-2 " />)}
                                 </Button>
                             </Col>
                         </Row>
@@ -74,17 +74,17 @@ const CommentWall = () => {
         }, 3000);
         return () => clearInterval(timeoutID);
         // eslint-disable-next-line
-    },[])
+    }, [])
 
 
     const handleSubmit = (event) => {
         const message = event.target[0].value;
         event.preventDefault();
         event.stopPropagation();
-        fetch('/host/event/'+id+"/comment", {
+        fetch('/host/event/' + id + "/comment", {
             method: 'POST',
             headers: {
-                "Authorization": "Bearer "+cookies['access_token'],
+                "Authorization": "Bearer " + cookies['access_token'],
             },
             body: JSON.stringify({
                 content: message
@@ -100,13 +100,13 @@ const CommentWall = () => {
     return (
         <div className="mt-auto">
             <div className="comment-wall-container m-1">
-            <ListGroup variant="flush" className="comment-list">
-                {comments}
-            </ListGroup>
+                <ListGroup variant="flush" className="comment-list">
+                    {comments}
+                </ListGroup>
             </div>
             <Form onSubmit={handleSubmit}>
                 <InputGroup className="my-2">
-                    <Form.Control size="lg" placeholder="Add a comment..."/>
+                    <Form.Control size="lg" placeholder="Add a comment..." />
                 </InputGroup>
             </Form>
         </div>
