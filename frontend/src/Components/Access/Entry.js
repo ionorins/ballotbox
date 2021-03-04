@@ -48,30 +48,30 @@ const Entry = () => {
 
     return (
         <Div100vh>
-        <div className="container">
-            <h1 className="display-3">BallotBox <TitleLogo /></h1>
-            <Form className="forms mx-auto my-3 flex-column" onSubmit={handleSubmit}>
-                <InputGroup className="mt-2">
-                    <InputGroup.Prepend>
-                        <InputGroup.Text>
-                            <FiLink />
-                        </InputGroup.Text>
-                    </InputGroup.Prepend>
-                    <Form.Control required size="lg" placeholder="Event Code" maxLength="8" defaultValue={code} />
-                </InputGroup>
-                <Form.Text style={{ color: "crimson", }}>
-                    {validated}
-                </Form.Text>
-                <Button className="buttons my-3" type="submit">
-                    Join
+            <div className="container">
+                <h1 className="display-3">BallotBox <TitleLogo /></h1>
+                <Form className="forms mx-auto my-3 flex-column" onSubmit={handleSubmit}>
+                    <InputGroup className="mt-2">
+                        <InputGroup.Prepend>
+                            <InputGroup.Text>
+                                <FiLink />
+                            </InputGroup.Text>
+                        </InputGroup.Prepend>
+                        <Form.Control required size="lg" placeholder="Event Code" maxLength="8" defaultValue={code} />
+                    </InputGroup>
+                    <Form.Text style={{ color: "crimson", }}>
+                        {validated}
+                    </Form.Text>
+                    <Button className="buttons my-3" type="submit">
+                        Join
                 </Button>
-            </Form>
-            <Navbar fixed="bottom">
-                <Navbar.Text className="mx-auto navbar-text">
-                    <Link to="/host" className="clickable-link">Hosting an event? Click here</Link>
-                </Navbar.Text>
-            </Navbar>
-        </div>
+                </Form>
+                <Navbar fixed="bottom">
+                    <Navbar.Text className="mx-auto navbar-text">
+                        <Link to="/host" className="clickable-link">Hosting an event? Click here</Link>
+                    </Navbar.Text>
+                </Navbar>
+            </div>
 
         </Div100vh>
     )

@@ -16,39 +16,39 @@ const Event = () => {
 
     return (
         <Div100vh>
-        <div className="container">
-            <Link className="clickable-link mt-3" to="/">
-                <h1 className="display-4">BallotBox <TitleLogo /></h1>
-            </Link>
-            <Card className="standard-card attendee-event-card">
-                <Tab.Container defaultActiveKey="comments">
-                    <Card.Header style={{ borderBottom: "none", backgroundColor: "transparent", }}>
-                        <Nav variant="tabs" className="tab-bar">
-                            <Nav.Item className="custom-nav-tabs mx-1">
-                                <Nav.Link className="custom-nav-links" eventKey="comments">
-                                    Comments
+            <div className="container">
+                <Link className="clickable-link mt-3" to="/">
+                    <h1 className="display-4">BallotBox <TitleLogo /></h1>
+                </Link>
+                <Card className="standard-card attendee-event-card">
+                    <Tab.Container defaultActiveKey="comments">
+                        <Card.Header style={{ borderBottom: "none", backgroundColor: "transparent", }}>
+                            <Nav variant="tabs" className="tab-bar">
+                                <Nav.Item className="custom-nav-tabs mx-1">
+                                    <Nav.Link className="custom-nav-links" eventKey="comments">
+                                        Comments
                             </Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item className="custom-nav-tabs mx-1">
-                                <Nav.Link className="custom-nav-links" eventKey="polls" >
-                                    Polls {unansweredPolls > 0 ? <Badge className="py-1 ml  -1" pill variant="danger">{unansweredPolls}</Badge> : ""}
-                                </Nav.Link>
-                            </Nav.Item>
-                        </Nav>
-                    </Card.Header>
-                    <Card.Body className="access-card-body">
-                        <Tab.Content>
-                            <Tab.Pane eventKey="comments">
-                                <AttendeeCommentWall />
-                            </Tab.Pane>
-                            <Tab.Pane eventKey="polls">
-                                <AttendeePolls setUnansweredPolls={setUnansweredPolls} />
-                            </Tab.Pane>
-                        </Tab.Content>
-                    </Card.Body>
-                </Tab.Container>
-            </Card>
-        </div>
+                                </Nav.Item>
+                                <Nav.Item className="custom-nav-tabs mx-1">
+                                    <Nav.Link className="custom-nav-links" eventKey="polls" >
+                                        Polls {unansweredPolls > 0 ? <Badge className="py-1 ml  -1" pill variant="danger">{unansweredPolls}</Badge> : ""}
+                                    </Nav.Link>
+                                </Nav.Item>
+                            </Nav>
+                        </Card.Header>
+                        <Card.Body className="access-card-body">
+                            <Tab.Content>
+                                <Tab.Pane eventKey="comments">
+                                    <AttendeeCommentWall />
+                                </Tab.Pane>
+                                <Tab.Pane eventKey="polls">
+                                    <AttendeePolls setUnansweredPolls={setUnansweredPolls} />
+                                </Tab.Pane>
+                            </Tab.Content>
+                        </Card.Body>
+                    </Tab.Container>
+                </Card>
+            </div>
         </Div100vh>
     )
 }
