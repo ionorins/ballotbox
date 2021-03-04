@@ -50,7 +50,7 @@ const MoodLineChart = ({interval, mood}) => {
                     <CartesianGrid stroke="#c9c9c9" strokeDasharray="5 5"/>
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="y" stroke="#8884d8" />
+                    <Line type="monotone" dataKey={mood} stroke="#8884d8" />
                 </LineChart>
             </ResponsiveContainer>
 

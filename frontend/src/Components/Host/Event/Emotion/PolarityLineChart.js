@@ -51,7 +51,7 @@ const PolarityLineChart = ({interval}) => {
                     <ReferenceLine y={0} stroke="red" strokeDasharray="3 10" />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" dataKey="y" stroke="#8884d8" />
+                    <Line type="monotone" dataKey="polarity" stroke="#8884d8" />
                 </LineChart>
             </ResponsiveContainer>
 
