@@ -33,6 +33,7 @@ const PolarityLineChart = ({interval}) => {
 
     }
 
+
     useEffect(() => {
         getValues();
         const timeoutID = setInterval(() => {
@@ -45,17 +46,22 @@ const PolarityLineChart = ({interval}) => {
     return (
             <ResponsiveContainer width="90%" className="">
                 <LineChart data={emotionData[0]['data']}>
-                    <XAxis dataKey="x"/>
+                    <XAxis dataKey="x" tickFormatter={Math.round}/>
                     <YAxis domain={[-0.5,0.5]}/>
                     <CartesianGrid stroke="#c9c9c9" strokeDasharray="5 5"/>
                     <ReferenceLine y={0} stroke="red" strokeDasharray="3 10" />
-                    <Tooltip />
+                    <Tooltip labelFormatter={labelFormatter}/>
                     <Legend />
-                    <Line type="monotone" dataKey="polarity" stroke="#8884d8" />
+                    <Line type="monotone" dataKey="polarity" stroke="#8884d8" strokeWidth={2} dot={false}/>
                 </LineChart>
             </ResponsiveContainer>
 
     );
 
 }
+
+export const labelFormatter = (e) => {
+    return Math.round(e) + " minutes passed"
+}
+
 export default PolarityLineChart;

@@ -36,8 +36,11 @@ const CommentWall = () => {
             headers: {
                 "Authorization": "Bearer "+cookies['access_token'],
             }
-        }).then((response) => response.json())
-            .then((responseJson) => {
+        }).then((response) => {
+            if (response.status !== 200) {
+                return;
+            }
+            response.json().then((responseJson) => {
                 const commentList = responseJson.map((comment) =>
                     <ListGroup.Item>
                         <Row>
@@ -60,6 +63,8 @@ const CommentWall = () => {
                 );
                 responseJson.length === 0 ? setComments(<ListGroup.Item className="mx-auto my-auto">No one has commented yet :(</ListGroup.Item>) : setComments(commentList);
             });
+        })
+
     }
 
     useEffect(() => {

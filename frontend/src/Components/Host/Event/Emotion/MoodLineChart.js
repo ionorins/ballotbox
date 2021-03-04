@@ -7,11 +7,12 @@ import {
     ResponsiveContainer,
     ReferenceLine,
     Tooltip,
-    Legend, Text
+    Legend, Text, Label
 } from "recharts";
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {useCookies} from "react-cookie";
+import {labelFormatter} from "./PolarityLineChart";
 
 const MoodLineChart = ({interval, mood}) => {
 
@@ -33,6 +34,19 @@ const MoodLineChart = ({interval, mood}) => {
 
     }
 
+    const getStrokeColour = () => {
+        if (mood === "joy")
+            return "#ffc800"
+        if (mood === "anger")
+            return "red"
+        if (mood === "love")
+            return "purple"
+        if (mood === "sadness")
+            return "blue"
+        if (mood === "fear")
+            return "black"
+    }
+
     useEffect(() => {
         getMoodValues();
         const timeoutID = setInterval(() => {
@@ -43,14 +57,16 @@ const MoodLineChart = ({interval, mood}) => {
 
 
     return (
-            <ResponsiveContainer width="90%" className="mr-5 ml-2">
+            <ResponsiveContainer width="90%" className="mr-5">
                 <LineChart data={emotionData[0]['data']}>
-                    <XAxis dataKey="x"/>
+                    <XAxis dataKey="x">
+                        <Label content={<div> tet </div>}/>
+                    </XAxis>
                     <YAxis domain={[0,1]}/>
                     <CartesianGrid stroke="#c9c9c9" strokeDasharray="5 5"/>
-                    <Tooltip />
+                    <Tooltip labelFormatter={labelFormatter}/>
                     <Legend />
-                    <Line type="monotone" dataKey={mood} stroke="#8884d8" />
+                    <Line type="monotone" dataKey={mood} stroke={getStrokeColour()} strokeWidth={2} dot={false}/>
                 </LineChart>
             </ResponsiveContainer>
 

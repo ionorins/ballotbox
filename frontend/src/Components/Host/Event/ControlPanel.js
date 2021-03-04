@@ -1,5 +1,5 @@
 import '../../../App.css';
-import { Link, useParams } from "react-router-dom";
+import {Link, useHistory, useParams} from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import Nav from "react-bootstrap/Nav";
 import React, { useEffect, useRef, useState } from "react";
@@ -30,6 +30,8 @@ const ControlPanel = () => {
     const [show, setShow] = useState(false);
     const target = useRef(null);
 
+    let history = useHistory();
+
     async function getAttendees() {
         fetch('/host/event/' + id + "/attendees", {
             method: 'GET',
@@ -49,11 +51,17 @@ const ControlPanel = () => {
             headers: {
                 "Authorization": "Bearer " + cookies['access_token'],
             }
-        }).then((response) => response.json())
-            .then((responseJson) => {
+        }).then((response) => {
+            if (response.status !== 200) {
+                history.push("/");
+                return;
+            }
+            response.json().then((responseJson) => {
                 setEventName(responseJson['name']);
                 setEventCode(responseJson['code']);
             });
+        })
+
         getAttendees();
         const timeoutID = setInterval(() => {
             getAttendees();
@@ -67,7 +75,7 @@ const ControlPanel = () => {
                 <Row className="min-vw-100">
                     <Navbar.Text className="mx-auto nav-stats-font">
                         <Link to="/host" className="clickable-link">
-                            {eventName} <TitleLogo />
+                            {eventName} <TitleLogo size={"-small"}/>
                         </Link>
                     </Navbar.Text>
                     <Navbar.Text>
@@ -108,7 +116,7 @@ const ControlPanel = () => {
                         <Nav variant="tabs" className="tab-bar" >
                             <Nav.Item className="custom-nav-tabs mx-1">
                                 <Nav.Link className="custom-nav-links" eventKey="emotion">
-                                    Emotion Analysis
+                                    Mood Analysis
                             </Nav.Link>
                             </Nav.Item>
                             <Nav.Item className="custom-nav-tabs mx-1">

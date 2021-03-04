@@ -59,15 +59,15 @@ const EmotionAnalysis = () => {
                         </Form.Group>
                     </Form>
                     <Carousel interval={null} nextIcon={<NextIcon />} prevIcon={<PrevIcon />} indicators={false} className="custom-carousel">
-                        <Carousel.Item>
+                        <Carousel.Item className="">
                             <div className="chart-container ">
-                                Polarity
+                                Polarity by minutes passed
                                 { polarityChart }
                             </div>
                         </Carousel.Item>
                         <Carousel.Item>
                             <div className="chart-container">
-                                {selectedEmoji.charAt(0).toUpperCase() + selectedEmoji.slice(1)}
+                                {selectedEmoji.charAt(0).toUpperCase() + selectedEmoji.slice(1)} by minutes passed
                                 { emojiChart }
                             </div>
                         </Carousel.Item>

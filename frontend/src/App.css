@@ -208,7 +208,11 @@
 .copy-link {
     cursor: pointer;
     max-width: 30vh;
+    white-space: nowrap;
 }
 .carousel-control-prev, .carousel-control-next {
     width: 5% !important;
+}
+.title-logo-small {
+    height: 5vh;
 }
