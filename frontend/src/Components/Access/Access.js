@@ -10,12 +10,14 @@ import {Link, useHistory} from "react-router-dom";
 import {FiChevronLeft} from "react-icons/fi";
 import Button from "react-bootstrap/Button";
 import TitleLogo from "../Utils/TitleLogo";
+import Div100vh from "react-div-100vh";
 
 const Access = () => {
 
     let history = useHistory();
 
     return (
+        <Div100vh>
         <div className="container">
             <Link to="/" className="clickable-link">
                     <h1 className="display-3">BallotBox <TitleLogo /></h1>
@@ -57,6 +59,8 @@ const Access = () => {
                 </Navbar.Text>
             </Navbar>
         </div>
+
+        </Div100vh>
     )
 }
 export default Access;

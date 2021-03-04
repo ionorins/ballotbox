@@ -18,6 +18,7 @@ const PolarityLineChart = ({interval}) => {
     let { id } = useParams();
 
     const [emotionData, setEmotionData] = useState([{x: 0, y: 0}])
+    // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token'])
 
     async function getValues() {
@@ -41,6 +42,7 @@ const PolarityLineChart = ({interval}) => {
             getValues();
         }, 3000);
         return () => clearInterval(timeoutID);
+        // eslint-disable-next-line
     },[interval])
 
     return (

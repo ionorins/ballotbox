@@ -9,6 +9,7 @@ import { useCookies } from "react-cookie";
 import { useState } from "react";
 import TitleLogo from "../Utils/TitleLogo";
 import { useParams } from "react-router-dom";
+import Div100vh from "react-div-100vh";
 
 const Entry = () => {
 
@@ -46,6 +47,7 @@ const Entry = () => {
     let { code } = useParams();
 
     return (
+        <Div100vh>
         <div className="container">
             <h1 className="display-3">BallotBox <TitleLogo /></h1>
             <Form className="forms mx-auto my-3 flex-column" onSubmit={handleSubmit}>
@@ -70,6 +72,8 @@ const Entry = () => {
                 </Navbar.Text>
             </Navbar>
         </div>
+
+        </Div100vh>
     )
 }
 export default Entry;

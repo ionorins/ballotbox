@@ -73,6 +73,7 @@ const CommentWall = () => {
             getComments();
         }, 3000);
         return () => clearInterval(timeoutID);
+        // eslint-disable-next-line
     },[])
 
 

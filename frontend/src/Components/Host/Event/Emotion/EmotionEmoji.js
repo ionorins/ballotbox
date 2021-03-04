@@ -1,5 +1,3 @@
-import Twemoji from "react-twemoji";
-
 const EmotionEmoji = ({type, size, toggleLine, toggled, handler}) => {
     let dimension = size * size * 250;
     if (size === 0 || size === null)

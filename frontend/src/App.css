@@ -1,5 +1,5 @@
 .container {
-    min-height: 100vh;
+    min-height: 100%;
     min-width: 100vw;
     display: flex;
     flex-direction: column;
@@ -9,6 +9,7 @@
     justify-content: center;
     text-align: center;
     padding: 0 !important;
+    overscroll-behavior-y: none !important;
 }
 .buttons {
     background-color: black !important;

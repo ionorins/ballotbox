@@ -7,6 +7,8 @@ import {useCookies} from "react-cookie";
 
 const EmojiGrid = ({selected, handler}) => {
     const [emojiSize, setEmojiSize] = useState([]);
+
+    // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token']);
 
 
@@ -31,6 +33,7 @@ const EmojiGrid = ({selected, handler}) => {
             getCurrent();
         }, 3000);
         return () => clearInterval(timeoutID);
+        // eslint-disable-next-line
     },[])
 
     return(

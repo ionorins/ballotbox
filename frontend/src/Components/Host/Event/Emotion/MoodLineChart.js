@@ -5,9 +5,8 @@ import {
     CartesianGrid,
     Line,
     ResponsiveContainer,
-    ReferenceLine,
     Tooltip,
-    Legend, Text, Label
+    Legend, Label
 } from "recharts";
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
@@ -19,6 +18,7 @@ const MoodLineChart = ({interval, mood}) => {
     let { id } = useParams();
 
     const [emotionData, setEmotionData] = useState([{x: 0, y: 0}])
+    // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token'])
 
     async function getMoodValues() {
@@ -53,6 +53,7 @@ const MoodLineChart = ({interval, mood}) => {
             getMoodValues();
         }, 3000);
         return () => clearInterval(timeoutID);
+        // eslint-disable-next-line
     },[mood, interval])
 
 

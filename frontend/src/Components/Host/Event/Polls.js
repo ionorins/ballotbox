@@ -53,6 +53,7 @@ const Polls = ({attendees}) => {
             getPolls();
         }, 3000);
         return () => clearInterval(timeoutID);
+        // eslint-disable-next-line
     },[])
 
     return (
@@ -93,7 +94,7 @@ const Polls = ({attendees}) => {
             <div className="my-2">
                 {or}
             </div>
-            <Accordion>
+            <Accordion className="mb-2">
                     <Card style={{cursor: "pointer",}} onClick={() => setShow(true)}>
                         <Card.Header>
                             <Accordion.Toggle eventKey="#'" className="builder-toggle">

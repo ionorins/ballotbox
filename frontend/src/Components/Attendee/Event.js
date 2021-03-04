@@ -8,12 +8,14 @@ import AttendeePolls from "./AttendeePolls";
 import Badge from "react-bootstrap/Badge";
 import {Link} from "react-router-dom";
 import TitleLogo from "../Utils/TitleLogo";
+import Div100vh from "react-div-100vh";
 
 const Event = () => {
 
     const [unansweredPolls, setUnansweredPolls] = useState(0);
 
     return (
+        <Div100vh>
         <div className="container">
             <Link className="clickable-link mt-3" to="/">
                 <h1 className="display-4">BallotBox <TitleLogo /></h1>
@@ -47,6 +49,7 @@ const Event = () => {
                 </Tab.Container>
             </Card>
         </div>
+        </Div100vh>
     )
 }
 export default Event;

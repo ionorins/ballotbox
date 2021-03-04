@@ -64,6 +64,7 @@ const AttendeePolls = ({setUnansweredPolls}) => {
             getPolls();
         }, 3000);
         return () => clearInterval(timeoutID);
+        // eslint-disable-next-line
     },[])
 
     return (

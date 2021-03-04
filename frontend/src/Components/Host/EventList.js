@@ -29,10 +29,6 @@ const EventList = () => {
         history.push("/host/event/" + eventId);
     }
 
-    const deleteEvent = (eventId) => {
-        console.log(eventId);
-        history.push("/host/event/" + eventId);
-    }
 
     function handleDelete(code, name, timestamp) {
         setDeleteModal(<DeleteEvent showDelete={true} setShowDelete={setDeleteModal} code={code} name={name} timestamp={timestamp} />);
@@ -44,8 +40,10 @@ const EventList = () => {
             headers: {
                 "Authorization": "Bearer " + cookies['access_token'],
             }
-        }).then((response) => response.json())
-            .then((responseJson) => {
+        }).then((response) => {
+            if (response.status !== 200)
+                return;
+            response.json().then((responseJson) => {
                 console.log(responseJson);
                 const eventMap = responseJson.filter((event) => event.active).map((event) =>
                     <ListGroup.Item>
@@ -74,6 +72,9 @@ const EventList = () => {
                 );
                 setEvents(responseJson.length > 0 ? eventMap : <p>Looks like you haven't made an event yet, get started by creating an event below!</p>);
             });
+        })
+
+        // eslint-disable-next-line
     }, []);
 
     return (

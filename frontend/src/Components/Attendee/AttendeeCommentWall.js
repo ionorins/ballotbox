@@ -8,8 +8,7 @@ import Form from "react-bootstrap/Form";
 import {useEffect, useState} from "react";
 import {useCookies} from "react-cookie";
 import {RiThumbUpFill, RiThumbUpLine} from "react-icons/ri";
-import {Container, OverlayTrigger, Popover} from "react-bootstrap";
-import {FiSettings} from "react-icons/fi";
+import { OverlayTrigger, Popover} from "react-bootstrap";
 import {FaUserEdit} from "react-icons/all";
 
 
@@ -73,6 +72,7 @@ const AttendeeCommentWall = () => {
             getComments();
         }, 3000);
         return () => clearInterval(timeoutID);
+        // eslint-disable-next-line
     },[])
 
 

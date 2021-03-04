@@ -1,9 +1,5 @@
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import {useParams} from "react-router-dom";
 import {useCookies} from "react-cookie";
-import React, {useEffect, useState} from "react";
-import EmotionEmoji from "./Emotion/EmotionEmoji";
+import React, {useState} from "react";
 import PolarityLineChart from "./Emotion/PolarityLineChart";
 import ListGroup from "react-bootstrap/ListGroup";
 import Form from "react-bootstrap/Form";
@@ -14,7 +10,6 @@ import MoodLineChart from "./Emotion/MoodLineChart";
 
 const EmotionAnalysis = () => {
 
-    let { id } = useParams();
     // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token']);
     const [intervalValue, setIntervalValue] = useState(5);

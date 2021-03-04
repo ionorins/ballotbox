@@ -7,16 +7,17 @@ import Tab from "react-bootstrap/Tab";
 import CommentWall from "./CommentWall";
 import { useCookies } from "react-cookie";
 import Navbar from "react-bootstrap/Navbar";
-import { FiLink, FiUser } from "react-icons/fi";
+import { FiUser } from "react-icons/fi";
 import { RiQrCodeLine } from "react-icons/ri"
 import Polls from "./Polls";
 import EmotionAnalysis from "./EmotionAnalysis";
 import Overlay from "react-bootstrap/Overlay";
 import Tooltip from "react-bootstrap/Tooltip";
-import { Fade, Row } from "react-bootstrap";
+import { Row } from "react-bootstrap";
 import TitleLogo from "../../Utils/TitleLogo";
 import Col from "react-bootstrap/Col";
 import Logout from "../../Access/Logout";
+import Div100vh from "react-div-100vh";
 
 
 const ControlPanel = () => {
@@ -67,9 +68,11 @@ const ControlPanel = () => {
             getAttendees();
         }, 3000);
         return () => clearInterval(timeoutID);
+        // eslint-disable-next-line
     }, []);
 
     return (
+        <Div100vh>
         <div className="container">
             <Navbar fixed="top" className="flex-column mb-3">
                 <Row className="min-vw-100">
@@ -147,6 +150,7 @@ const ControlPanel = () => {
                 </Tab.Container>
             </Card>
         </div>
+        </Div100vh>
 
     );
 }
