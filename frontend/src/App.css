@@ -73,7 +73,7 @@
         }
         .standard-card {
             max-height: 70vh !important;
-            margin-top: 3rem !important;
+            margin-top: auto !important;
             -webkit-overflow-scrolling: touch;
             overflow-y: auto;
         }
@@ -82,6 +82,7 @@
             max-height: 80vh !important;
         }
         .control-panel-card-body, .access-card-body {
+            height: 90%;
             overflow-y: scroll !important;
             -webkit-overflow-scrolling: touch;
 
