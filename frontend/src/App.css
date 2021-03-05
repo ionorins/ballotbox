@@ -83,6 +83,7 @@
         .control-panel-card-body, .access-card-body {
             max-height: 50vh !important;
             overflow-y: scroll !important;
+            -webkit-overflow-scrolling: touch;
 
         }
         .comment-wall-container {
