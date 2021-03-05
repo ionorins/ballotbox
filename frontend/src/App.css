@@ -82,6 +82,8 @@
         }
         .control-panel-card-body {
             max-height: 50vh !important;
+            overflow-y: scroll;
+
         }
         .comment-wall-container {
             min-height: 45vh !important;
