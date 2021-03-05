@@ -69,6 +69,7 @@
     @supports (-webkit-touch-callout: none) {
         .standard-card {
             max-height: 50vh !important;
+            margin-top: 3rem !important;
         }
         .attendee-event-card {
             max-height: 50vh;
