@@ -68,7 +68,7 @@
 @media only screen and (max-width: 600px) {
     @supports (-webkit-touch-callout: none) {
         .standard-card {
-            max-height: 50vh;
+            max-height: 50vh !important;
         }
         .attendee-event-card {
             max-height: 50vh;
