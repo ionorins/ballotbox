@@ -82,7 +82,7 @@
             max-height: 80vh !important;
         }
         .control-panel-card-body, .access-card-body {
-            height: 90%;
+            height: 90% !important;
             overflow-y: scroll !important;
             -webkit-overflow-scrolling: touch;
 
