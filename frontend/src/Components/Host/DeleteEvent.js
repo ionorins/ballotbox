@@ -15,7 +15,7 @@ const DeleteEvent = ({ showDelete, setShowDelete, code, name, timestamp, getEven
     const handleSubmit = (event) => {
         event.preventDefault();
         event.stopPropagation();
-        fetch('http://localhost:8000/host/event/' + code, {
+        fetch('/host/event/' + code, {
             method: 'PUT',
             headers: {
                 "Authorization": "Bearer " + cookies['access_token'],
