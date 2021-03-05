@@ -67,6 +67,10 @@
 }
 @media only screen and (max-width: 600px) {
     @supports (-webkit-touch-callout: none) {
+        .container {
+            -webkit-overflow-scrolling: touch;
+            overflow-y: auto;
+        }
         .standard-card {
             max-height: 50vh !important;
             margin-top: 3rem !important;
