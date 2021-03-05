@@ -73,7 +73,7 @@
         }
         .standard-card {
             max-height: 70vh !important;
-            margin-top: 3rem !important;
+            margin-top: auto !important;
             -webkit-overflow-scrolling: touch;
             overflow-y: auto;
         }
