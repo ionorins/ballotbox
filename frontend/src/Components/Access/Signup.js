@@ -18,8 +18,18 @@ const Signup = () => {
     const handleSubmit = (event) => {
         const email = event.target[0].value;
         const pass = event.target[1].value;
+        const conf_pass = event.target[2].value;
+        const regex = new RegExp("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$")
         event.preventDefault();
         event.stopPropagation();
+        if (pass !== conf_pass) {
+            setPassValidated("Passwords do not match");
+            return;
+        }
+        if (!regex.test(pass)) {
+            setPassValidated("Password requires 8 characters and at least 1 number")
+            return;
+        }
         fetch('/auth/create', {
             method: 'POST',
             body: JSON.stringify({
@@ -32,8 +42,7 @@ const Signup = () => {
                 setEmailValidated("Email already in use");
             }
             else if (response.status === 422) {
-                setEmailValidated("");
-                setPassValidated("Password requires 8 characters and at least 1 number")
+                setEmailValidated("Invalid email address")
             }
             else {
                 response.json().then((responseJson) => {

@@ -7,7 +7,7 @@ import Modal from "react-bootstrap/Modal";
 import { useCookies } from "react-cookie";
 
 
-const NewEvent = ({ show, setShow }) => {
+const NewEvent = ({ show, setShow, getEvents }) => {
 
     // eslint-disable-next-line no-unused-vars
     const [cookies, setCookie] = useCookies(['access_token']);
@@ -18,6 +18,7 @@ const NewEvent = ({ show, setShow }) => {
         const date = new Date(event.target[1].value).getTime();
         event.preventDefault();
         event.stopPropagation();
+        console.log(new Date().toISOString().split('T')[0].substr(4));
         fetch('/host/event', {
             method: 'POST',
             headers: {
@@ -29,7 +30,7 @@ const NewEvent = ({ show, setShow }) => {
             }),
         }).then((response) => {
             setShow(false);
-            window.location.reload();
+            getEvents();
         });
 
     };
@@ -48,14 +49,16 @@ const NewEvent = ({ show, setShow }) => {
                         <Form.Label>
                             Event name
                         </Form.Label>
-                        <Form.Control type="name" placeholder="Enter event name" required />
+                        <Form.Control type="name" placeholder="Enter event name" required maxLength={28}/>
                     </Form.Group>
 
                     <Form.Group as={Row}>
                         <Form.Label>
                             Date
                         </Form.Label>
-                        <Form.Control type="date" required />
+                        <Form.Control type="date" required min={new Date().toISOString().split('T')[0]}
+                                      max={"2050-01-01"}
+                         />
                     </Form.Group>
                     <Button variant="primary" type="submit">Create</Button>
                 </Form>

@@ -12,6 +12,7 @@ import Accordion from "react-bootstrap/Accordion";
 import { ImBubble } from "react-icons/im";
 import { FaTheaterMasks } from "react-icons/fa";
 import { MdFormatListBulleted } from "react-icons/md";
+import {tooltipLabeller} from "../../FormBuilder/Types/MoodSlider";
 
 export const getIcon = (type) => {
     if (type === "freeText")
@@ -56,6 +57,7 @@ const Polls = ({ attendees }) => {
         // eslint-disable-next-line
     }, [])
 
+
     return (
         <div>
             <div className="polls-container">
@@ -75,7 +77,7 @@ const Polls = ({ attendees }) => {
                                             <ListGroup variant="flush" className="answers-container">
                                                 {(poll.answers.length > 0 ? poll.answers.map((answer) =>
                                                     <ListGroup.Item>
-                                                        {answer.answer}
+                                                        {answer.answer} {(poll.content.type === "moodSlider" ? tooltipLabeller(answer.answer) : "")}
                                                     </ListGroup.Item>
                                                 ) : <div className="my-3">No one has answered yet :(</div>)
                                                 }

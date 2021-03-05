@@ -41,29 +41,7 @@ const MoodSlider = ({ setShow }) => {
     };
 
 
-    function tooltipLabeller() {
-        console.log(value)
-        if (value < 10)
-            return "😭";
-        if (value < 20)
-            return "😢";
-        if (value < 30)
-            return "☹️";
-        if (value < 40)
-            return "🙁";
-        if (value < 50)
-            return "😕";
-        if (value < 60)
-            return "😐";
-        if (value < 70)
-            return "🙂";
-        if (value < 80)
-            return "😀";
-        if (value < 90)
-            return "😁";
-        if (value < 101)
-            return "😍";
-    }
+
 
     return (
         <Form className="px-3" onSubmit={handleSubmit}>
@@ -95,3 +73,26 @@ const MoodSlider = ({ setShow }) => {
     )
 }
 export default MoodSlider;
+
+export function tooltipLabeller(value){
+    if (value < 10)
+        return "😭";
+    if (value < 20)
+        return "😢";
+    if (value < 30)
+        return "☹️";
+    if (value < 40)
+        return "🙁";
+    if (value < 50)
+        return "😕";
+    if (value < 60)
+        return "😐";
+    if (value < 70)
+        return "🙂";
+    if (value < 80)
+        return "😀";
+    if (value < 90)
+        return "😁";
+    if (value < 101)
+        return "😍";
+}

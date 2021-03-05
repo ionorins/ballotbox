@@ -63,7 +63,6 @@ const FreeText = ({ setShow }) => {
             </InputGroup>
         )
         setOptionForm(temp)
-        console.log(optionsList)
     }
 
 

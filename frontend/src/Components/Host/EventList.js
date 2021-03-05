@@ -22,7 +22,7 @@ const EventList = () => {
 
     const [events, setEvents] = useState(<> </>);
 
-    const [deleteModal, setDeleteModal] = useState(<DeleteEvent />);
+    const [deleteModal, setDeleteModal] = useState(<DeleteEvent getEvents={getEvents}/>);
 
     const selectEvent = (eventId) => {
         console.log(eventId);
@@ -31,10 +31,10 @@ const EventList = () => {
 
 
     function handleDelete(code, name, timestamp) {
-        setDeleteModal(<DeleteEvent showDelete={true} setShowDelete={setDeleteModal} code={code} name={name} timestamp={timestamp} />);
+        setDeleteModal(<DeleteEvent showDelete={true} setShowDelete={setDeleteModal} code={code} name={name} timestamp={timestamp} getEvents={getEvents}/>);
     }
 
-    useEffect(() => {
+    async function getEvents() {
         fetch('/host/events', {
             method: 'GET',
             headers: {
@@ -73,7 +73,10 @@ const EventList = () => {
                 setEvents(responseJson.length > 0 ? eventMap : <p>Looks like you haven't made an event yet, get started by creating an event below!</p>);
             });
         })
+    }
 
+    useEffect(() => {
+        getEvents();
         // eslint-disable-next-line
     }, []);
 
@@ -93,7 +96,7 @@ const EventList = () => {
                                 <Button className="mx-2 event-select-button" size={"lg"} onClick={() => setShow(true)}>
                                     <FaPlus />
                                 </Button>
-                                <NewEvent show={show} setShow={setShow} />
+                                <NewEvent show={show} setShow={setShow} getEvents={getEvents}/>
                             </Row>
                             {deleteModal}
                         </Col>

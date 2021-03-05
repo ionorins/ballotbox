@@ -7,7 +7,6 @@ import LogoutModal from "./LogoutModal";
 import { useState } from "react";
 
 const Logout = () => {
-    let history = useHistory();
 
     // eslint-disable-next-line no-unused-vars
     const [cookies, setCookie] = useCookies(['access_token']);

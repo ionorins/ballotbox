@@ -6,7 +6,7 @@ import Modal from "react-bootstrap/Modal";
 import { useCookies } from "react-cookie";
 
 
-const DeleteEvent = ({ showDelete, setShowDelete, code, name, timestamp }) => {
+const DeleteEvent = ({ showDelete, setShowDelete, code, name, timestamp, getEvents }) => {
 
     // eslint-disable-next-line no-unused-vars
     const [cookies, setCookie] = useCookies(['access_token']);
@@ -27,7 +27,7 @@ const DeleteEvent = ({ showDelete, setShowDelete, code, name, timestamp }) => {
             }),
         }).then((response) => {
             setShowDelete(false);
-            window.location.reload();
+            getEvents();
         });
 
     };
