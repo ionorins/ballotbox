@@ -74,6 +74,8 @@
         .standard-card {
             max-height: 50vh !important;
             margin-top: 3rem !important;
+            -webkit-overflow-scrolling: touch;
+            overflow-y: auto;
         }
         .attendee-event-card {
             max-height: 50vh;
