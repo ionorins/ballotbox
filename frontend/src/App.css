@@ -78,7 +78,7 @@
             overflow-y: auto;
         }
         .attendee-event-card {
-            max-height: 70vh !important;
+            max-height: 80vh !important;
         }
         .control-panel-card-body, .access-card-body {
             max-height: 50vh !important;
@@ -88,7 +88,7 @@
         }
         .comment-wall-container {
             min-height: 45vh !important;
-            max-height: 60vh !important;
+            max-height: 50vh !important;
         }
     }
     .standard-card {
