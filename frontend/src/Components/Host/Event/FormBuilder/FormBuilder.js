@@ -1,4 +1,4 @@
-import '../../App.css';
+import '../../../../App.css';
 import Card from "react-bootstrap/Card";
 import React from "react";
 import FreeText from "./Types/FreeText";

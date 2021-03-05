@@ -2,7 +2,7 @@ import '../../../App.css';
 import Button from "react-bootstrap/Button";
 import React from "react";
 import Modal from "react-bootstrap/Modal";
-import FormBuilder from "../../FormBuilder/FormBuilder";
+import FormBuilder from "./FormBuilder/FormBuilder";
 
 
 const NewPoll = ({ show, setShow, getPolls }) => {

@@ -59,7 +59,7 @@ const Signup = () => {
             <Form.Text style={{ color: "crimson", }}>
                 {emailValidated}
             </Form.Text>
-            <InputGroup controlId="email" className="mb-4" size="lg">
+            <InputGroup className="mb-4" size="lg">
                 <InputGroup.Prepend>
                     <InputGroup.Text>
                         <FiMail />
@@ -78,7 +78,7 @@ const Signup = () => {
                 </InputGroup.Prepend>
                 <Form.Control type="password" placeholder="Password" />
             </InputGroup>
-            <InputGroup controlId="confirmPassword" className="my-4" size="lg">
+            <InputGroup className="my-4" size="lg">
                 <InputGroup.Prepend>
                     <InputGroup.Text>
                         <FiLock />

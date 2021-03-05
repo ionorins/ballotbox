@@ -1,12 +1,18 @@
 import App from "./App";
 import { render, screen } from '@testing-library/react';
-import Access from "./Components/Access/Access";
-import Entry from "./Components/Access/Entry";
-import Host from "./Components/Host/Host";
+import Signup from "./Components/Access/Signup";
+import Login from "./Components/Access/Login";
+import TitleLogo from "./Components/Utils/TitleLogo";
+import Qr from "./Components/Utils/Qr";
+import {PrevIcon, NextIcon} from "./Components/Utils/CarouselIcons"
+import {Component} from "react";
+import NewEvent from "./Components/Host/NewEvent";
+import DeleteEvent from "./Components/Host/DeleteEvent";
+import Logout from "./Components/Access/Logout";
 import Event from "./Components/Attendee/Event";
 
 it("renders App without crashing", () => { render(<App />); });
-it("renders Access without crashing", () => { render(<Access />); });
-it("renders Entry without crashing", () => { render(<Entry />); });
-it("renders Host without crashing", () => { render(<Host />); });
-it("renders Event without crashing", () => { render(<Event />); });
+it("renders Signup without crashing", () => { render(<Signup />);});
+it("renders Login without crashing", () => { render(<Login />);});
+it("renders Utilities without crashing", () => { render(<TitleLogo />); render(<NextIcon/>); render(<PrevIcon />)});
+it("renders Modals without crashing", () => { render(<NewEvent />); render(<DeleteEvent />); render(<Logout />);});

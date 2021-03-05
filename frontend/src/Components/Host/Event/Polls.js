@@ -12,7 +12,7 @@ import Accordion from "react-bootstrap/Accordion";
 import { ImBubble } from "react-icons/im";
 import { FaTheaterMasks } from "react-icons/fa";
 import { MdFormatListBulleted } from "react-icons/md";
-import {tooltipLabeller} from "../../FormBuilder/Types/MoodSlider";
+import {tooltipLabeller} from "./FormBuilder/Types/MoodSlider";
 
 export const getIcon = (type) => {
     if (type === "freeText")

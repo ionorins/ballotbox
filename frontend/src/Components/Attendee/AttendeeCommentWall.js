@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { RiThumbUpFill, RiThumbUpLine } from "react-icons/ri";
 import { OverlayTrigger, Popover } from "react-bootstrap";
-import { FaUserEdit } from "react-icons/all";
+import { FaUserEdit } from "react-icons/fa";
 
 
 const AttendeeCommentWall = () => {
