@@ -8,7 +8,6 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 from fastapi.security import OAuth2PasswordBearer
 
-from ..rpc_client import analyse
 from .models import (CommentModel, EventModel, PollModel, PostCommentModel,
                      PostEventModel, PostPollModel, UpdateEventModel)
 
@@ -163,11 +162,6 @@ async def comment(code: str, request: Request, access_token: str = Depends(oauth
     new_comment.content = comment.content
     new_comment.author = "Host"
     new_comment.event = code
-
-    # perform sentiment analysis on comment content
-    analysis = analyse(comment.content)
-    new_comment.moods = analysis["moods"]
-    new_comment.polarity = analysis["polarity"]
 
     new_comment = jsonable_encoder(new_comment)
 
@@ -328,7 +322,12 @@ async def get_polarity(code: str, request: Request, access_token: str = Depends(
 
     # go through each comment in database
     for comment in await request.app.mongodb["comments"].find({
-        "event": code
+        "$and": [
+            {"event": code},
+            {"author": {
+                "$ne": "Host"
+            }}
+        ]
     }).sort("timestamp").to_list(length=maxsize):
         # remember time of first comment
         if first_time is None:
@@ -387,7 +386,12 @@ async def get_mood(code: str, emotion: str, request: Request, access_token: str 
 
     # go through each comment in database
     for comment in await request.app.mongodb["comments"].find({
-        "event": code
+        "$and": [
+            {"event": code},
+            {"author": {
+            "$ne": "Host"
+            }}
+        ]
     }).sort("timestamp").to_list(length=maxsize):
         # remember time of first comment
         if first_time is None:
@@ -442,8 +446,13 @@ async def get_current_mood(code: str, request: Request, access_token: str = Depe
 
     # go through each comment in database and remember weighted by likes mood
     for comment in await request.app.mongodb["comments"].find({
-        "event": code,
-        "timestamp": {"$gt": time() - 60 * interval}
+        "$and": [
+            {"event": code},
+            {"timestamp": {"$gt": time() - 60 * interval}},
+            {"author": {
+            "$ne": "Host"
+            }}
+        ]
     }).to_list(length=maxsize):
         moods += (1 + len(comment["likes"])) * [comment["moods"]]
 
