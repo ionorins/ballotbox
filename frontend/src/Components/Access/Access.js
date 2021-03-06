@@ -18,7 +18,7 @@ const Access = () => {
 
     return (
         <Div100vh>
-        <div className="container">
+        <div className="main-container">
             <Link to="/" className="clickable-link">
                 <h1 className="display-4">BallotBox <TitleLogo /></h1>
             </Link>

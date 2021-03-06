@@ -48,7 +48,7 @@ const Entry = () => {
 
     return (
         <Div100vh>
-        <div className="container">
+        <div className="main-container">
             <h1 className="display-4">BallotBox <TitleLogo /></h1>
             <Form className="forms mx-auto my-3 flex-column" onSubmit={handleSubmit}>
                 <InputGroup className="mt-2">

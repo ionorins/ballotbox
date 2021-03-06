@@ -34,7 +34,7 @@ const Host = () => {
     if (load)
         return (
             <Div100vh>
-            <div className="container">
+            <div className="main-container">
                 <Link className="clickable-link" to="/">
                     <h1 className="display-4">BallotBox <TitleLogo /></h1>
                 </Link>

@@ -76,7 +76,7 @@ const ControlPanel = () => {
     if (load)
     return (
         <Div100vh>
-            <div className="container">
+            <div className="main-container">
                 <Navbar fixed="top" className="flex-column mb-3">
                     <Row className="min-vw-100">
                         <Navbar.Text className="mx-auto nav-stats-font">

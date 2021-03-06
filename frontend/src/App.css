@@ -1,5 +1,5 @@
-.container {
-    min-height: 100%;
+.main-container {
+    min-height: 100% !important;
     min-width: 100vw;
     display: flex;
     flex-direction: column;

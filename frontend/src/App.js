@@ -1,17 +1,23 @@
-import Entry from './Components/Access/Entry.js';
-import React from 'react';
+import React , {lazy, Suspense} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
-import Access from "./Components/Access/Access";
-import Host from "./Components/Host/Host";
-import Event from "./Components/Attendee/Event";
-import ControlPanel from "./Components/Host/Event/ControlPanel";
 import Qr from "./Components/Utils/Qr";
 import Error404 from "./Components/Utils/Error404";
+import Loading from "./Components/Utils/Loading";
 
 function App() {
+
+    const Entry = lazy(() => import('./Components/Access/Entry'));
+    const Access = lazy(() => import('./Components/Access/Access'));
+    const ControlPanel = lazy(() => import('./Components/Host/Event/ControlPanel'));
+    const Host = lazy(() => import('./Components/Host/Host'));
+    const Event = lazy(() => import('./Components/Attendee/Event'));
+    const Qr = lazy(() => import('./Components/Utils/Qr'));
+    const Error404 = lazy(() => import('./Components/Utils/Error404'));
+
     return (
         <Router>
+            <Suspense fallback={<Loading />}>
             <Switch>
                 <Route exact path="/">
                     <Entry />
@@ -42,6 +48,7 @@ function App() {
                 </Route>
 
             </Switch>
+            </Suspense>
         </Router>
     )
 }
