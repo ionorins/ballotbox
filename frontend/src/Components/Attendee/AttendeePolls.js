@@ -70,14 +70,14 @@ const AttendeePolls = ({ setUnansweredPolls }) => {
     return (
         <div className="polls-container attendee-polls-container">
             <Accordion>
-                {unansweredPollsList}
+                {unansweredPollsList.length > 0 ? unansweredPollsList : "No polls left to answer :)"}
             </Accordion>
 
             <Accordion className="mt-4">
                 <Card>
                     <Card.Header>
                         <Accordion.Toggle eventKey="answered" className="builder-toggle">
-                            <h4 className="my-3">Answered</h4>
+                            <h5 className="my-2">Answered</h5>
                         </Accordion.Toggle>
                     </Card.Header>
                     <Accordion.Collapse eventKey="answered">
