@@ -1,19 +1,46 @@
 import '../../App.css';
 import Card from "react-bootstrap/Card";
 import Nav from "react-bootstrap/Nav";
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import AttendeeCommentWall from "./AttendeeCommentWall";
 import Tab from "react-bootstrap/Tab";
 import AttendeePolls from "./AttendeePolls";
 import Badge from "react-bootstrap/Badge";
-import { Link } from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import TitleLogo from "../Utils/TitleLogo";
 import Div100vh from "react-div-100vh";
+import ListGroup from "react-bootstrap/ListGroup";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import {RiThumbUpFill, RiThumbUpLine} from "react-icons/ri";
+import {useCookies} from "react-cookie";
 
 const Event = () => {
 
     const [unansweredPolls, setUnansweredPolls] = useState(0);
+    const [cookies, setCookies] = useCookies(['access_token']);
 
+    const [load, setLoad] = useState(false);
+
+    let history = useHistory();
+
+    useEffect(() => {
+        fetch('/attendee/comments', {
+            method: 'GET',
+            headers: {
+                "Authorization": "Bearer " + cookies['access_token'],
+            }
+        }).then((response) => {
+            if (response.status === 403) {
+                history.push('/');
+            }
+            else setLoad(true);
+        });
+        // eslint-disable-next-line
+    }, [])
+
+    if (load)
     return (
         <Div100vh>
             <div className="container">
@@ -50,6 +77,7 @@ const Event = () => {
                 </Card>
             </div>
         </Div100vh>
-    )
+    );
+    else return null;
 }
 export default Event;
