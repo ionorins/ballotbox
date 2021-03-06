@@ -7,6 +7,7 @@ import Host from "./Components/Host/Host";
 import Event from "./Components/Attendee/Event";
 import ControlPanel from "./Components/Host/Event/ControlPanel";
 import Qr from "./Components/Utils/Qr";
+import Error404 from "./Components/Utils/Error404";
 
 function App() {
     return (
@@ -30,9 +31,16 @@ function App() {
                 <Route path="/qr/:code">
                     <Qr />
                 </Route>
+                <Route exact path="/404">
+                    <Error404 />
+                </Route>
                 <Route exact path="/:code">
                     <Entry />
                 </Route>
+                <Route>
+                    <Error404 />
+                </Route>
+
             </Switch>
         </Router>
     )

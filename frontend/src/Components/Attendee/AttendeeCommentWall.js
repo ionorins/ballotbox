@@ -17,6 +17,7 @@ const AttendeeCommentWall = () => {
     // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token']);
     const [comments, setComments] = useState("");
+    const [show, setShow] = useState(false);
 
     function like(id) {
         fetch('/attendee/comment/like/' + id, {
@@ -107,7 +108,9 @@ const AttendeeCommentWall = () => {
         }).then((response) => response.json())
             .then((responseJson) => {
                 getComments()
+
             });
+        setShow(false);
         event.currentTarget.reset();
     };
 
@@ -140,8 +143,8 @@ const AttendeeCommentWall = () => {
                     </Form>
                 </Col>
                 <Col xs={2} md={1} className="pl-0">
-                    <OverlayTrigger trigger="click" placement="auto" overlay={aliasPopover}>
-                        <Button variant="light" className="p-2 mt-2"><FaUserEdit /></Button>
+                    <OverlayTrigger show={show} trigger="click" placement="auto" overlay={aliasPopover}>
+                        <Button variant="light" onClick={() => setShow(true)} className="p-2 mt-2"><FaUserEdit /></Button>
                     </OverlayTrigger>
                 </Col>
             </Row>

@@ -1,5 +1,5 @@
 import '../../App.css';
-import { FaPlay, FaPlus, FaTimes } from "react-icons/fa";
+import {FaPlay, FaPlus, FaRegCalendarAlt, FaTimes} from "react-icons/fa";
 import ListGroup from "react-bootstrap/ListGroup";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -51,10 +51,9 @@ const EventList = () => {
                             <Col>
                                 <Row className="text-left mx-1">
                                     {event.name}
-
                                 </Row>
                                 <Row className="text-left mx-1">
-                                    {event.code}
+                                    {new Date(event.timestamp).toDateString().substring(4)}<FaRegCalendarAlt  style={{color: "grey"}} className="mt-1 ml-1"/>
                                 </Row>
                             </Col>
                             <Col>
