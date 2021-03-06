@@ -27,7 +27,7 @@ const Signup = () => {
             return;
         }
         if (!regex.test(pass)) {
-            setPassValidated("Password requires 8 characters and at least 1 number")
+            setPassValidated("Password requires 8 characters including at least 1 number and at least 1 letter")
             return;
         }
         fetch('/auth/create', {

@@ -41,7 +41,6 @@ const AttendeeCommentWall = () => {
             }
         }).then((response) => response.json())
             .then((responseJson) => {
-                console.log(responseJson);
                 const commentList = responseJson.map((comment) =>
                     <ListGroup.Item>
                         <Row>

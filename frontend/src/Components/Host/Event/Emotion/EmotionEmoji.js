@@ -1,3 +1,7 @@
+import Tooltip from "react-bootstrap/Tooltip";
+import {OverlayTrigger} from "react-bootstrap";
+import React from "react";
+
 const EmotionEmoji = ({ type, size, toggleLine, toggled, handler }) => {
     let dimension = size * size * 250;
     if (size === 0 || size === null)
@@ -30,6 +34,17 @@ const EmotionEmoji = ({ type, size, toggleLine, toggled, handler }) => {
         alt = "😍";
         id = "1f60d";
     }
-    return <img onClick={handler} id={type} draggable="false" style={{ filter: "opacity(" + opc + ")", cursor: "pointer", height: dimension, width: dimension }} alt={alt} src={"https://twemoji.maxcdn.com/v/13.0.1/72x72/" + id + ".png"} />
+    return (
+        <OverlayTrigger
+            placement="auto-start"
+            delay={{ show: 300, hide: 400 }}
+            trigger={'hover'}
+            overlay={<Tooltip id="button-tooltip">
+                {type.charAt(0).toUpperCase() + type.slice(1)}
+            </Tooltip>}
+        >
+            <img onClick={handler} id={type} draggable="false" style={{ filter: "opacity(" + opc + ")", cursor: "pointer", height: dimension, width: dimension }} alt={alt} src={"https://twemoji.maxcdn.com/v/13.0.1/72x72/" + id + ".png"} />
+        </OverlayTrigger>
+    );
 }
 export default EmotionEmoji;

@@ -4,6 +4,8 @@ import EmotionEmoji from "./EmotionEmoji";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import {OverlayTrigger} from "react-bootstrap";
+import Tooltip from "react-bootstrap/Tooltip";
 
 const EmojiGrid = ({ selected, handler }) => {
     const [emojiSize, setEmojiSize] = useState([]);
