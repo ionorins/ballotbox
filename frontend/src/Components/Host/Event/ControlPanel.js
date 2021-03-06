@@ -29,6 +29,7 @@ const ControlPanel = () => {
     const [eventCode, setEventCode] = useState("Loading...");
     const [attendees, setAttendees] = useState(0);
     const [show, setShow] = useState(false);
+    const [load, setLoad] = useState(false);
     const target = useRef(null);
 
     let history = useHistory();
@@ -60,6 +61,7 @@ const ControlPanel = () => {
             response.json().then((responseJson) => {
                 setEventName(responseJson['name']);
                 setEventCode(responseJson['code']);
+                setLoad(true);
             });
         })
 
@@ -71,6 +73,7 @@ const ControlPanel = () => {
         // eslint-disable-next-line
     }, []);
 
+    if (load)
     return (
         <Div100vh>
             <div className="container">
@@ -153,5 +156,6 @@ const ControlPanel = () => {
         </Div100vh>
 
     );
+    else return null;
 }
 export default ControlPanel;

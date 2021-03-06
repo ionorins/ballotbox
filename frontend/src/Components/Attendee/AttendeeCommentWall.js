@@ -144,7 +144,7 @@ const AttendeeCommentWall = () => {
                 </Col>
                 <Col xs={2} md={1} className="pl-0">
                     <OverlayTrigger show={show} trigger="click" placement="auto" overlay={aliasPopover}>
-                        <Button variant="light" onClick={() => setShow(true)} className="p-2 mt-2"><FaUserEdit /></Button>
+                        <Button variant="light" onClick={() => setShow(!show)} className="p-2 mt-2"><FaUserEdit /></Button>
                     </OverlayTrigger>
                 </Col>
             </Row>
