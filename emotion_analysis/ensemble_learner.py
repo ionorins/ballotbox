@@ -21,7 +21,9 @@ class EnsembleLearner:
                  '💙', '😬', '✨']
 
         dist = np.array([text.count(emoji[i]) for i in range(len(emoji))])
-        dist = dist / sum(dist)
+        if sum(dist) > 0:
+            dist = dist / sum(dist)
+        print(dist)
         text = text.encode('ascii', 'ignore').decode()
 
         return text, dist
