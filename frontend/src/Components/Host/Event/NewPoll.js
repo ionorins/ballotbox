@@ -34,4 +34,3 @@ const NewPoll = ({ show, setShow, getPolls }) => {
 }
 export default NewPoll;
 
-export const ShowContext = React.createContext('');

@@ -244,3 +244,17 @@
 .title-logo-small {
     height: 5vh;
 }
+.help-button, .help-button:focus {
+    background-color: darkgrey;
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    box-shadow: none;
+}
+.help-button:hover, .help-button:active {
+    background-color: grey !important;
+    outline: none;
+    border: none;
+    border-radius: 50%;
+    box-shadow: none !important;
+}

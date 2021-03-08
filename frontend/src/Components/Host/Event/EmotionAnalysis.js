@@ -4,9 +4,10 @@ import PolarityLineChart from "./Emotion/PolarityLineChart";
 import ListGroup from "react-bootstrap/ListGroup";
 import Form from "react-bootstrap/Form";
 import EmojiGrid from "./Emotion/EmojiGrid";
-import { Carousel } from "react-bootstrap";
+import {Carousel, OverlayTrigger, Popover} from "react-bootstrap";
 import { NextIcon, PrevIcon } from "../../Utils/CarouselIcons";
 import MoodLineChart from "./Emotion/MoodLineChart";
+import Button from "react-bootstrap/Button";
 
 const EmotionAnalysis = () => {
 
@@ -30,6 +31,32 @@ const EmotionAnalysis = () => {
         setEmojiChart(<MoodLineChart mood={selectedEmoji} interval={event.target.value} />)
     }
 
+    const polarityPopover = () => {
+        return (
+            <Popover id="popover-basic">
+                <Popover.Content>
+                    <strong>Polarity</strong> is a numerical representation of the overall current mood in the event.
+                    Positive is good, negative is bad.
+                </Popover.Content>
+            </Popover>
+        );
+
+    }
+
+    const moodPopover = () => {
+        return (
+            <Popover id="popover-basic">
+                <Popover.Content>
+                    A numerical representation of  the level of <strong>{selectedEmoji}</strong> in the event over time
+
+
+
+                </Popover.Content>
+            </Popover>
+        );
+
+    }
+
 
     return (
         <div>
@@ -44,7 +71,7 @@ const EmotionAnalysis = () => {
                                 onChange={handleIntervalChange}
                                 defaultValue="Select interval"
                             >
-                                <option>Select interval</option>
+                                <option>Select data interval</option>
                                 <option value="1">1 minute</option>
                                 <option value="2">2 minutes</option>
                                 <option value="5">5 minutes</option>
@@ -57,12 +84,18 @@ const EmotionAnalysis = () => {
                         <Carousel.Item className="">
                             <div className="chart-container ">
                                 Polarity by minutes passed
+                                <OverlayTrigger trigger="hover" placement="bottom" overlay={polarityPopover()}>
+                                    <Button variant="success" className="help-button px-2 py-0 ml-2 mb-1">?</Button>
+                                </OverlayTrigger>
                                 {polarityChart}
                             </div>
                         </Carousel.Item>
                         <Carousel.Item>
                             <div className="chart-container">
                                 {selectedEmoji.charAt(0).toUpperCase() + selectedEmoji.slice(1)} by minutes passed
+                                <OverlayTrigger trigger="hover" placement="bottom" overlay={moodPopover()}>
+                                    <Button variant="success" className="help-button px-2 py-0 ml-2 mb-1">?</Button>
+                                </OverlayTrigger>
                                 {emojiChart}
                             </div>
                         </Carousel.Item>
