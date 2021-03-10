@@ -6,9 +6,15 @@ import { useState } from "react";
 import { useCookies } from "react-cookie";
 import { useParams } from "react-router-dom";
 
-
+/**
+ * Multiple choice text poll creator used in polls component
+ *
+ * @param setShow - modal state passdown
+ * @returns poll creation form
+ */
 const FreeText = ({ setShow }) => {
 
+    // Start state with 2 options
     const [optionForm, setOptionForm] = useState(
         <div>
             <InputGroup className="my-4" size="sm">
@@ -23,16 +29,22 @@ const FreeText = ({ setShow }) => {
     const [cookies, setCookies] = useCookies(['access_token']);
     let { id } = useParams();
 
+    /**
+     * Handles submission of form, aka poll creation
+     * @param event submission
+     */
     const handleSubmit = (event) => {
         const prompt = event.target[0].value;
         let choices = [];
         let i;
+        // Add all options to form data
         for (i = 1; i < event.target.length; i++) {
             if (event.target[i].value !== "")
                 choices.push(event.target[i].value);
         }
         event.preventDefault();
         event.stopPropagation();
+        // Link to poll creation endpoint
         fetch('/host/event/' + id + "/poll", {
             method: 'POST',
             headers: {
@@ -54,6 +66,9 @@ const FreeText = ({ setShow }) => {
 
     const [optionsList, setOptionsList] = useState([1, 2]);
 
+    /**
+     * Increments the displayed number of choices the creator can add
+     */
     const incrementOptions = () => {
         optionsList.push(optionsList[optionsList.length - 1] + 1);
         setOptionsList(optionsList);

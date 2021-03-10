@@ -13,6 +13,12 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
+/**
+ * ReCharts line chart for overall polarity over time
+ *
+ * @param interval - data interval
+ * @returns responsive line chart showing polarity value over time
+ */
 const PolarityLineChart = ({ interval }) => {
 
     let { id } = useParams();
@@ -21,7 +27,11 @@ const PolarityLineChart = ({ interval }) => {
     // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token'])
 
+    /**
+     * Get polarity values from API
+     */
     async function getValues() {
+        // Link to polarity endpoint
         fetch('/host/event/' + id + "/mood/polarity?interval=" + interval, {
             method: 'GET',
             headers: {
@@ -34,7 +44,9 @@ const PolarityLineChart = ({ interval }) => {
 
     }
 
-
+    /**
+     * Sets timeout on getValues to 3000ms on mount, closing on unmount
+     */
     useEffect(() => {
         getValues();
         const timeoutID = setInterval(() => {
@@ -62,6 +74,11 @@ const PolarityLineChart = ({ interval }) => {
 
 }
 
+/**
+ * Formats chart's tooltip labels
+ * @param e - value
+ * @returns {string} - Formatted value
+ */
 export const labelFormatter = (e) => {
     return Math.round(e) + " minutes passed"
 }

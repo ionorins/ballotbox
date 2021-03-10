@@ -11,17 +11,28 @@ import TitleLogo from "../Utils/TitleLogo";
 import { useParams } from "react-router-dom";
 import Div100vh from "react-div-100vh";
 
+/**
+ * Component that is shown on the root of the application, where attendees can join events
+ *
+ * @returns event entry page
+ */
 const Entry = () => {
 
+    // routing
     const history = useHistory();
 
     // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token']);
     const [validated, setValidated] = useState(<></>);
 
+    /**
+     * Deals with submission of event code into form, if valid code then joins event.
+     * @param event submission
+     */
     const handleSubmit = (event) => {
         const roomCode = event.target[0].value;
 
+        // communicate with attendee endpoint
         fetch('/attendee/login/' + roomCode, {
             method: 'POST',
             body: "",
@@ -44,6 +55,7 @@ const Entry = () => {
 
     };
 
+    // code from url, for QR code linkage
     let { code } = useParams();
 
     return (

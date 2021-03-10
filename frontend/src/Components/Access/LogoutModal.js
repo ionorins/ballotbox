@@ -6,7 +6,13 @@ import Modal from "react-bootstrap/Modal";
 import { useCookies } from "react-cookie";
 import { useHistory } from "react-router-dom";
 
-
+/**
+ * Component confirming and handling host logout
+ * @param show - state pass down from logout button
+ * @param setShow - "    "
+ *
+ * @returns a modal confirming logout
+ */
 const LogoutModal = ({ show, setShow }) => {
 
     // eslint-disable-next-line no-unused-vars
@@ -14,7 +20,11 @@ const LogoutModal = ({ show, setShow }) => {
 
     let history = useHistory();
 
-    const handleSubmit = (event) => {
+    /**
+     * Handles submission of logout
+     */
+    const handleSubmit = () => {
+        // link to logout endpoint
         fetch('/auth/logout', {
             method: 'POST',
             headers: {

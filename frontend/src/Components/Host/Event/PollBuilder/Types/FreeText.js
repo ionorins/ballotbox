@@ -5,18 +5,27 @@ import Button from "react-bootstrap/Button";
 import { useCookies } from "react-cookie";
 import { useParams } from "react-router-dom";
 
-
+/**
+ * Text input based poll creator used in polls component
+ *
+ * @param setShow - modal state passdown
+ * @returns poll creation form
+ */
 const FreeText = ({ setShow }) => {
 
     let { id } = useParams();
     // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token']);
 
-
+    /**
+     * Handles submission of form, aka poll creation
+     * @param event submission
+     */
     const handleSubmit = (event) => {
         const prompt = event.target[0].value;
         event.preventDefault();
         event.stopPropagation();
+        // link to poll creation endpoint
         fetch('/host/event/' + id + "/poll", {
             method: 'POST',
             headers: {

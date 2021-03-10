@@ -10,6 +10,13 @@ import 'react-bootstrap-range-slider/dist/react-bootstrap-range-slider.css';
 import { useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
+/**
+ * Mood slider based poll creator used in polls component,
+ * uses react-bootstrap-range-slider module
+ *
+ * @param setShow - modal state passdown
+ * @returns poll creation form
+ */
 const MoodSlider = ({ setShow }) => {
 
     const [value, setValue] = useState(0);
@@ -18,10 +25,15 @@ const MoodSlider = ({ setShow }) => {
     // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token']);
 
+    /**
+     * Handles submission of form, aka poll creation
+     * @param event submission
+     */
     const handleSubmit = (event) => {
         const prompt = event.target[0].value;
         event.preventDefault();
         event.stopPropagation();
+        // link to poll creation endpoint
         fetch('/host/event/' + id + "/poll", {
             method: 'POST',
             headers: {
@@ -39,8 +51,6 @@ const MoodSlider = ({ setShow }) => {
             });
         event.currentTarget.reset();
     };
-
-
 
 
     return (
@@ -74,6 +84,11 @@ const MoodSlider = ({ setShow }) => {
 }
 export default MoodSlider;
 
+/**
+ * Tooltip labeller for range slider, maps emoji to values
+ * @param value
+ * @returns emoji
+ */
 export function tooltipLabeller(value){
     if (value < 10)
         return "😭";

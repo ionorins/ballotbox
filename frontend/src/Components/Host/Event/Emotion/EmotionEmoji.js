@@ -2,8 +2,18 @@ import Tooltip from "react-bootstrap/Tooltip";
 import {OverlayTrigger} from "react-bootstrap";
 import React from "react";
 
-const EmotionEmoji = ({ type, size, toggleLine, toggled, handler }) => {
+/**
+ * Size variable emoji button for graph control
+ *
+ * @param type - which emoji
+ * @param size - current emoji value
+ * @param toggled - currently toggled bool
+ * @param handler - toggle handler passdown
+ * @returns specific size emoji button
+ */
+const EmotionEmoji = ({ type, size, toggled, handler }) => {
     let dimension = size * size * 250;
+    // No data or mood is 0
     if (size === 0 || size === null)
         dimension = 40;
     let opc, alt, id;

@@ -4,7 +4,10 @@ import QRCode from "qrcode.react";
 import Div100vh from "react-div-100vh";
 import '../../App.css';
 
-
+/**
+ * Generates and displays a QR code for a specific event from code in URL
+ * uses qrcode module
+ */
 const Qr = () => {
     let { code } = useParams();
     return (

@@ -7,6 +7,11 @@ import { useCookies } from "react-cookie";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 
+/**
+ * Signup form inside Access component
+ *
+ * @returns signup form
+ */
 const Signup = () => {
 
     // eslint-disable-next-line no-unused-vars
@@ -15,10 +20,15 @@ const Signup = () => {
     const [passValidated, setPassValidated] = useState("");
     let history = useHistory();
 
+    /**
+     * Handles and verifies submission of signup0 form
+     * @param event submission
+     */
     const handleSubmit = (event) => {
         const email = event.target[0].value;
         const pass = event.target[1].value;
         const conf_pass = event.target[2].value;
+        // password regex
         const regex = new RegExp("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$")
         event.preventDefault();
         event.stopPropagation();
@@ -30,6 +40,7 @@ const Signup = () => {
             setPassValidated("Password requires 8 characters including at least 1 number and at least 1 letter")
             return;
         }
+        // link to signup endpoint
         fetch('/auth/create', {
             method: 'POST',
             body: JSON.stringify({

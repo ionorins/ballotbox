@@ -12,16 +12,15 @@ import Accordion from "react-bootstrap/Accordion";
 import { ImBubble } from "react-icons/im";
 import { FaTheaterMasks } from "react-icons/fa";
 import { MdFormatListBulleted } from "react-icons/md";
-import {tooltipLabeller} from "./FormBuilder/Types/MoodSlider";
+import {tooltipLabeller} from "./PollBuilder/Types/MoodSlider";
 
-export const getIcon = (type) => {
-    if (type === "freeText")
-        return <ImBubble className="mb-1 mx-1" />;
-    else if (type === "multipleChoice")
-        return <MdFormatListBulleted className="mx-1 mb-1" />;
-    else return <FaTheaterMasks className="mx-1 mb-1" />;
-}
-
+/**
+ * Polls component for ControlPanel, allowing poll creation
+ * dependent on NewPoll
+ *
+ * @param attendees - number of attendees to check who has answered
+ * @returns Accordion of polls, new poll creator
+ */
 const Polls = ({ attendees }) => {
 
 
@@ -32,8 +31,11 @@ const Polls = ({ attendees }) => {
     const [show, setShow] = useState(false);
     const [or, setOr] = useState("");
 
+    /**
+     * Gets polls from API
+     */
     async function getPolls() {
-        console.log("TEST")
+        // Link to polls endpoint
         fetch('/host/event/' + id + '/polls', {
             method: 'GET',
             headers: {
@@ -48,6 +50,9 @@ const Polls = ({ attendees }) => {
             });
     }
 
+    /**
+     * Sets refresh on polls to 3000ms on mount, closing on unmount
+     */
     useEffect(() => {
         getPolls();
         const timeoutID = setInterval(() => {
@@ -114,5 +119,19 @@ const Polls = ({ attendees }) => {
 
     );
 }
+
+/**
+ * Gets corresponding icon for poll type
+ * @param type of poll
+ * @returns question icon
+ */
+export const getIcon = (type) => {
+    if (type === "freeText")
+        return <ImBubble className="mb-1 mx-1" />;
+    else if (type === "multipleChoice")
+        return <MdFormatListBulleted className="mx-1 mb-1" />;
+    else return <FaTheaterMasks className="mx-1 mb-1" />;
+}
+
 export default Polls;
 

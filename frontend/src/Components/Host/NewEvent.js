@@ -6,19 +6,28 @@ import React from "react";
 import Modal from "react-bootstrap/Modal";
 import { useCookies } from "react-cookie";
 
-
+/**
+ * Event creation modal
+ * @param show - state passdown
+ * @param setShow - "  "
+ * @param getEvents - function passdown for event refresh
+ * @returns event creation modal
+ */
 const NewEvent = ({ show, setShow, getEvents }) => {
 
     // eslint-disable-next-line no-unused-vars
     const [cookies, setCookie] = useCookies(['access_token']);
 
-
+    /**
+     * Handle submission of new event
+     * @param event
+     */
     const handleSubmit = (event) => {
         const name = event.target[0].value;
         const date = new Date(event.target[1].value).getTime();
         event.preventDefault();
         event.stopPropagation();
-        console.log(new Date().toISOString().split('T')[0].substr(4));
+        // Link to new event endpoint
         fetch('/host/event', {
             method: 'POST',
             headers: {

@@ -1,11 +1,11 @@
-import {Link, useParams} from "react-router-dom";
 import React from "react";
-import QRCode from "qrcode.react";
 import Div100vh from "react-div-100vh";
 import {Spinner} from "react-bootstrap";
 import '../../App.css';
 
-
+/**
+ * Loading screen for app fallback
+ */
 const Loading = () => {
     return (
         <Div100vh>

@@ -4,7 +4,9 @@ import QRCode from "qrcode.react";
 import Div100vh from "react-div-100vh";
 import '../../App.css';
 
-
+/**
+ * 404 page
+ */
 const Error404 = () => {
     return (
         <Div100vh>

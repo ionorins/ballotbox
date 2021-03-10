@@ -6,7 +6,13 @@ import { useCookies } from "react-cookie";
 import PollForm from "./PollForm";
 import { getIcon } from "../Host/Event/Polls";
 
-
+/**
+ * Gets submitted polls for attendee to answer
+ * dependent on PollForm
+ *
+ * @param setUnansweredPolls - state passdown
+ * @returns accordions of polls
+ */
 const AttendeePolls = ({ setUnansweredPolls }) => {
 
     // eslint-disable-next-line no-unused-vars
@@ -14,10 +20,15 @@ const AttendeePolls = ({ setUnansweredPolls }) => {
     const [unansweredPollsList, setUnansweredPollsList] = useState(<></>);
     const [answeredPollsList, setAnsweredPollsList] = useState(<></>);
 
+    /**
+     * Gets all polls from API, answered and unanswered
+     * @returns {Promise<void>}
+     */
     async function getPolls() {
         let answered = [];
         let unanswered = [];
         let i;
+        // Link to polls endpoint
         fetch('/attendee/polls', {
             method: 'GET',
             headers: {
@@ -58,6 +69,9 @@ const AttendeePolls = ({ setUnansweredPolls }) => {
             });
     }
 
+    /**
+     * Sets refresh on getPolls to 3000ms on component mount, closing on unmount
+     */
     useEffect(() => {
         getPolls();
         const timeoutID = setInterval(() => {

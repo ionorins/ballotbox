@@ -9,22 +9,26 @@ import Badge from "react-bootstrap/Badge";
 import {Link, useHistory} from "react-router-dom";
 import TitleLogo from "../Utils/TitleLogo";
 import Div100vh from "react-div-100vh";
-import ListGroup from "react-bootstrap/ListGroup";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import {RiThumbUpFill, RiThumbUpLine} from "react-icons/ri";
 import {useCookies} from "react-cookie";
 
+/**
+ * Event macro component, dependent on AttendeeCommentWall, AttendeePolls
+ * @returns the entire event view for attendees
+ * @constructor
+ */
 const Event = () => {
 
     const [unansweredPolls, setUnansweredPolls] = useState(0);
+    // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token']);
 
     const [load, setLoad] = useState(false);
 
     let history = useHistory();
 
+    /**
+     * Check if user is authorised for event, otherwise send back to home page
+     */
     useEffect(() => {
         fetch('/attendee/comments', {
             method: 'GET',

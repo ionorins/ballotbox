@@ -4,9 +4,14 @@ import EmotionEmoji from "./EmotionEmoji";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import {OverlayTrigger} from "react-bootstrap";
-import Tooltip from "react-bootstrap/Tooltip";
 
+/**
+ * Layout grid for individual emojis, used in EmotionAnalysis component
+ *
+ * @param selected - state passdown of selected emoji
+ * @param handler - state passdown of selection handler
+ * @returns 3x3 grid of 5 emojis
+ */
 const EmojiGrid = ({ selected, handler }) => {
     const [emojiSize, setEmojiSize] = useState([]);
 
@@ -16,6 +21,9 @@ const EmojiGrid = ({ selected, handler }) => {
 
     let { id } = useParams();
 
+    /**
+     * Get current mood values from API
+     */
     async function getCurrent() {
         fetch('/host/event/' + id + "/currentmood", {
             method: 'GET',
@@ -29,6 +37,9 @@ const EmojiGrid = ({ selected, handler }) => {
             });
     }
 
+    /**
+     * On component mount sets timeout for getCurrent to 3000ms, closing on unmount
+     */
     useEffect(() => {
         getCurrent();
         const timeoutID = setInterval(() => {

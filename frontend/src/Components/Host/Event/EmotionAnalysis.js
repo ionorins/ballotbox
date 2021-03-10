@@ -9,6 +9,12 @@ import { NextIcon, PrevIcon } from "../../Utils/CarouselIcons";
 import MoodLineChart from "./Emotion/MoodLineChart";
 import Button from "react-bootstrap/Button";
 
+/**
+ * Emotion analysis component containing all machine-learning content
+ * dependent on everything in ./Emotion
+ * @returns {JSX.Element}
+ * @constructor
+ */
 const EmotionAnalysis = () => {
 
     // eslint-disable-next-line no-unused-vars
@@ -18,11 +24,19 @@ const EmotionAnalysis = () => {
     const [emojiChart, setEmojiChart] = useState(<MoodLineChart mood={selectedEmoji} interval={intervalValue} />);
     const [polarityChart, setPolarityChart] = useState(<PolarityLineChart interval={intervalValue} />);
 
+    /**
+     * Handles toggle of emoji in grid
+     * @param event submission
+     */
     const handleEmojiClick = (event) => {
         setSelectedEmoji(event.target.id);
         setEmojiChart(<MoodLineChart mood={event.target.id} interval={intervalValue} />)
     }
 
+    /**
+     * Handles change in interval selection
+     * @param event submission
+     */
     const handleIntervalChange = (event) => {
         if (event.target.value === "Select interval")
             return;
@@ -31,6 +45,7 @@ const EmotionAnalysis = () => {
         setEmojiChart(<MoodLineChart mood={selectedEmoji} interval={event.target.value} />)
     }
 
+    // Popover element for polarity chart tooltip
     const polarityPopover = () => {
         return (
             <Popover id="popover-basic">
@@ -43,18 +58,15 @@ const EmotionAnalysis = () => {
 
     }
 
+    // Popover element for mood chart tooltip
     const moodPopover = () => {
         return (
             <Popover id="popover-basic">
                 <Popover.Content>
                     A numerical representation of  the level of <strong>{selectedEmoji}</strong> in the event over time
-
-
-
                 </Popover.Content>
             </Popover>
         );
-
     }
 
 

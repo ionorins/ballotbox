@@ -4,38 +4,26 @@ import Button from "react-bootstrap/Button";
 import { useCookies } from "react-cookie";
 import RangeSlider from "react-bootstrap-range-slider";
 import React, { useState } from "react";
+import {tooltipLabeller} from "../Host/Event/PollBuilder/Types/MoodSlider";
 
-
+/**
+ * Submission form for individual polls
+ *
+ * @param poll - to be answered
+ * @param getPolls - getPolls function passdown to refresh polls after answering
+ * @returns form to submit for poll
+ */
 const PollForm = ({ poll, getPolls }) => {
 
     // eslint-disable-next-line no-unused-vars
     const [cookies, setCookies] = useCookies(['access_token']);
     const [value, setValue] = useState(0);
 
-    function tooltipLabeller() {
-        console.log(value)
-        if (value < 10)
-            return "😭";
-        if (value < 20)
-            return "😢";
-        if (value < 30)
-            return "☹️";
-        if (value < 40)
-            return "🙁";
-        if (value < 50)
-            return "😕";
-        if (value < 60)
-            return "😐";
-        if (value < 70)
-            return "🙂";
-        if (value < 80)
-            return "😀";
-        if (value < 90)
-            return "😁";
-        if (value < 101)
-            return "😍";
-    }
-
+    /**
+     * Collects attendee answers pre-submission
+     * @param event submission
+     * @returns answers
+     */
     const getAnswer = (event) => {
         let answers = [];
         if (poll.content.type === "multipleChoice") {
@@ -49,7 +37,12 @@ const PollForm = ({ poll, getPolls }) => {
         else return event.target[0].value;
     }
 
+    /**
+     * Handles submission of answer to poll
+     * @param event
+     */
     const handleSubmit = (event) => {
+        // Link to poll answer endpoint
         fetch('/attendee/poll/' + poll.id + '/answer', {
             method: 'POST',
             headers: {
@@ -70,6 +63,9 @@ const PollForm = ({ poll, getPolls }) => {
 
     }
 
+    /**
+     * @returns correct form dependent on poll type
+     */
     const formBody = () => {
         if (poll.content.type === "freeText") {
             return (<Form.Control as="textarea" placeholder="Write your answer here..." />)

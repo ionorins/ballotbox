@@ -19,7 +19,12 @@ import Col from "react-bootstrap/Col";
 import Logout from "../../Access/Logout";
 import Div100vh from "react-div-100vh";
 
-
+/**
+ * Macro component for host view of the event
+ * dependent on CommentWall, EmotionAnalysis and Polls
+ *
+ * @returns host event view
+ */
 const ControlPanel = () => {
     let { id } = useParams();
 
@@ -34,6 +39,9 @@ const ControlPanel = () => {
 
     let history = useHistory();
 
+    /**
+     * Sets current number of attendees in the event
+     */
     async function getAttendees() {
         fetch('/host/event/' + id + "/attendees", {
             method: 'GET',
@@ -47,7 +55,11 @@ const ControlPanel = () => {
     }
 
 
+    /**
+     * Checks host authorisation to view event, sets refresh on getAttendees to 3000ms on mount, closing on unmount
+     */
     useEffect(() => {
+        // Link to event endpoint
         fetch('/host/event/' + id, {
             method: 'GET',
             headers: {

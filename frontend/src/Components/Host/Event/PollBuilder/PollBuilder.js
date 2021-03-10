@@ -9,7 +9,14 @@ import { ImBubble } from "react-icons/im";
 import { FaTheaterMasks } from "react-icons/fa";
 import { MdFormatListBulleted } from "react-icons/md";
 
-const FormBuilder = ({ setShow }) => {
+/**
+ * Poll creation wrapper for all poll types
+ * depends on all components in ./Types
+ *
+ * @param setShow - modal state passdown
+ * @returns accordion of poll creation forms
+ */
+const PollBuilder = ({ setShow }) => {
 
     return (
         <Accordion className="text-center">
@@ -46,4 +53,4 @@ const FormBuilder = ({ setShow }) => {
         </Accordion>
     )
 }
-export default FormBuilder;
+export default PollBuilder;

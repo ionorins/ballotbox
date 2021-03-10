@@ -10,7 +10,12 @@ import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { RiThumbUpFill, RiThumbUpLine } from "react-icons/ri";
 
-
+/**
+ * Comment wall component for Host
+ *
+ * @returns live-updating comment wall
+ * @constructor
+ */
 const CommentWall = () => {
 
     let { id } = useParams();
@@ -18,7 +23,12 @@ const CommentWall = () => {
     const [cookies, setCookies] = useCookies(['access_token']);
     const [comments, setComments] = useState(<></>);
 
+    /**
+     * Handles comment liking
+     * @param commentId to like
+     */
     const like = (commentId) => {
+        // link to comment endpoint
         fetch('/host/event/' + id + '/comment/like/' + commentId, {
             method: 'POST',
             headers: {
@@ -30,7 +40,11 @@ const CommentWall = () => {
             });
     }
 
+    /**
+     * Gets all comments posted in the event
+     */
     async function getComments() {
+        // Link to comment endpoint
         fetch('/host/event/' + id + "/comments", {
             method: 'GET',
             headers: {
@@ -40,6 +54,7 @@ const CommentWall = () => {
             if (response.status !== 200) {
                 return;
             }
+            // Map comments to jsx
             response.json().then((responseJson) => {
                 const commentList = responseJson.map((comment) =>
                     <ListGroup.Item>
@@ -67,6 +82,9 @@ const CommentWall = () => {
 
     }
 
+    /**
+     * Sets refresh on getComments to 3000ms interval on mount, closing on unmount
+     */
     useEffect(() => {
         getComments();
         const timeoutID = setInterval(() => {
@@ -76,11 +94,15 @@ const CommentWall = () => {
         // eslint-disable-next-line
     }, [])
 
-
+    /**
+     * Handles submission of comment to wall
+     * @param event submission
+     */
     const handleSubmit = (event) => {
         const message = event.target[0].value;
         event.preventDefault();
         event.stopPropagation();
+        // Link to comment post endpoint
         fetch('/host/event/' + id + "/comment", {
             method: 'POST',
             headers: {

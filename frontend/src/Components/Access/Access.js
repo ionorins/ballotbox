@@ -12,8 +12,15 @@ import Button from "react-bootstrap/Button";
 import TitleLogo from "../Utils/TitleLogo";
 import Div100vh from "react-div-100vh";
 
+/**
+ * Component controlling the login/signup flows, in other words access to host functionality
+ * depends on Login and Signup
+ *
+ * @returns login/signup page
+ */
 const Access = () => {
 
+    // Used for back button
     let history = useHistory();
 
     return (

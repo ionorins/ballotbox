@@ -10,7 +10,11 @@ import NewEvent from "./NewEvent";
 import DeleteEvent from "./DeleteEvent";
 import { useCookies } from "react-cookie";
 
-
+/**
+ * Event list component for Host showing list of all events
+ * dependent on NewEvent
+ * @returns list of events
+ */
 const EventList = () => {
 
     let history = useHistory();
@@ -24,17 +28,30 @@ const EventList = () => {
 
     const [deleteModal, setDeleteModal] = useState(<DeleteEvent getEvents={getEvents}/>);
 
+    /**
+     * Pick an event to go into
+     * @param eventId
+     */
     const selectEvent = (eventId) => {
         console.log(eventId);
         history.push("/host/event/" + eventId);
     }
 
-
+    /**
+     * Handle deletion of event by showing modal
+     * @param code - event code
+     * @param name - event name
+     * @param timestamp - event timestamp
+     */
     function handleDelete(code, name, timestamp) {
         setDeleteModal(<DeleteEvent showDelete={true} setShowDelete={setDeleteModal} code={code} name={name} timestamp={timestamp} getEvents={getEvents}/>);
     }
 
+    /**
+     * Get hosts events from API
+     */
     async function getEvents() {
+        // Link to events endpoint
         fetch('/host/events', {
             method: 'GET',
             headers: {
@@ -43,6 +60,7 @@ const EventList = () => {
         }).then((response) => {
             if (response.status !== 200)
                 return;
+            // Map events to jsx
             response.json().then((responseJson) => {
                 console.log(responseJson);
                 const eventMap = responseJson.filter((event) => event.active).map((event) =>
@@ -74,6 +92,9 @@ const EventList = () => {
         })
     }
 
+    /**
+     * Show events on mount
+     */
     useEffect(() => {
         getEvents();
         // eslint-disable-next-line

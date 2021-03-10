@@ -11,7 +11,12 @@ import { RiThumbUpFill, RiThumbUpLine } from "react-icons/ri";
 import { OverlayTrigger, Popover } from "react-bootstrap";
 import { FaUserEdit } from "react-icons/fa";
 
-
+/**
+ * Comment wall component for Event macrocomponent
+ *
+ * @returns a live updating comment wall
+ * @constructor
+ */
 const AttendeeCommentWall = () => {
 
     // eslint-disable-next-line no-unused-vars
@@ -19,7 +24,12 @@ const AttendeeCommentWall = () => {
     const [comments, setComments] = useState("");
     const [show, setShow] = useState(false);
 
+    /**
+     * Handles comment liking
+     * @param id of comment to be liked
+     */
     function like(id) {
+        // Link to comment like endpoint
         fetch('/attendee/comment/like/' + id, {
             method: 'POST',
             headers: {
@@ -33,7 +43,11 @@ const AttendeeCommentWall = () => {
 
     }
 
+    /**
+     * Gets all comments posted in the event
+     */
     async function getComments() {
+        // Link to comments endpoint
         fetch('/attendee/comments', {
             method: 'GET',
             headers: {
@@ -41,6 +55,7 @@ const AttendeeCommentWall = () => {
             }
         }).then((response) => response.json())
             .then((responseJson) => {
+                // map comments to jsx
                 const commentList = responseJson.map((comment) =>
                     <ListGroup.Item>
                         <Row>
@@ -65,7 +80,9 @@ const AttendeeCommentWall = () => {
             });
     }
 
-
+    /**
+     * Sets refresh on getComments to 3000ms on mount, close on unmount
+     */
     useEffect(() => {
         getComments();
         const timeoutID = setInterval(() => {
@@ -75,11 +92,15 @@ const AttendeeCommentWall = () => {
         // eslint-disable-next-line
     }, [])
 
-
+    /**
+     * Handles submission of a comment to the wall
+     * @param event submission
+     */
     const handleSubmit = (event) => {
         const message = event.target[0].value;
         event.preventDefault();
         event.stopPropagation();
+        // Link to comment post endpoint
         fetch('/attendee/comment', {
             method: 'POST',
             headers: {
@@ -95,10 +116,15 @@ const AttendeeCommentWall = () => {
         event.currentTarget.reset();
     };
 
+    /**
+     * Handles attendee alias change
+     * @param event submission
+     */
     const handleAliasChange = (event) => {
         const alias = event.target[0].value;
         event.preventDefault();
         event.stopPropagation();
+        // Link to alias change endpoint
         fetch('/attendee/alias/' + alias, {
             method: 'POST',
             headers: {
@@ -113,6 +139,7 @@ const AttendeeCommentWall = () => {
         event.currentTarget.reset();
     };
 
+    // Popover element for alias change button
     const aliasPopover = (
         <Popover id="popover-basic">
             <Popover.Title as="h3">Set a name</Popover.Title>

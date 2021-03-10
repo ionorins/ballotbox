@@ -6,6 +6,11 @@ import { useCookies } from "react-cookie";
 import LogoutModal from "./LogoutModal";
 import { useState } from "react";
 
+/**
+ * Logout button, wrapper for LogoutModal
+ *
+ * @returns logout button
+ */
 const Logout = () => {
 
     // eslint-disable-next-line no-unused-vars

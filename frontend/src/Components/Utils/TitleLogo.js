@@ -1,3 +1,7 @@
+/**
+ * Title logo
+ * @param size of image
+ */
 const TitleLogo = ({ size }) => {
     return (
         <img draggable="false" className={"mb-3 title-logo" + size} alt="🗳️"

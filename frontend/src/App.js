@@ -1,12 +1,14 @@
 import React , {lazy, Suspense} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
-import Qr from "./Components/Utils/Qr";
-import Error404 from "./Components/Utils/Error404";
 import Loading from "./Components/Utils/Loading";
 
+/**
+ * Main application switchboard for all routes and macro components
+ */
 function App() {
 
+    // lazy's
     const Entry = lazy(() => import('./Components/Access/Entry'));
     const Access = lazy(() => import('./Components/Access/Access'));
     const ControlPanel = lazy(() => import('./Components/Host/Event/ControlPanel'));

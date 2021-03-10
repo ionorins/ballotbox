@@ -7,6 +7,12 @@ import { useHistory } from "react-router-dom";
 import { useCookies, withCookies } from "react-cookie";
 import { useState } from "react";
 
+/**
+ * Component containing the host login form inside the Access component
+ *
+ * @returns login form
+ *
+ */
 const Login = () => {
     let history = useHistory();
 
@@ -14,6 +20,10 @@ const Login = () => {
     const [cookies, setCookie] = useCookies(['access_token']);
     const [validated, setValidated] = useState("");
 
+    /**
+     * Deals with login form submissions
+     * @param event submission
+     */
     const handleSubmit = (event) => {
         const email = event.target[0].value;
         const pass = event.target[1].value;
@@ -22,6 +32,8 @@ const Login = () => {
         form.append("password", pass);
         event.preventDefault();
         event.stopPropagation();
+
+        // link to host login endpoint
         fetch('/auth/login', {
             method: 'POST',
             body: form,
