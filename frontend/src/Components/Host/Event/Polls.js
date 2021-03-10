@@ -43,7 +43,6 @@ const Polls = ({ attendees }) => {
             }
         }).then((response) => response.json())
             .then((responseJson) => {
-                console.log(responseJson);
                 if (responseJson.length > 0)
                     setOr("or");
                 setPollsList(responseJson);

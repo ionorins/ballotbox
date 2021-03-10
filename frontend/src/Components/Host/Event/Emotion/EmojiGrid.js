@@ -32,7 +32,6 @@ const EmojiGrid = ({ selected, handler }) => {
             },
         }).then((response) => response.json())
             .then((responseJson) => {
-                console.log(responseJson);
                 setEmojiSize(responseJson);
             });
     }

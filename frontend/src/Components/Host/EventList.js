@@ -33,7 +33,6 @@ const EventList = () => {
      * @param eventId
      */
     const selectEvent = (eventId) => {
-        console.log(eventId);
         history.push("/host/event/" + eventId);
     }
 
@@ -62,7 +61,6 @@ const EventList = () => {
                 return;
             // Map events to jsx
             response.json().then((responseJson) => {
-                console.log(responseJson);
                 const eventMap = responseJson.filter((event) => event.active).map((event) =>
                     <ListGroup.Item>
                         <Row>

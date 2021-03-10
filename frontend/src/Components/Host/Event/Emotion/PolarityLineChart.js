@@ -50,7 +50,6 @@ const PolarityLineChart = ({ interval }) => {
     useEffect(() => {
         getValues();
         const timeoutID = setInterval(() => {
-            console.log("CHECKING " + interval);
             getValues();
         }, 3000);
         return () => clearInterval(timeoutID);

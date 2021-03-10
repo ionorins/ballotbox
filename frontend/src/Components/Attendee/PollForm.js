@@ -78,7 +78,6 @@ const PollForm = ({ poll, getPolls }) => {
             />)
         }
         else if (poll.content.type === "multipleChoice") {
-            console.log(poll.content.options);
             const optionMap = poll.content.options.map((option) =>
                 <Form.Check id={option} label={option} />
             );

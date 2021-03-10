@@ -36,7 +36,6 @@ const AttendeePolls = ({ setUnansweredPolls }) => {
             }
         }).then((response) => response.json())
             .then((responseJson) => {
-                console.log(responseJson);
                 for (i = 0; i < responseJson.length; i++) {
                     if (responseJson[i].answered)
                         answered.push(responseJson[i]);
