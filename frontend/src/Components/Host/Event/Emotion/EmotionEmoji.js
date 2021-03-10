@@ -50,7 +50,7 @@ const EmotionEmoji = ({ type, size, toggled, handler }) => {
             delay={{ show: 300, hide: 400 }}
             trigger={'hover'}
             overlay={<Tooltip id="button-tooltip">
-                {type.charAt(0).toUpperCase() + type.slice(1)} - {size}
+                {type.charAt(0).toUpperCase() + type.slice(1)}
             </Tooltip>}
         >
             <img onClick={handler} id={type} draggable="false" style={{ filter: "opacity(" + opc + ")", cursor: "pointer", height: dimension, width: dimension }} alt={alt} src={"https://twemoji.maxcdn.com/v/13.0.1/72x72/" + id + ".png"} />
